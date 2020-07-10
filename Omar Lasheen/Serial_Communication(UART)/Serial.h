@@ -15,6 +15,8 @@
 #define INT 41
 #define CHAR 42
 #define STRING 43
+
+
 #define RX_INTERRUPT 50
 #define TX_INTERRUPT 51
 #define NO_PARITY 60
@@ -31,5 +33,9 @@ unsigned char Serial_read (void);
 void Serial_attachInterrupt(unsigned char Case,void (*Local_ISR)(void));
 void Add_ParityBit(unsigned char UART_PARITY);
 void Set_U2X_transmission(void);
+
+void Serial_readString(unsigned char *x, unsigned char size);
+void Serial_readStringUntil(unsigned char *x, unsigned char c);
+
 
 #endif /* INCFILE1_H_ */

@@ -11,7 +11,7 @@
  * Author : Omar Lasheen
  */ 
 #ifndef F_CPU
-#define F_CPU 8000000UL
+#define F_CPU 1000000UL
 #endif
 
 #define BAUDRATE ((F_CPU)/(baud*16UL)-1)            // set baud rate value for UBRR
@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
+#include <string.h>
 int baud;
 void (*RXC_ISR)(void)='\0';
 void (*TXC_ISR)(void)='\0';
@@ -125,12 +126,60 @@ void Serial_attachInterrupt(unsigned char Case,void (*Local_ISR)(void))
 }
 void Serial_flush(void){
 	unsigned char dummy;
+	while (Serial_available()>0)
 	dummy=UDR;
 }
 // function to receive data
 unsigned char Serial_read (void)
 {
 	return UDR;                                   // return 8-bit data
+}
+
+void Serial_readString(unsigned char *x, unsigned char size)
+{
+	strcpy(x,"");
+	unsigned char i = 0;
+	
+	x[i]=Serial_read();
+	i++;
+	while (i < size - 1) {              // check space is available (including additional null char at end)
+		unsigned char c;
+		while ( !(UCSRA & (1<<RXC)) );  // wait for another char - WARNING this will wait forever if nothing is received
+		c = UDR;
+		if (c == '\0') break;           // break on NULL character
+		x[i] = c;                       // write into the supplied buffer
+		i++;
+	}
+	x[i] = '\0';                           // ensure string is null terminated
+
+}
+
+void Serial_readStringUntil(unsigned char *x, unsigned char c)
+{
+	strcpy(x,"");
+	unsigned char i = 0;
+	unsigned char a;
+	x[i]=Serial_read();
+	i++;
+	
+	if(x[i]!=c)
+	{
+		while (1) 
+	{              	
+		while ( !(UCSRA & (1<<RXC)) );  // wait for another char - WARNING this will wait forever if nothing is received
+		a = UDR;
+		x[i] = a;                       // write into the supplied buffer
+		i++;
+		if(a == c)
+		{
+		break;
+		}
+	}
+	
+	}
+	x[i] = '\0';                           // ensure string is null terminated
+	
+	
 }
 
 ISR(USART_RXC_vect){
