@@ -11,7 +11,7 @@
 * This Blink example clarifies the  functions used in the library
 in Order to toggle an Led every 1 Sec. 
  
-<img src="./PDS_waYmaVhIFy.png" width="700" />
+<img src="./PDS_waYmaVhIFy.png" width="1080" />
 
 ```
 
@@ -39,7 +39,7 @@ int main(void)
 in Order to Read the value on a digital Pin connected to a push button
 and display the output on LED. 
  
-<img src="./PDS_WX1yE5dwLt.png" width="700" /> 
+<img src="./PDS_WX1yE5dwLt.png" width="1080" /> 
 
 ```
 
@@ -77,7 +77,7 @@ int main(void)
 in Order to Read the value on an Interrupt Pin connected to a push button
 and display the output on LED using External Interrupts(Interrupt on Falling Edge). 
 
-<img src="./PDS_rxG0Cs611q.png" width="700" />
+<img src="./PDS_rxG0Cs611q.png" width="1080" />
 
 ```
 
