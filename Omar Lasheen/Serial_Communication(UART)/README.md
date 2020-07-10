@@ -101,17 +101,19 @@ in Order to send and recieve a string between 2 microcontrollers and enlight an 
 #include "Gpio.h"
 #include "Serial.h"
 #include <util/delay.h>
-char x[20];
+#include <avr/io.h>
+void transmit(){
+	
+	UDR='A';
+}
 int main(void)
 {
 	
 	Serial_begin(4800);
-	
+	Serial_attachInterrupt(TX_INTERRUPT,transmit);
 		
 	while (1)
-	{
-		Serial_print("A",STRING);
-	}
+	{}
 }
 
  ```
