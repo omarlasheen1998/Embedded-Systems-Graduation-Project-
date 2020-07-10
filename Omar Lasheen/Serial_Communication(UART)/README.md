@@ -164,7 +164,7 @@ int main(void)
 * In Atmega 32, We have 1 Serial Port with pins  D0(RX),D1(TX). 
 
 
-<img src="./FoxitPhantomPDF_2dh3VE055Q.png" width="700" />
+<img src="./qrICK2XReA.png" width="700" />
 
 
 

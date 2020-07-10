@@ -117,7 +117,7 @@ int main(void)
 * In Atmega 32, We have 3 external Interrupt pins which are D2(INT0),D3(INT1), and B2 (INT2). 
 
 
-<img src="./FoxitPhantomPDF_2dh3VE055Q.png" width="700" />
+<img src="./qrICK2XReA.png" width="700" />
 
 
 * INT0 and INT1 interrupts has 4 causes for interrupt : LOW(INT_LOW),CHANGE(INT_CHANGE),FALLING(INT_FALLING), and RISING (INT_RISING)
