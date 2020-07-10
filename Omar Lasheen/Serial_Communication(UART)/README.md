@@ -1,12 +1,12 @@
 # Serial Communication(UART)
 
-```
- The Driver is written in Arduino functions Format to allow users understand avr Driver for Atmega 32
-```
 
-## Examples
+* The Driver is written in Arduino functions Format to allow users understand avr Driver for Atmega 32
 
-### Transmitting and Recieving  between 2 microcontrollers example
+
+# Examples
+
+## Transmitting and Recieving  between 2 microcontrollers example
 
 * This  example clarifies the  functions used in the library
 in Order to send and recieve a string between 2 microcontrollers and enlight an led if the string is recieved correctly
@@ -15,7 +15,7 @@ in Order to send and recieve a string between 2 microcontrollers and enlight an 
 
 
 
-#### Transmitter
+### Transmitter
 
 
 
@@ -42,7 +42,7 @@ int main(void)
 
 
 
-#### Reciever
+### Reciever
 
 
 
@@ -81,7 +81,7 @@ int main(void)
   
 
 
-### Transmitting and Recieving  between 2 microcontrollers using interrupt example
+## Transmitting and Recieving  between 2 microcontrollers using interrupt example
 
 * This  example clarifies the  functions used in the library
 in Order to send and recieve a string between 2 microcontrollers and enlight an led if the string is recieved correctly
@@ -90,7 +90,7 @@ in Order to send and recieve a string between 2 microcontrollers and enlight an 
 
 
 
-####Transmitter
+### Transmitter
 
 
 
@@ -120,7 +120,7 @@ int main(void)
 
 
 
-####Reciever
+### Reciever
 
 
 
