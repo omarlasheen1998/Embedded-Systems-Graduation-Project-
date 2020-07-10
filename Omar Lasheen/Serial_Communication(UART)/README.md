@@ -11,7 +11,7 @@
 * This  example clarifies the  functions used in the library
 in Order to send and recieve a string between 2 microcontrollers and enlight an led if the string is recieved correctly
  
-<img src="./YgOq8YVWfc.png" width="700" />
+<img src="./YgOq8YVWfc.png" width="1080" />
 
 
 
