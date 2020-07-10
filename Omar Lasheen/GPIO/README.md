@@ -1,8 +1,8 @@
 # GPIO
 
-```
- The Driver is written in Arduino functions Format to allow users understand avr Driver for Atmega 32
-```
+
+* The Driver is written in Arduino functions Format to allow users understand avr Driver for Atmega 32
+
 
 ## Examples
 
