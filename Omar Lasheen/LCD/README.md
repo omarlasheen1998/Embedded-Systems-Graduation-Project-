@@ -207,7 +207,7 @@ int main(void)
 * pin R/W is connected to ground and vee is connected to potentiometer to control brightness,
 and it is connected to ground to achieve maximum brightness
 
-*the lcd is able to display all types of data (INT,FLOAT,CHAR,STRING)
+* the lcd is able to display all types of data (INT,FLOAT,CHAR,STRING)
  
 * address of first line starts at 0x80 , address of 2nd line starts at 0xC0, address of 3rd line starts at 0x94, and the address of 4th line starts at 0xD4 
 
