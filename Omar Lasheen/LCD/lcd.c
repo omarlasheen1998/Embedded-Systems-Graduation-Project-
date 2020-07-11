@@ -4,6 +4,7 @@
  * Created: 5/8/2020 5:03:37 AM
  *  Author: Lasheen
  */ 
+#define F_CPU 1000000UL
 #include <avr/io.h>
 #include <util/delay.h>			/* Include Delay header file */
 #include <stdio.h>
@@ -11,6 +12,23 @@
 #include "lcd.h"
 #include <stdint.h>
 
+typedef union
+{
+	struct
+	{
+		unsigned char bit1 : 1;
+		unsigned char bit2 : 1;
+		unsigned char bit3 : 1;
+		unsigned char bit4 : 1;
+		unsigned char bit5 : 1;
+		unsigned char bit6 : 1;
+		unsigned char bit7 : 1;
+		unsigned char bit8 : 1;
+	}e;
+	unsigned char cmd;
+}Manual;
+
+Manual lcd;
 volatile unsigned char *LCD_Port;
 volatile unsigned char *LCD_Dir;
 unsigned char RS;
@@ -18,6 +36,8 @@ unsigned char EN;
 unsigned char Mode;
 unsigned char X;
 unsigned char Y;
+unsigned char PRT;
+unsigned char PINS[8];
 
 
 void LCD_Command( unsigned char cmnd );
@@ -26,6 +46,9 @@ void LCD_Command( unsigned char cmnd );
 void LCD_Command( unsigned char cmnd )
 {
 	if(Mode == _4_bitMode)
+	{
+		
+	if(PRT%10>=4 && PRT%10<=7)
 	{
 	*LCD_Port = (*LCD_Port & 0x0F) | (cmnd & 0xF0); /* sending upper nibble */
 	digitalWrite(RS,LOW);		/* RS=0, command reg. */
@@ -41,6 +64,26 @@ void LCD_Command( unsigned char cmnd )
 	_delay_ms(2);
 	
 	}
+    
+	else if(PRT%10>=0 && PRT%10<=3)
+	{
+		*LCD_Port = (*LCD_Port & 0xF0) | (cmnd >> 4); /* sending upper nibble */
+		digitalWrite(RS,LOW);		/* RS=0, command reg. */
+		digitalWrite(EN,HIGH);		/* Enable pulse */
+		_delay_us(1);
+		digitalWrite(EN,LOW);
+		_delay_us(200);
+
+		*LCD_Port = (*LCD_Port & 0xF0) | (cmnd & 0X0F);  /* sending lower nibble */
+		digitalWrite(EN,HIGH);		/* Enable pulse */
+		_delay_us(1);
+		digitalWrite(EN,LOW);
+		_delay_ms(2);
+		
+	}
+		
+	}
+	
 	else if(Mode == _8_bitMode)
 	{
 	
@@ -52,7 +95,53 @@ void LCD_Command( unsigned char cmnd )
     _delay_ms(3);			
 	
 	}
+	else if(Mode == _8_MANUAL)
+	{
+		
+		lcd.cmd = cmnd;
+		digitalWrite(PINS[0],lcd.e.bit1);
+		digitalWrite(PINS[1],lcd.e.bit2);
+		digitalWrite(PINS[2],lcd.e.bit3);
+		digitalWrite(PINS[3],lcd.e.bit4);
+		digitalWrite(PINS[4],lcd.e.bit5);
+		digitalWrite(PINS[5],lcd.e.bit6);
+        digitalWrite(PINS[6],lcd.e.bit7);
+		digitalWrite(PINS[7],lcd.e.bit8);
+		
+		digitalWrite(RS,LOW);		/* RS=0, command reg. */
+		digitalWrite(EN,HIGH);		/* Enable pulse */
+		_delay_us(10);
+		digitalWrite(EN,LOW);
+		_delay_ms(5);
+		
+	}
 	
+	else if(Mode == _4_MANUAL)
+	{
+		
+		lcd.cmd = cmnd&0xF0;
+		digitalWrite(PINS[0],lcd.e.bit5);
+		digitalWrite(PINS[1],lcd.e.bit6);
+		digitalWrite(PINS[2],lcd.e.bit7);
+		digitalWrite(PINS[3],lcd.e.bit8);
+	
+	digitalWrite(RS,LOW);		/* RS=0, command reg. */
+	digitalWrite(EN,HIGH);		/* Enable pulse */
+	_delay_us(10);
+	digitalWrite(EN,LOW);
+	_delay_us(200);
+
+		lcd.cmd = cmnd<<4;
+		digitalWrite(PINS[0],lcd.e.bit5);
+		digitalWrite(PINS[1],lcd.e.bit6);
+		digitalWrite(PINS[2],lcd.e.bit7);
+		digitalWrite(PINS[3],lcd.e.bit8);
+	digitalWrite(EN,HIGH);		/* Enable pulse */
+	_delay_us(10);
+	digitalWrite(EN,LOW);
+	_delay_ms(5);
+		
+	}
 }
 
 
@@ -61,7 +150,7 @@ void LCD_Begin (unsigned char x,unsigned char y)			/* LCD Initialize function */
 	X=x;
 	Y=y;
 	
-	if( Mode == _4_bitMode )
+	if( Mode == _4_bitMode || Mode == _4_MANUAL)
 	{
 	
 	_delay_ms(20);			/* LCD Power ON delay always >15ms */
@@ -76,7 +165,7 @@ void LCD_Begin (unsigned char x,unsigned char y)			/* LCD Initialize function */
 	_delay_ms(2);
 	
 	}
-	else if( Mode == _8_bitMode )
+	else if( Mode == _8_bitMode || Mode == _8_MANUAL)
 	{
 	
 	LCD_Command(Mode);              /* 2 line, 5*7 matrix in 4-bit mode */
@@ -93,35 +182,118 @@ void LCD_Begin (unsigned char x,unsigned char y)			/* LCD Initialize function */
 
 void LCD_Char( unsigned char data )
 {
-	*LCD_Port = (*LCD_Port & 0x0F) | (data & 0xF0); /* sending upper nibble */
-	digitalWrite(RS,HIGH);		/* RS=0, command reg. */
+if(Mode == _8_bitMode )
+{
+	*LCD_Port = data; /* sending upper nibble */
+	digitalWrite(RS,HIGH);		/* RS=1, data reg. */
 	digitalWrite(EN,HIGH);		/* Enable pulse */
 	_delay_us(1);
 	digitalWrite(EN,LOW);
 	
+	_delay_ms(2);
+}
+
+else if(Mode == _8_MANUAL)
+{	
+	lcd.cmd = data;
+	digitalWrite(PINS[0],lcd.e.bit1);
+	digitalWrite(PINS[1],lcd.e.bit2);
+	digitalWrite(PINS[2],lcd.e.bit3);
+	digitalWrite(PINS[3],lcd.e.bit4);
+	digitalWrite(PINS[4],lcd.e.bit5);
+	digitalWrite(PINS[5],lcd.e.bit6);
+	digitalWrite(PINS[6],lcd.e.bit7);
+	digitalWrite(PINS[7],lcd.e.bit8);
+	
+	digitalWrite(RS,HIGH);		/* RS=1, data reg. */
+	digitalWrite(EN,HIGH);		/* Enable pulse */
+	_delay_us(10);
+	digitalWrite(EN,LOW);
+	_delay_ms(5);
+	
+}
+
+else if(Mode == _4_MANUAL)
+{
+	
+	lcd.cmd = data&0xF0;
+	digitalWrite(PINS[0],lcd.e.bit5);
+	digitalWrite(PINS[1],lcd.e.bit6);
+	digitalWrite(PINS[2],lcd.e.bit7);
+	digitalWrite(PINS[3],lcd.e.bit8);
+	
+	digitalWrite(RS,HIGH);		/* RS=1, data reg. */
+	digitalWrite(EN,HIGH);		/* Enable pulse */
+	_delay_us(10);
+	digitalWrite(EN,LOW);
 	_delay_us(200);
 
-	*LCD_Port = (*LCD_Port & 0x0F) | (data << 4); /* sending lower nibble */
+	lcd.cmd = data<<4;
+	digitalWrite(PINS[0],lcd.e.bit5);
+	digitalWrite(PINS[1],lcd.e.bit6);
+	digitalWrite(PINS[2],lcd.e.bit7);
+	digitalWrite(PINS[3],lcd.e.bit8);
 	digitalWrite(EN,HIGH);		/* Enable pulse */
-	_delay_us(1);
+	_delay_us(10);
 	digitalWrite(EN,LOW);
-    _delay_ms(2);
+	_delay_ms(5);
+	
 }
+
+else if(Mode == _4_bitMode)
+{
+	
+	if(PRT%10>=4 && PRT%10<=7)
+	{
+		*LCD_Port = (*LCD_Port & 0x0F) | (data & 0xF0); /* sending upper nibble */
+		digitalWrite(RS,HIGH);		/* RS=1, data reg. */
+		digitalWrite(EN,HIGH);		/* Enable pulse */
+		_delay_us(1);
+		digitalWrite(EN,LOW);
+		_delay_us(200);
+
+		*LCD_Port = (*LCD_Port & 0x0F) | (data << 4);  /* sending lower nibble */
+		digitalWrite(EN,HIGH);		/* Enable pulse */
+		_delay_us(1);
+		digitalWrite(EN,LOW);
+		_delay_ms(2);
+		
+	}
+	
+	else if(PRT%10>=0 && PRT%10<=3)
+	{
+		*LCD_Port = (*LCD_Port & 0xF0) | (data >> 4); /* sending upper nibble */
+		digitalWrite(RS,HIGH);		/* RS=1, data reg. */
+		digitalWrite(EN,HIGH);		/* Enable pulse */
+		_delay_us(1);
+		digitalWrite(EN,LOW);
+		_delay_us(200);
+
+		*LCD_Port = (*LCD_Port & 0xF0) | (data & 0X0F);  /* sending lower nibble */
+		digitalWrite(EN,HIGH);		/* Enable pulse */
+		_delay_us(1);
+		digitalWrite(EN,LOW);
+		_delay_ms(2);
+		
+	}
+	
+}
+
+}
+
 
 void LCD_SetPosition(unsigned char row,unsigned char pos){
 	
-	if(row<=Y)	
-	{	
-		if (row == 0 && pos<=X)
+	    LCD_Command(HOME);	
+		if (row == 0 )
 		LCD_Command( pos + 0x80 );	/* Command of first row and required position<16 */
-		else if (row == 1 && pos<=X)
+		else if (row == 1)
 		LCD_Command( pos + 0xC0 );	/* Command of 2nd row and required position<16 */
-		else if (row == 2 && pos<=X)
+		else if (row == 2)
 		LCD_Command( pos + 0x94 );	/* Command of 3rd row and required position<16 */
-		else if (row == 3 && pos<=X)
-		LCD_Command( pos + 0xD4 );	/* Command of 4th row and required position<16 */
-		
-	}
+		else if (row == 3)
+		LCD_Command( pos + 0xD4 );	/* Command of 4th row and required position<16 */	
+	
 	
 }
 
@@ -147,11 +319,32 @@ void LCD_Clear()
 	_delay_ms(2);
 	LCD_Command (0x80);		/* Cursor at home position */
 }
-void LCD_SetUp(unsigned char rs,unsigned char en,unsigned char port)
+
+void LCD_SetUpManual(unsigned char no,unsigned char rs,unsigned char en,unsigned char pins[no]){
+RS=rs;
+EN=en;
+pinMode(RS,OUTPUT);
+pinMode(EN,OUTPUT);
+if(no==4)
+Mode=_4_MANUAL;
+else if(no==8)
+Mode=_8_MANUAL;
+char i;
+
+for(i=0;i<no;i++)	
+{
+PINS[i]=pins[i];
+pinMode(PINS[i],OUTPUT);	
+}
+	
+}
+void LCD_SetUpReg(unsigned char rs,unsigned char en,unsigned char port)
 {
 
 RS=rs;
 EN=en;
+PRT=port;
+
 if( port>=REGA && port<=REGD )
 {
   
@@ -179,7 +372,7 @@ if( port>=REGA && port<=REGD )
 
 }
 			/* Make LCD port direction as o/p */
-else if( port>=REGA_UPPER && port<=REGD_LOWER )
+else if( port>=REGA_LOWER && port<=REGD_UPPER )
 {
 	Mode=_4_bitMode;
 	if(port == REGA_UPPER)
@@ -254,14 +447,7 @@ void LCD_Print(void* x,unsigned char type){
 	sprintf(array,"%d.%d", i1,i2);
    LCD_String(array);
    }
-	
-	else if(type == CHAR)
-	{
-		
-		LCD_Char(*(char*)x);
-		
-	}
-	
+   
 }
 
 void DISPLAY_ON(){
