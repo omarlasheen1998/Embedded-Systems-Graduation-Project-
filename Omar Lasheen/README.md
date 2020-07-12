@@ -7,3 +7,5 @@
 3.LCD
 
 4.Keypad
+
+5.ADC
