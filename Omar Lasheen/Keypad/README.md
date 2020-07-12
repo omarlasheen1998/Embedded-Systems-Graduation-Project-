@@ -6,7 +6,7 @@
 
 ## Examples
 
-### interfacing with 4X3 KEYPAD example
+### Interfacing with 4X3 KEYPAD example
 
 * This example shows how to interface Atmega32 with 4X3 Keypad and display output on LCD    
 
@@ -47,7 +47,7 @@ int main(void)
 }
  ```
 
-### interfacing with 4X4 KEYPAD example
+### Interfacing with 4X4 KEYPAD example
 
 * This example shows how to interface Atmega32 with 4X4 Keypad and display sum of 2 numbers as output on LCD    
  
@@ -90,7 +90,7 @@ int main(void)
 
 ```
 
-### interfacing with 4X6 KEYPAD example
+### Interfacing with 4X6 KEYPAD example
 
 * This example shows how to interface Atmega32 with 4X6 Keypad and display sum of 2 numbers as output on LCD    
  
