@@ -436,15 +436,19 @@ void LCD_Print(void* x,unsigned char type){
 		
 	}
 	
-   else if(type == FLOAT)
+else if(type == FLOAT)
    {
 	   float f1,f2;
 	   int i1,i2;
 	f1=floor(*(float *)x);
 	f2=(*(float *)x) - f1;
 	i1 = (int)f1;
-	i2 = (int)1000*f2;
+	i2 = (int)100*f2;
+	if(i2<10)
+	sprintf(array,"%d.0%d", i1,i2);
+	else
 	sprintf(array,"%d.%d", i1,i2);
+	
    LCD_String(array);
    }
    
