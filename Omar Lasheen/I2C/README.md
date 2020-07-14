@@ -8,9 +8,9 @@
 
 ### Sending and Receiving strings between 2 microcontrollers example
 
-* This example shows how to interface 2 Atmega32 to send and receive strings by I2C and display the output on LCD    
+* This example shows how to interface 2 Atmega32 to send and receive strings("OMAR LASHEEN","AHMED ADEL") by I2C and display the output on LCD    
 
-<img src="./PDS_6qD7qpTYtk.png" width="1080" />
+<img src="./caXD2LEtPE.png" width="1080" />
 
 ### Master
 ```
@@ -149,3 +149,12 @@ int main(void)
 * you have to write the proper value of the I2c clock frequency when initializing the master
 
 * you can check the status(check the values defined in i2c.h) of the i2c port to know what the port has received 
+
+* you can use the I2C debugger on proteus to see what you actualy received on the master and the slave with this simple explanation:
+```
+1. all numbers appearing are in hexadecimal format
+2. the i2c debugger simulates the way data is transmitted and received in the i2c protocol(check the image of the example)
+3. S means (Start condition),Sr means (Repeated Start condition),A means (Acknowledge),N means (Not Acknowledge),P means (Stop Condition)
+4. you can also send data to the bus by the I2C debugger
+```
+ 
