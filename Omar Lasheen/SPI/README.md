@@ -171,6 +171,8 @@ int main(void)
 
 * you have to clear the chip select pin for the slave that want to listen to the master.
 
+* the clock of the spi is already defined in the library as 1/24 of the clock frequency. In order to change it, you have to edit this part in the library according to the datasheet. 
+
 * you can use the SPI debugger on proteus to see what you actualy received on the master and the slave with this simple explanation:
 ```
 1. all numbers appearing are in hexadecimal format
