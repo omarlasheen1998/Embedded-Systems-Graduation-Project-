@@ -167,8 +167,9 @@ int main(void)
 <img src="./qrICK2XReA.png" width="1080" />
 
 
-* you have to define chip select pins when initializing the master to select which slave to listen
+* you have to define chip select pins when initializing the master to select which slave to listen. You can define any pin in the microcontroller as chip select pin. In slaves, the slave select pin is already defined as B4.
 
+* you have to clear the chip select pin for the slave that want to listen to the master.
 
 * you can use the SPI debugger on proteus to see what you actualy received on the master and the slave with this simple explanation:
 ```
@@ -177,4 +178,3 @@ int main(void)
 3. you can also send data to the bus by the SPI debugger
 ```
  
-* you have to clear the chip select pin for the slave that want to listen to the master.
