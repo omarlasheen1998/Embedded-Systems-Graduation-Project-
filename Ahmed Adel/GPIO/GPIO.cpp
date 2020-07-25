@@ -161,6 +161,20 @@ uint8_t Pin::pinRead(){
 	return 1;
 }
 
+uint16_t Pin::pinAnalogRead(void){
+	if (portSelector == 0 && pinType == INPUT)
+	{
+		ADC_Init(DIV_FACTOR_8, CONVERSION_10_BIT, REF_DEFAULT);
+		uint16_t adcValue = analogRead(pinNumber);
+		disableADC();
+		_delay_us(20);
+		return adcValue;
+	}
+	else{
+		return 0;
+	}
+}
+
 uint8_t Pin::attachInterrupt(uint8_t state, void (*Local_ISR)(void)){
 	if (portSelector == 3)
 	{

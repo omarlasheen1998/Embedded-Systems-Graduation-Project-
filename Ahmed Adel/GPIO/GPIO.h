@@ -3,8 +3,10 @@
 #define GPIO_H_
 
 #include <avr/io.h>
+#include <util/delay.h>
 #include <avr/interrupt.h>
 #include <stdint.h>
+#include "ADC.h"
 
 /* 
 	GPIO Driver consists of the following:
@@ -56,6 +58,7 @@ public:
 	Pin(uint8_t pinNum, uint8_t portNum, uint8_t type);
 	uint8_t pinWrite(uint8_t out);
 	uint8_t pinRead(void);
+	uint16_t pinAnalogRead(void);
 	uint8_t attachInterrupt(uint8_t state, void (*Local_ISR)(void));
 
 	
