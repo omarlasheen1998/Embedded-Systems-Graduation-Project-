@@ -9,3 +9,7 @@
 4.Keypad
 
 5.ADC
+
+6.I2C
+
+7.SPI
