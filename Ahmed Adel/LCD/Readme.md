@@ -6,7 +6,8 @@
 **1- void begin(uint8_t type)**
 
 Definition:
-This function Initialized the Two-wire Module(TWI)
+
+> This function Initialized the Two-wire Module(TWI)
 Arguments:
 The Type of the Controller either a Master or Slave.
 -TYPE_MASTER
