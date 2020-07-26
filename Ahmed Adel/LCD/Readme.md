@@ -15,7 +15,7 @@
 > - TYPE_MASTER
 > - TYPE_SLAVE
 
-**2. uint8_t beginTransmission(uint8_t addr)**
+### **2. uint8_t beginTransmission(uint8_t addr)**
 
 ***Definition:***
 
@@ -25,7 +25,7 @@
 
 > Address of the Slave. (Addresses should be from 1 to 127.)
 
-**3. uint8_t requestFrom(uint8_t addr, uint8_t bytes)**
+### **3. uint8_t requestFrom(uint8_t addr, uint8_t bytes)**
 
 ***Definition:***
 
@@ -36,7 +36,7 @@
 > - Address of the Slave.
 > - Number of bytes to be read from the Slave.
 
-**4. void setAddress(uint8_t addr)**
+### **4. void setAddress(uint8_t addr)**
 
 ***Definition:***
 
@@ -46,13 +46,13 @@
 
 > Address of the Slave.
 
-**5. uint8_t listen(void)**
+### **5. uint8_t listen(void)**
 
 ***Definition:***
 
 > This function makes the Slave listen to the I2C bus if it has been addressed.
 
-**6. uint8_t write(uint8_t data)**
+### **6. uint8_t write(uint8_t data)**
 
 ***Definition:***
 
@@ -62,13 +62,13 @@
 
 > The data to be send.
 
-**7. uint8_t read()**
+### **7. uint8_t read()**
 
 ***Definition:***
 
 > This function reads a data from the `I2C bus`. It can be used either with the Master or Slave.
 
-**8. void disableGeneralCall(void)**
+### **8. void disableGeneralCall(void)**
 
 ***Definition:***
 
