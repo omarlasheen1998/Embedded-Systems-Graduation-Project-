@@ -2,96 +2,96 @@
 ###### This driver has 3 modes of operation for LCD.
 ###### 1. 8-BIT Operation.
 ###### 2. 4-BIT Operation.
-###### 1. I2C Operation using PCF8574.
+###### 3. I2C Operation using PCF8574.
 
 ## Methods Description:
 
-### **1. void begin(uint8_t type)**
+### **1. LCD Constructor: LCD(uint8_t config)**
 
 ***Definition:***
 
-> This function Initialized the Two-wire Module(TWI)
+> This is the constructor of the LCD object.It defines the configuration in which the LCD will operate.
 
 ***Arguments:***
 
-> The Type of the Controller either a Master or Slave.
-> - TYPE_MASTER
-> - TYPE_SLAVE
+> The Configuration of the LCD.
+> - LCD_8_BIT
+> - LCD_4_BIT
+> - LCD_I2C
 
-### **2. uint8_t beginTransmission(uint8_t addr)**
+### **2. void Init(void)**
 
 ***Definition:***
 
-> This function Starts the Transmission by sending a start bit followed by the Slave's address and Write bit `(SLA+W)`.
+> This function Initializes the LCD and makes it ready to receive commands.
+
+### **3. void printString(char *str)**
+
+***Definition:***
+
+> This function prints a string on the LCD.
 
 ***Arguments:***
 
-> Address of the Slave. (Addresses should be from 1 to 127.)
+> - The string to be printed.
 
-### **3. uint8_t requestFrom(uint8_t addr, uint8_t bytes)**
+### **4. void gotoXY(uint8_t x, uint8_t y)**
 
 ***Definition:***
 
-> This function Sends a Repeated Start bit followed by the Slave's address and Read bit `(SLA+R)`.
+> This function sets the cursor at point(x, y).
 
 ***Arguments:***
 
-> - Address of the Slave.
-> - Number of bytes to be read from the Slave.
+> X Point ( 1 -> 16 )
+> Y Point ( 1 -> 2 )
 
-### **4. void setAddress(uint8_t addr)**
+### **5. void command(uint8_t cmd)**
 
 ***Definition:***
 
-> This function sets the address of the Slave that will be addressed with by the Master.
+> This function sends a specific command to the LCD. all commands of the LCD can be found in the LCD's datasheet.
 
 ***Arguments:***
 
-> Address of the Slave.
+> Command to be sent.
 
-### **5. uint8_t listen(void)**
 
-***Definition:***
-
-> This function makes the Slave listen to the I2C bus if it has been addressed.
-
-### **6. uint8_t write(uint8_t data)**
+### **6. void printData(uint8_t data)**
 
 ***Definition:***
 
-> This function writes a data to the I2C bus. It can be used either with the Master or Slave.
+> This function prints a single data byte on the LCD.
 
 ***Arguments:***
 
-> The data to be send.
+> The data byte to be printed.
 
-### **7. uint8_t read()**
-
-***Definition:***
-
-> This function reads a data from the `I2C bus`. It can be used either with the Master or Slave.
-
-### **8. void disableGeneralCall(void)**
+### **7. void clear(void)**
 
 ***Definition:***
 
-> This function disable the responding of the General Call for the Slave.
+> This function clears the LCD and return the cursor to Home.
 
 
 # Example:
-## Master Transmitter and Slave Receiver.
+## 8-BIT LCD.
 
-###### Master Controller:
 ```
+#include <stdio.h>
+
 int main(void)
 {
+	
+	LCD lcd(LCD_8_BIT);
+	lcd.Init();
 
-	I2C::begin(TYPE_MASTER);
-	
-	I2C::beginTransmission(addr);
-	I2C::write(1);
-	I2C::endTransmission();
-	
+	char str[20];
+
+	sprintf(str, "Hello World");
+	lcd.gotoXY(1,1);
+	lcd.printString(str);
+
 	while (1)
 	{
 	}
@@ -99,23 +99,50 @@ int main(void)
 
 ```
 
-###### Slave Controller:
+## 4-BIT LCD.
+
 ```
- int main(void)
- {
-	 
-	 I2C::begin(TYPE_SLAVE);
-	 
-	 I2C::setAddress(addr);
-	 
-	 I2C::listen();
-	 uint8_t readData = I2C::read();
-	 
-	 while (1)
+#include <stdio.h>
+
+int main(void)
+{
+	
+	LCD lcd(LCD_4_BIT);
+	lcd.Init();
+
+	char str[20];
+
+	sprintf(str, "Hello World");
+	lcd.gotoXY(1,1);
+	lcd.printString(str);
+
+	while (1)
 	{
 	}
- }
+}
+
 ```
 
-## Master Reciever and Slave Transmitter.
+## I2C LCD.
 
+```
+#include <stdio.h>
+
+int main(void)
+{
+	
+	LCD lcd(LCD_I2C);
+	lcd.Init();
+
+	char str[20];
+
+	sprintf(str, "Hello World");
+	lcd.gotoXY(1,1);
+	lcd.printString(str);
+
+	while (1)
+	{
+	}
+}
+
+```
