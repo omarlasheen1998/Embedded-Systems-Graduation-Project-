@@ -114,5 +114,5 @@ int main(void)
  }
 ```
 
-2- Master Reciever and Slave Transmitter.
+## Master Reciever and Slave Transmitter.
 
