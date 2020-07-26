@@ -3,17 +3,17 @@
 
 ## Methods Description:
 
-**1. void begin(uint8_t type)**
+#### **1. void begin(uint8_t type)**
 
-	***Definition:***
+***Definition:***
 
-	> This function Initialized the Two-wire Module(TWI)
+> This function Initialized the Two-wire Module(TWI)
 
-	***Arguments:***
+***Arguments:***
 
-	> The Type of the Controller either a Master or Slave.
-	> - TYPE_MASTER
-	> - TYPE_SLAVE
+> The Type of the Controller either a Master or Slave.
+> - TYPE_MASTER
+> - TYPE_SLAVE
 
 **2. uint8_t beginTransmission(uint8_t addr)**
 
