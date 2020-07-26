@@ -1,9 +1,10 @@
 # I2C Driver
-The driver can be used for both the Master and the Slave programming.
+###### The driver can be used for both the Master and the Slave programming.
 
-Methods Description:
+## Methods Description:
 
-1- void begin(uint8_t type)
+1- ** void begin(uint8_t type) **
+
 Definition:
 This function Initialized the Two-wire Module(TWI)
 Arguments:
@@ -55,6 +56,7 @@ This function disable the responding of the General Call for the Slave.
 
 ###### Master Controller:
 '''
+
 int main(void)
 {
 
@@ -68,10 +70,13 @@ int main(void)
 	{
 	}
 }
+
+
 '''
 
 ###### Slave Controller:
 '''
+
  int main(void)
  {
 	 
@@ -86,6 +91,7 @@ int main(void)
 	{
 	}
  }
+ 
 '''
 
 2- Master Reciever and Slave Transmitter.
