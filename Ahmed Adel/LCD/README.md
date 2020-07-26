@@ -98,7 +98,7 @@ int main(void)
 }
 
 ```
-![8_BIT_LCD](/8_BIT_LCD.png)
+![8_BIT_LCD](8_BIT_LCD.png)
 
 ## 4-BIT LCD.
 
