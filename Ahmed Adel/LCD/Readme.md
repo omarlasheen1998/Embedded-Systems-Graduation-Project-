@@ -3,7 +3,7 @@
 
 ## Methods Description:
 
-#### **1. void begin(uint8_t type)**
+### **1. void begin(uint8_t type)**
 
 ***Definition:***
 
