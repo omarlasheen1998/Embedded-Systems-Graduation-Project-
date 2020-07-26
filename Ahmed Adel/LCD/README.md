@@ -1,5 +1,8 @@
-# I2C Driver
-###### The driver can be used for both the Master and the Slave programming.
+# Liquid Crystal Display (LCD) Driver
+###### This driver has 3 modes of operation for LCD.
+###### 1. 8-BIT Operation.
+###### 2. 4-BIT Operation.
+###### 1. I2C Operation using PCF8574.
 
 ## Methods Description:
 
