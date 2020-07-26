@@ -123,6 +123,7 @@ int main(void)
 }
 
 ```
+![4_BIT_LCD](4_BIT_LCD.png)
 
 ## I2C LCD.
 
@@ -147,3 +148,4 @@ int main(void)
 }
 
 ```
+![I2C_LCD](I2C_LCD.png)
