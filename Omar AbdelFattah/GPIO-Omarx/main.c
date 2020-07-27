@@ -4,26 +4,37 @@
  * Created: 18/07/2020 06:21:02 ã
  *  Author: omar
  */
-#include <avr/io.h>
+
 #include <util/delay.h>
 #include "drivers.h"
+#include "mytypedef.h"
 
 
 int main(void)
 {
-	typedef char U8;
-	DIO_DDRA=0xFF;
-	PORTA=0x00;
+	DIO_SetPortDir('A',DIO_OUTPUT);
     while(1)
     {
-		DIO_PORTA=0x01;
-		_delay_ms(500);
-		DIO_PORTA=0x03;
-		_delay_ms(500);
-		DIO_PORTA=0x07;
-		_delay_ms(500);
-		DIO_PORTA=0xF;
-		_delay_ms(500);
+DIO_SetPinValue('A',0,DIO_HIGH);
+_delay_ms(200);
+DIO_SetPinValue('A',1,DIO_HIGH);
+_delay_ms(200);
+DIO_SetPinValue('A',2,DIO_HIGH);
+_delay_ms(200);
+DIO_SetPinValue('A',3,DIO_HIGH);
+_delay_ms(200);
+DIO_SetPinValue('A',4,DIO_HIGH);
+_delay_ms(200);
+DIO_SetPinValue('A',5,DIO_HIGH);
+_delay_ms(200);
+DIO_SetPinValue('A',6,DIO_HIGH);
+_delay_ms(200);
+DIO_SetPinValue('A',7,DIO_HIGH);
+_delay_ms(200);
+
+DIO_SetPortValue('A',DIO_LOW);
+_delay_ms(200);
+
 
     }
 	return 1;
