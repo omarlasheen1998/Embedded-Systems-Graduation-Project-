@@ -1,0 +1,8 @@
+Keypad tutorial .. https://www.youtube.com/watch?v=6FjrKXmquxU
+
+Keypad and LCD Arabic video .. https://www.youtube.com/watch?v=XlPGO8vN40Q
+
+https://circuitdigest.com/microcontroller-projects/keypad-interfacing-with-avr-atmega32
+
+
+
