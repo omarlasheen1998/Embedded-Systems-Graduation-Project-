@@ -19,6 +19,8 @@
 u8 PinsArr[RowNum][ColNum] ={{'7','8','9','A'},{'4','5','6','B'},{'1','2','3','C'},{'*','0','#','D'}};
 //(RowNum 4) & (ColNum 4) are defined in Keypad_def.h
 
+
+/*** Functions ***/
 //Func_1 .. Pins Initialization
 void KPD_PinsInitialization()
 {	/*Columns connected to PORTA and the first 4Pins are output*/
