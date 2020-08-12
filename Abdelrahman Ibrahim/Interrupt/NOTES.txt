@@ -1,0 +1,10 @@
+Each interrupt in the microcontroller has a specific indicator bit called peripheral interrupt flag (PIF).
+This bit is set to 1 when the interrupt happens whatever the interrupt was enabled or disabled.
+
+In Maskable interrupts, another bit exist called peripheral interrupt Enable (PIE).
+When Maskable happens, its PIF is set to 1. If its PIE was set to 1, then the interrupt
+would be served.
+If not, the processor would continue its normal code execution.
+
+In Non-Maskable interrupts, there is no PIE. 
+Whenever the interrupt happens, it is being served. 
