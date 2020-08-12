@@ -1,0 +1,728 @@
+
+ADCDriver.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000003ea  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000043e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000043e  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000470  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000088  00000000  00000000  000004ac  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000806  00000000  00000000  00000534  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000639  00000000  00000000  00000d3a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000799  00000000  00000000  00001373  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000bc  00000000  00000000  00001b0c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000339  00000000  00000000  00001bc8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000038f  00000000  00000000  00001f01  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000058  00000000  00000000  00002290  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 dd 01 	call	0x3ba	; 0x3ba <main>
+  64:	0c 94 f3 01 	jmp	0x3e6	; 0x3e6 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <ADC_initilization>:
+
+
+
+void ADC_initilization(u8 mode_source,u8 pin,u8 number_bits ){
+	// source
+	if(mode_source ==Internal){
+  6c:	81 11       	cpse	r24, r1
+  6e:	03 c0       	rjmp	.+6      	; 0x76 <ADC_initilization+0xa>
+		
+		set_bit(ADMUX_REG,7);
+  70:	3f 9a       	sbi	0x07, 7	; 7
+		set_bit(ADMUX_REG,6);
+  72:	3e 9a       	sbi	0x07, 6	; 7
+  74:	04 c0       	rjmp	.+8      	; 0x7e <ADC_initilization+0x12>
+	}
+	
+	else if(mode_source ==AREF){
+  76:	81 30       	cpi	r24, 0x01	; 1
+  78:	11 f4       	brne	.+4      	; 0x7e <ADC_initilization+0x12>
+		
+		clc_bit(ADMUX_REG,7);
+  7a:	3f 98       	cbi	0x07, 7	; 7
+		clc_bit(ADMUX_REG,6);
+  7c:	3e 98       	cbi	0x07, 6	; 7
+	}
+	
+   //mode bits
+
+if(number_bits==10){
+  7e:	4a 30       	cpi	r20, 0x0A	; 10
+  80:	11 f4       	brne	.+4      	; 0x86 <ADC_initilization+0x1a>
+	clc_bit(ADMUX_REG,5);
+  82:	3d 98       	cbi	0x07, 5	; 7
+  84:	03 c0       	rjmp	.+6      	; 0x8c <ADC_initilization+0x20>
+}
+
+else if(number_bits==8){
+  86:	48 30       	cpi	r20, 0x08	; 8
+  88:	09 f4       	brne	.+2      	; 0x8c <ADC_initilization+0x20>
+	
+	set_bit(ADMUX_REG,5);
+  8a:	3d 9a       	sbi	0x07, 5	; 7
+} 
+
+	//pinsADC
+	if(pin == 0){
+  8c:	61 11       	cpse	r22, r1
+  8e:	06 c0       	rjmp	.+12     	; 0x9c <ADC_initilization+0x30>
+		
+		clc_bit(ADMUX_REG,0);
+  90:	38 98       	cbi	0x07, 0	; 7
+		clc_bit(ADMUX_REG,1);
+  92:	39 98       	cbi	0x07, 1	; 7
+		clc_bit(ADMUX_REG,2);
+  94:	3a 98       	cbi	0x07, 2	; 7
+		clc_bit(ADMUX_REG,3);
+  96:	3b 98       	cbi	0x07, 3	; 7
+		clc_bit(ADMUX_REG,4);
+  98:	3c 98       	cbi	0x07, 4	; 7
+  9a:	37 c0       	rjmp	.+110    	; 0x10a <ADC_initilization+0x9e>
+		
+	}
+	
+	else if(pin == 1){
+  9c:	61 30       	cpi	r22, 0x01	; 1
+  9e:	31 f4       	brne	.+12     	; 0xac <ADC_initilization+0x40>
+		
+		set_bit(ADMUX_REG,0);
+  a0:	38 9a       	sbi	0x07, 0	; 7
+		clc_bit(ADMUX_REG,1);
+  a2:	39 98       	cbi	0x07, 1	; 7
+		clc_bit(ADMUX_REG,2);
+  a4:	3a 98       	cbi	0x07, 2	; 7
+		clc_bit(ADMUX_REG,3);
+  a6:	3b 98       	cbi	0x07, 3	; 7
+		clc_bit(ADMUX_REG,4);
+  a8:	3c 98       	cbi	0x07, 4	; 7
+  aa:	2f c0       	rjmp	.+94     	; 0x10a <ADC_initilization+0x9e>
+		
+	}
+	
+	else if(pin == 2){
+  ac:	62 30       	cpi	r22, 0x02	; 2
+  ae:	31 f4       	brne	.+12     	; 0xbc <ADC_initilization+0x50>
+		
+		clc_bit(ADMUX_REG,0);
+  b0:	38 98       	cbi	0x07, 0	; 7
+		set_bit(ADMUX_REG,1);
+  b2:	39 9a       	sbi	0x07, 1	; 7
+		clc_bit(ADMUX_REG,2);
+  b4:	3a 98       	cbi	0x07, 2	; 7
+		clc_bit(ADMUX_REG,3);
+  b6:	3b 98       	cbi	0x07, 3	; 7
+		clc_bit(ADMUX_REG,4);
+  b8:	3c 98       	cbi	0x07, 4	; 7
+  ba:	27 c0       	rjmp	.+78     	; 0x10a <ADC_initilization+0x9e>
+		
+	}
+	
+	
+	else if(pin == 3){
+  bc:	63 30       	cpi	r22, 0x03	; 3
+  be:	31 f4       	brne	.+12     	; 0xcc <ADC_initilization+0x60>
+		
+		set_bit(ADMUX_REG,0);
+  c0:	38 9a       	sbi	0x07, 0	; 7
+		set_bit(ADMUX_REG,1);
+  c2:	39 9a       	sbi	0x07, 1	; 7
+		clc_bit(ADMUX_REG,2);
+  c4:	3a 98       	cbi	0x07, 2	; 7
+		clc_bit(ADMUX_REG,3);
+  c6:	3b 98       	cbi	0x07, 3	; 7
+		clc_bit(ADMUX_REG,4);
+  c8:	3c 98       	cbi	0x07, 4	; 7
+  ca:	1f c0       	rjmp	.+62     	; 0x10a <ADC_initilization+0x9e>
+		
+	}
+	
+	else if(pin == 4){
+  cc:	64 30       	cpi	r22, 0x04	; 4
+  ce:	31 f4       	brne	.+12     	; 0xdc <ADC_initilization+0x70>
+		
+		clc_bit(ADMUX_REG,0);
+  d0:	38 98       	cbi	0x07, 0	; 7
+		clc_bit(ADMUX_REG,1);
+  d2:	39 98       	cbi	0x07, 1	; 7
+		set_bit(ADMUX_REG,2);
+  d4:	3a 9a       	sbi	0x07, 2	; 7
+		clc_bit(ADMUX_REG,3);
+  d6:	3b 98       	cbi	0x07, 3	; 7
+		clc_bit(ADMUX_REG,4);
+  d8:	3c 98       	cbi	0x07, 4	; 7
+  da:	17 c0       	rjmp	.+46     	; 0x10a <ADC_initilization+0x9e>
+		
+	}
+	
+	else if(pin == 5){
+  dc:	65 30       	cpi	r22, 0x05	; 5
+  de:	31 f4       	brne	.+12     	; 0xec <ADC_initilization+0x80>
+		
+		set_bit(ADMUX_REG,0);
+  e0:	38 9a       	sbi	0x07, 0	; 7
+		clc_bit(ADMUX_REG,1);
+  e2:	39 98       	cbi	0x07, 1	; 7
+		set_bit(ADMUX_REG,2);
+  e4:	3a 9a       	sbi	0x07, 2	; 7
+		clc_bit(ADMUX_REG,3);
+  e6:	3b 98       	cbi	0x07, 3	; 7
+		clc_bit(ADMUX_REG,4);
+  e8:	3c 98       	cbi	0x07, 4	; 7
+  ea:	0f c0       	rjmp	.+30     	; 0x10a <ADC_initilization+0x9e>
+	}
+	
+	else if(pin == 6){
+  ec:	66 30       	cpi	r22, 0x06	; 6
+  ee:	31 f4       	brne	.+12     	; 0xfc <ADC_initilization+0x90>
+		
+		clc_bit(ADMUX_REG,0);
+  f0:	38 98       	cbi	0x07, 0	; 7
+		set_bit(ADMUX_REG,1);
+  f2:	39 9a       	sbi	0x07, 1	; 7
+		set_bit(ADMUX_REG,2);
+  f4:	3a 9a       	sbi	0x07, 2	; 7
+		clc_bit(ADMUX_REG,3);
+  f6:	3b 98       	cbi	0x07, 3	; 7
+		clc_bit(ADMUX_REG,4);
+  f8:	3c 98       	cbi	0x07, 4	; 7
+  fa:	07 c0       	rjmp	.+14     	; 0x10a <ADC_initilization+0x9e>
+		
+	}
+	
+	
+	else if(pin == 7){
+  fc:	67 30       	cpi	r22, 0x07	; 7
+  fe:	29 f4       	brne	.+10     	; 0x10a <ADC_initilization+0x9e>
+		
+		set_bit(ADMUX_REG,0);
+ 100:	38 9a       	sbi	0x07, 0	; 7
+		set_bit(ADMUX_REG,1);
+ 102:	39 9a       	sbi	0x07, 1	; 7
+		set_bit(ADMUX_REG,2);
+ 104:	3a 9a       	sbi	0x07, 2	; 7
+		clc_bit(ADMUX_REG,3);
+ 106:	3b 98       	cbi	0x07, 3	; 7
+		clc_bit(ADMUX_REG,4);
+ 108:	3c 98       	cbi	0x07, 4	; 7
+		
+	}
+	
+	//Enable
+	set_bit(ADCSRA_REG,7);
+ 10a:	37 9a       	sbi	0x06, 7	; 6
+	
+	//Prescaller
+	set_bit(ADCSRA_REG,0);
+ 10c:	30 9a       	sbi	0x06, 0	; 6
+	set_bit(ADCSRA_REG,1);
+ 10e:	31 9a       	sbi	0x06, 1	; 6
+	set_bit(ADCSRA_REG,2);
+ 110:	32 9a       	sbi	0x06, 2	; 6
+ 112:	08 95       	ret
+
+00000114 <ADC_getValue>:
+
+
+u16 ADC_getValue(u8 number_bits){
+	
+	//Startconversion
+	set_bit(ADCSRA_REG,6);
+ 114:	36 9a       	sbi	0x06, 6	; 6
+	
+	while( ( (ADCSRA_REG) & (1<<6) ) );
+ 116:	36 99       	sbic	0x06, 6	; 6
+ 118:	fe cf       	rjmp	.-4      	; 0x116 <ADC_getValue+0x2>
+	
+	if(number_bits==10){
+ 11a:	8a 30       	cpi	r24, 0x0A	; 10
+ 11c:	29 f4       	brne	.+10     	; 0x128 <ADC_getValue+0x14>
+		
+		return ( (ADCL_REG)|(ADCH_REG<<8) ) ;
+ 11e:	84 b1       	in	r24, 0x04	; 4
+ 120:	25 b1       	in	r18, 0x05	; 5
+ 122:	90 e0       	ldi	r25, 0x00	; 0
+ 124:	92 2b       	or	r25, r18
+ 126:	08 95       	ret
+		
+	}
+	
+	else if (number_bits==8){
+ 128:	88 30       	cpi	r24, 0x08	; 8
+ 12a:	19 f4       	brne	.+6      	; 0x132 <ADC_getValue+0x1e>
+		
+		return (ADCH_REG);
+ 12c:	85 b1       	in	r24, 0x05	; 5
+ 12e:	90 e0       	ldi	r25, 0x00	; 0
+ 130:	08 95       	ret
+	}
+	
+	return 0;
+ 132:	80 e0       	ldi	r24, 0x00	; 0
+ 134:	90 e0       	ldi	r25, 0x00	; 0
+	
+ 136:	08 95       	ret
+
+00000138 <pinModepin>:
+	
+	PORTD_REG |=(1<<pin);
+	
+	else if((port ==portD)&&(states==LOW))
+	
+	PORTD_REG &=~(1<<pin);
+ 138:	81 30       	cpi	r24, 0x01	; 1
+ 13a:	89 f5       	brne	.+98     	; 0x19e <pinModepin+0x66>
+ 13c:	41 11       	cpse	r20, r1
+ 13e:	0d c0       	rjmp	.+26     	; 0x15a <pinModepin+0x22>
+ 140:	9a b3       	in	r25, 0x1a	; 26
+ 142:	21 e0       	ldi	r18, 0x01	; 1
+ 144:	30 e0       	ldi	r19, 0x00	; 0
+ 146:	06 2e       	mov	r0, r22
+ 148:	02 c0       	rjmp	.+4      	; 0x14e <pinModepin+0x16>
+ 14a:	22 0f       	add	r18, r18
+ 14c:	33 1f       	adc	r19, r19
+ 14e:	0a 94       	dec	r0
+ 150:	e2 f7       	brpl	.-8      	; 0x14a <pinModepin+0x12>
+ 152:	20 95       	com	r18
+ 154:	29 23       	and	r18, r25
+ 156:	2a bb       	out	0x1a, r18	; 26
+ 158:	81 c0       	rjmp	.+258    	; 0x25c <pinModepin+0x124>
+ 15a:	41 30       	cpi	r20, 0x01	; 1
+ 15c:	61 f4       	brne	.+24     	; 0x176 <pinModepin+0x3e>
+ 15e:	9a b3       	in	r25, 0x1a	; 26
+ 160:	21 e0       	ldi	r18, 0x01	; 1
+ 162:	30 e0       	ldi	r19, 0x00	; 0
+ 164:	06 2e       	mov	r0, r22
+ 166:	02 c0       	rjmp	.+4      	; 0x16c <pinModepin+0x34>
+ 168:	22 0f       	add	r18, r18
+ 16a:	33 1f       	adc	r19, r19
+ 16c:	0a 94       	dec	r0
+ 16e:	e2 f7       	brpl	.-8      	; 0x168 <pinModepin+0x30>
+ 170:	29 2b       	or	r18, r25
+ 172:	2a bb       	out	0x1a, r18	; 26
+ 174:	73 c0       	rjmp	.+230    	; 0x25c <pinModepin+0x124>
+ 176:	42 30       	cpi	r20, 0x02	; 2
+ 178:	09 f0       	breq	.+2      	; 0x17c <pinModepin+0x44>
+ 17a:	70 c0       	rjmp	.+224    	; 0x25c <pinModepin+0x124>
+ 17c:	9a b3       	in	r25, 0x1a	; 26
+ 17e:	21 e0       	ldi	r18, 0x01	; 1
+ 180:	30 e0       	ldi	r19, 0x00	; 0
+ 182:	06 2e       	mov	r0, r22
+ 184:	02 c0       	rjmp	.+4      	; 0x18a <pinModepin+0x52>
+ 186:	22 0f       	add	r18, r18
+ 188:	33 1f       	adc	r19, r19
+ 18a:	0a 94       	dec	r0
+ 18c:	e2 f7       	brpl	.-8      	; 0x186 <pinModepin+0x4e>
+ 18e:	32 2f       	mov	r19, r18
+ 190:	30 95       	com	r19
+ 192:	93 23       	and	r25, r19
+ 194:	9a bb       	out	0x1a, r25	; 26
+ 196:	9b b3       	in	r25, 0x1b	; 27
+ 198:	29 2b       	or	r18, r25
+ 19a:	2b bb       	out	0x1b, r18	; 27
+ 19c:	5f c0       	rjmp	.+190    	; 0x25c <pinModepin+0x124>
+ 19e:	82 30       	cpi	r24, 0x02	; 2
+ 1a0:	71 f5       	brne	.+92     	; 0x1fe <pinModepin+0xc6>
+ 1a2:	41 11       	cpse	r20, r1
+ 1a4:	0c c0       	rjmp	.+24     	; 0x1be <pinModepin+0x86>
+ 1a6:	27 b3       	in	r18, 0x17	; 23
+ 1a8:	81 e0       	ldi	r24, 0x01	; 1
+ 1aa:	90 e0       	ldi	r25, 0x00	; 0
+ 1ac:	02 c0       	rjmp	.+4      	; 0x1b2 <pinModepin+0x7a>
+ 1ae:	88 0f       	add	r24, r24
+ 1b0:	99 1f       	adc	r25, r25
+ 1b2:	6a 95       	dec	r22
+ 1b4:	e2 f7       	brpl	.-8      	; 0x1ae <pinModepin+0x76>
+ 1b6:	80 95       	com	r24
+ 1b8:	82 23       	and	r24, r18
+ 1ba:	87 bb       	out	0x17, r24	; 23
+ 1bc:	08 95       	ret
+ 1be:	41 30       	cpi	r20, 0x01	; 1
+ 1c0:	59 f4       	brne	.+22     	; 0x1d8 <pinModepin+0xa0>
+ 1c2:	27 b3       	in	r18, 0x17	; 23
+ 1c4:	81 e0       	ldi	r24, 0x01	; 1
+ 1c6:	90 e0       	ldi	r25, 0x00	; 0
+ 1c8:	02 c0       	rjmp	.+4      	; 0x1ce <pinModepin+0x96>
+ 1ca:	88 0f       	add	r24, r24
+ 1cc:	99 1f       	adc	r25, r25
+ 1ce:	6a 95       	dec	r22
+ 1d0:	e2 f7       	brpl	.-8      	; 0x1ca <pinModepin+0x92>
+ 1d2:	82 2b       	or	r24, r18
+ 1d4:	87 bb       	out	0x17, r24	; 23
+ 1d6:	08 95       	ret
+ 1d8:	42 30       	cpi	r20, 0x02	; 2
+ 1da:	09 f0       	breq	.+2      	; 0x1de <pinModepin+0xa6>
+ 1dc:	6d c0       	rjmp	.+218    	; 0x2b8 <pinModepin+0x180>
+ 1de:	27 b3       	in	r18, 0x17	; 23
+ 1e0:	81 e0       	ldi	r24, 0x01	; 1
+ 1e2:	90 e0       	ldi	r25, 0x00	; 0
+ 1e4:	02 c0       	rjmp	.+4      	; 0x1ea <pinModepin+0xb2>
+ 1e6:	88 0f       	add	r24, r24
+ 1e8:	99 1f       	adc	r25, r25
+ 1ea:	6a 95       	dec	r22
+ 1ec:	e2 f7       	brpl	.-8      	; 0x1e6 <pinModepin+0xae>
+ 1ee:	98 2f       	mov	r25, r24
+ 1f0:	90 95       	com	r25
+ 1f2:	92 23       	and	r25, r18
+ 1f4:	97 bb       	out	0x17, r25	; 23
+ 1f6:	98 b3       	in	r25, 0x18	; 24
+ 1f8:	89 2b       	or	r24, r25
+ 1fa:	88 bb       	out	0x18, r24	; 24
+ 1fc:	08 95       	ret
+ 1fe:	83 30       	cpi	r24, 0x03	; 3
+ 200:	69 f5       	brne	.+90     	; 0x25c <pinModepin+0x124>
+ 202:	41 11       	cpse	r20, r1
+ 204:	0c c0       	rjmp	.+24     	; 0x21e <pinModepin+0xe6>
+ 206:	24 b3       	in	r18, 0x14	; 20
+ 208:	81 e0       	ldi	r24, 0x01	; 1
+ 20a:	90 e0       	ldi	r25, 0x00	; 0
+ 20c:	02 c0       	rjmp	.+4      	; 0x212 <pinModepin+0xda>
+ 20e:	88 0f       	add	r24, r24
+ 210:	99 1f       	adc	r25, r25
+ 212:	6a 95       	dec	r22
+ 214:	e2 f7       	brpl	.-8      	; 0x20e <pinModepin+0xd6>
+ 216:	80 95       	com	r24
+ 218:	82 23       	and	r24, r18
+ 21a:	84 bb       	out	0x14, r24	; 20
+ 21c:	08 95       	ret
+ 21e:	41 30       	cpi	r20, 0x01	; 1
+ 220:	59 f4       	brne	.+22     	; 0x238 <pinModepin+0x100>
+ 222:	24 b3       	in	r18, 0x14	; 20
+ 224:	81 e0       	ldi	r24, 0x01	; 1
+ 226:	90 e0       	ldi	r25, 0x00	; 0
+ 228:	02 c0       	rjmp	.+4      	; 0x22e <pinModepin+0xf6>
+ 22a:	88 0f       	add	r24, r24
+ 22c:	99 1f       	adc	r25, r25
+ 22e:	6a 95       	dec	r22
+ 230:	e2 f7       	brpl	.-8      	; 0x22a <pinModepin+0xf2>
+ 232:	82 2b       	or	r24, r18
+ 234:	84 bb       	out	0x14, r24	; 20
+ 236:	08 95       	ret
+ 238:	42 30       	cpi	r20, 0x02	; 2
+ 23a:	f1 f5       	brne	.+124    	; 0x2b8 <pinModepin+0x180>
+ 23c:	24 b3       	in	r18, 0x14	; 20
+ 23e:	81 e0       	ldi	r24, 0x01	; 1
+ 240:	90 e0       	ldi	r25, 0x00	; 0
+ 242:	02 c0       	rjmp	.+4      	; 0x248 <pinModepin+0x110>
+ 244:	88 0f       	add	r24, r24
+ 246:	99 1f       	adc	r25, r25
+ 248:	6a 95       	dec	r22
+ 24a:	e2 f7       	brpl	.-8      	; 0x244 <pinModepin+0x10c>
+ 24c:	98 2f       	mov	r25, r24
+ 24e:	90 95       	com	r25
+ 250:	92 23       	and	r25, r18
+ 252:	94 bb       	out	0x14, r25	; 20
+ 254:	95 b3       	in	r25, 0x15	; 21
+ 256:	89 2b       	or	r24, r25
+ 258:	85 bb       	out	0x15, r24	; 21
+ 25a:	08 95       	ret
+ 25c:	84 30       	cpi	r24, 0x04	; 4
+ 25e:	61 f5       	brne	.+88     	; 0x2b8 <pinModepin+0x180>
+ 260:	41 11       	cpse	r20, r1
+ 262:	0c c0       	rjmp	.+24     	; 0x27c <pinModepin+0x144>
+ 264:	21 b3       	in	r18, 0x11	; 17
+ 266:	81 e0       	ldi	r24, 0x01	; 1
+ 268:	90 e0       	ldi	r25, 0x00	; 0
+ 26a:	02 c0       	rjmp	.+4      	; 0x270 <pinModepin+0x138>
+ 26c:	88 0f       	add	r24, r24
+ 26e:	99 1f       	adc	r25, r25
+ 270:	6a 95       	dec	r22
+ 272:	e2 f7       	brpl	.-8      	; 0x26c <pinModepin+0x134>
+ 274:	80 95       	com	r24
+ 276:	82 23       	and	r24, r18
+ 278:	81 bb       	out	0x11, r24	; 17
+ 27a:	08 95       	ret
+ 27c:	41 30       	cpi	r20, 0x01	; 1
+ 27e:	59 f4       	brne	.+22     	; 0x296 <pinModepin+0x15e>
+ 280:	21 b3       	in	r18, 0x11	; 17
+ 282:	81 e0       	ldi	r24, 0x01	; 1
+ 284:	90 e0       	ldi	r25, 0x00	; 0
+ 286:	02 c0       	rjmp	.+4      	; 0x28c <pinModepin+0x154>
+ 288:	88 0f       	add	r24, r24
+ 28a:	99 1f       	adc	r25, r25
+ 28c:	6a 95       	dec	r22
+ 28e:	e2 f7       	brpl	.-8      	; 0x288 <pinModepin+0x150>
+ 290:	82 2b       	or	r24, r18
+ 292:	81 bb       	out	0x11, r24	; 17
+ 294:	08 95       	ret
+ 296:	42 30       	cpi	r20, 0x02	; 2
+ 298:	79 f4       	brne	.+30     	; 0x2b8 <pinModepin+0x180>
+ 29a:	21 b3       	in	r18, 0x11	; 17
+ 29c:	81 e0       	ldi	r24, 0x01	; 1
+ 29e:	90 e0       	ldi	r25, 0x00	; 0
+ 2a0:	02 c0       	rjmp	.+4      	; 0x2a6 <pinModepin+0x16e>
+ 2a2:	88 0f       	add	r24, r24
+ 2a4:	99 1f       	adc	r25, r25
+ 2a6:	6a 95       	dec	r22
+ 2a8:	e2 f7       	brpl	.-8      	; 0x2a2 <pinModepin+0x16a>
+ 2aa:	98 2f       	mov	r25, r24
+ 2ac:	90 95       	com	r25
+ 2ae:	92 23       	and	r25, r18
+ 2b0:	91 bb       	out	0x11, r25	; 17
+ 2b2:	92 b3       	in	r25, 0x12	; 18
+ 2b4:	89 2b       	or	r24, r25
+ 2b6:	82 bb       	out	0x12, r24	; 18
+ 2b8:	08 95       	ret
+
+000002ba <pinModeport>:
+ 2ba:	81 30       	cpi	r24, 0x01	; 1
+ 2bc:	79 f4       	brne	.+30     	; 0x2dc <pinModeport+0x22>
+ 2be:	61 11       	cpse	r22, r1
+ 2c0:	02 c0       	rjmp	.+4      	; 0x2c6 <pinModeport+0xc>
+ 2c2:	1a ba       	out	0x1a, r1	; 26
+ 2c4:	2d c0       	rjmp	.+90     	; 0x320 <pinModeport+0x66>
+ 2c6:	61 30       	cpi	r22, 0x01	; 1
+ 2c8:	19 f4       	brne	.+6      	; 0x2d0 <pinModeport+0x16>
+ 2ca:	9f ef       	ldi	r25, 0xFF	; 255
+ 2cc:	9a bb       	out	0x1a, r25	; 26
+ 2ce:	28 c0       	rjmp	.+80     	; 0x320 <pinModeport+0x66>
+ 2d0:	62 30       	cpi	r22, 0x02	; 2
+ 2d2:	31 f5       	brne	.+76     	; 0x320 <pinModeport+0x66>
+ 2d4:	1a ba       	out	0x1a, r1	; 26
+ 2d6:	9f ef       	ldi	r25, 0xFF	; 255
+ 2d8:	9b bb       	out	0x1b, r25	; 27
+ 2da:	22 c0       	rjmp	.+68     	; 0x320 <pinModeport+0x66>
+ 2dc:	82 30       	cpi	r24, 0x02	; 2
+ 2de:	79 f4       	brne	.+30     	; 0x2fe <pinModeport+0x44>
+ 2e0:	61 11       	cpse	r22, r1
+ 2e2:	02 c0       	rjmp	.+4      	; 0x2e8 <pinModeport+0x2e>
+ 2e4:	17 ba       	out	0x17, r1	; 23
+ 2e6:	08 95       	ret
+ 2e8:	61 30       	cpi	r22, 0x01	; 1
+ 2ea:	19 f4       	brne	.+6      	; 0x2f2 <pinModeport+0x38>
+ 2ec:	8f ef       	ldi	r24, 0xFF	; 255
+ 2ee:	87 bb       	out	0x17, r24	; 23
+ 2f0:	08 95       	ret
+ 2f2:	62 30       	cpi	r22, 0x02	; 2
+ 2f4:	29 f5       	brne	.+74     	; 0x340 <pinModeport+0x86>
+ 2f6:	17 ba       	out	0x17, r1	; 23
+ 2f8:	8f ef       	ldi	r24, 0xFF	; 255
+ 2fa:	88 bb       	out	0x18, r24	; 24
+ 2fc:	08 95       	ret
+ 2fe:	83 30       	cpi	r24, 0x03	; 3
+ 300:	79 f4       	brne	.+30     	; 0x320 <pinModeport+0x66>
+ 302:	61 11       	cpse	r22, r1
+ 304:	02 c0       	rjmp	.+4      	; 0x30a <pinModeport+0x50>
+ 306:	14 ba       	out	0x14, r1	; 20
+ 308:	08 95       	ret
+ 30a:	61 30       	cpi	r22, 0x01	; 1
+ 30c:	19 f4       	brne	.+6      	; 0x314 <pinModeport+0x5a>
+ 30e:	8f ef       	ldi	r24, 0xFF	; 255
+ 310:	84 bb       	out	0x14, r24	; 20
+ 312:	08 95       	ret
+ 314:	62 30       	cpi	r22, 0x02	; 2
+ 316:	a1 f4       	brne	.+40     	; 0x340 <pinModeport+0x86>
+ 318:	14 ba       	out	0x14, r1	; 20
+ 31a:	8f ef       	ldi	r24, 0xFF	; 255
+ 31c:	85 bb       	out	0x15, r24	; 21
+ 31e:	08 95       	ret
+ 320:	84 30       	cpi	r24, 0x04	; 4
+ 322:	71 f4       	brne	.+28     	; 0x340 <pinModeport+0x86>
+ 324:	61 11       	cpse	r22, r1
+ 326:	02 c0       	rjmp	.+4      	; 0x32c <pinModeport+0x72>
+ 328:	11 ba       	out	0x11, r1	; 17
+ 32a:	08 95       	ret
+ 32c:	61 30       	cpi	r22, 0x01	; 1
+ 32e:	19 f4       	brne	.+6      	; 0x336 <pinModeport+0x7c>
+ 330:	8f ef       	ldi	r24, 0xFF	; 255
+ 332:	81 bb       	out	0x11, r24	; 17
+ 334:	08 95       	ret
+ 336:	62 30       	cpi	r22, 0x02	; 2
+ 338:	19 f4       	brne	.+6      	; 0x340 <pinModeport+0x86>
+ 33a:	11 ba       	out	0x11, r1	; 17
+ 33c:	8f ef       	ldi	r24, 0xFF	; 255
+ 33e:	82 bb       	out	0x12, r24	; 18
+ 340:	08 95       	ret
+
+00000342 <digitalWrightport>:
+}
+
+void digitalWrightport(u8 port,u8 states){
+	
+	//	PORTA
+	if((port ==portA ) && (states==HIGH))
+ 342:	81 30       	cpi	r24, 0x01	; 1
+ 344:	69 f4       	brne	.+26     	; 0x360 <digitalWrightport+0x1e>
+ 346:	61 30       	cpi	r22, 0x01	; 1
+ 348:	19 f4       	brne	.+6      	; 0x350 <digitalWrightport+0xe>
+		PORTA_REG =0xff;
+ 34a:	9f ef       	ldi	r25, 0xFF	; 255
+ 34c:	9b bb       	out	0x1b, r25	; 27
+ 34e:	26 c0       	rjmp	.+76     	; 0x39c <digitalWrightport+0x5a>
+		
+		else if((port ==portA ) &&(states==LOW)) 
+ 350:	61 11       	cpse	r22, r1
+ 352:	02 c0       	rjmp	.+4      	; 0x358 <digitalWrightport+0x16>
+		PORTA_REG =0x00;
+ 354:	1b ba       	out	0x1b, r1	; 27
+ 356:	22 c0       	rjmp	.+68     	; 0x39c <digitalWrightport+0x5a>
+		
+		else if	((port ==portA ) && ( (states!=LOW)&&(states!=HIGH) )  )
+ 358:	62 30       	cpi	r22, 0x02	; 2
+ 35a:	00 f1       	brcs	.+64     	; 0x39c <digitalWrightport+0x5a>
+		PORTA_REG=states;
+ 35c:	6b bb       	out	0x1b, r22	; 27
+ 35e:	1e c0       	rjmp	.+60     	; 0x39c <digitalWrightport+0x5a>
+		
+//PORTB
+     if((port ==portB ) && (states==HIGH))
+ 360:	82 30       	cpi	r24, 0x02	; 2
+ 362:	69 f4       	brne	.+26     	; 0x37e <digitalWrightport+0x3c>
+ 364:	61 30       	cpi	r22, 0x01	; 1
+ 366:	19 f4       	brne	.+6      	; 0x36e <digitalWrightport+0x2c>
+	PORTB_REG =0xff;
+ 368:	8f ef       	ldi	r24, 0xFF	; 255
+ 36a:	88 bb       	out	0x18, r24	; 24
+ 36c:	08 95       	ret
+
+	else if((port ==portB ) &&(states==LOW))
+ 36e:	61 11       	cpse	r22, r1
+ 370:	02 c0       	rjmp	.+4      	; 0x376 <digitalWrightport+0x34>
+	PORTB_REG =0x00;
+ 372:	18 ba       	out	0x18, r1	; 24
+ 374:	08 95       	ret
+	
+	else if	((port ==portB ) && ( (states!=LOW)&&(states!=HIGH) )  )
+ 376:	62 30       	cpi	r22, 0x02	; 2
+ 378:	f8 f0       	brcs	.+62     	; 0x3b8 <digitalWrightport+0x76>
+	PORTB_REG=states;
+ 37a:	68 bb       	out	0x18, r22	; 24
+ 37c:	08 95       	ret
+
+//PORTC
+if((port ==portC ) && (states==HIGH))
+ 37e:	83 30       	cpi	r24, 0x03	; 3
+ 380:	69 f4       	brne	.+26     	; 0x39c <digitalWrightport+0x5a>
+ 382:	61 30       	cpi	r22, 0x01	; 1
+ 384:	19 f4       	brne	.+6      	; 0x38c <digitalWrightport+0x4a>
+PORTC_REG =0xff;
+ 386:	8f ef       	ldi	r24, 0xFF	; 255
+ 388:	85 bb       	out	0x15, r24	; 21
+ 38a:	08 95       	ret
+
+else if((port ==portC ) &&(states==LOW))
+ 38c:	61 11       	cpse	r22, r1
+ 38e:	02 c0       	rjmp	.+4      	; 0x394 <digitalWrightport+0x52>
+PORTC_REG =0x00;
+ 390:	15 ba       	out	0x15, r1	; 21
+ 392:	08 95       	ret
+
+else if	((port ==portC ) && ( (states!=LOW)&&(states!=HIGH) )  )
+ 394:	62 30       	cpi	r22, 0x02	; 2
+ 396:	80 f0       	brcs	.+32     	; 0x3b8 <digitalWrightport+0x76>
+PORTC_REG=states;
+ 398:	65 bb       	out	0x15, r22	; 21
+ 39a:	08 95       	ret
+
+//PORTD
+
+if((port ==portD ) && (states==HIGH))
+ 39c:	84 30       	cpi	r24, 0x04	; 4
+ 39e:	61 f4       	brne	.+24     	; 0x3b8 <digitalWrightport+0x76>
+ 3a0:	61 30       	cpi	r22, 0x01	; 1
+ 3a2:	19 f4       	brne	.+6      	; 0x3aa <digitalWrightport+0x68>
+PORTD_REG =0xff;
+ 3a4:	8f ef       	ldi	r24, 0xFF	; 255
+ 3a6:	82 bb       	out	0x12, r24	; 18
+ 3a8:	08 95       	ret
+
+else if((port ==portD ) &&(states==LOW))
+ 3aa:	61 11       	cpse	r22, r1
+ 3ac:	02 c0       	rjmp	.+4      	; 0x3b2 <digitalWrightport+0x70>
+PORTD_REG =0x00;
+ 3ae:	12 ba       	out	0x12, r1	; 18
+ 3b0:	08 95       	ret
+
+else if	((port ==portD ) && ( (states!=LOW)&&(states!=HIGH) )  )
+ 3b2:	62 30       	cpi	r22, 0x02	; 2
+ 3b4:	08 f0       	brcs	.+2      	; 0x3b8 <digitalWrightport+0x76>
+PORTD_REG=states;
+ 3b6:	62 bb       	out	0x12, r22	; 18
+ 3b8:	08 95       	ret
+
+000003ba <main>:
+#include "DIO.h"
+
+int main(void)
+{
+	u16 x=0;
+   pinModepin(portA,1,INPUT);
+ 3ba:	40 e0       	ldi	r20, 0x00	; 0
+ 3bc:	61 e0       	ldi	r22, 0x01	; 1
+ 3be:	81 e0       	ldi	r24, 0x01	; 1
+ 3c0:	0e 94 9c 00 	call	0x138	; 0x138 <pinModepin>
+   pinModeport(portC,OUTPUT);
+ 3c4:	61 e0       	ldi	r22, 0x01	; 1
+ 3c6:	83 e0       	ldi	r24, 0x03	; 3
+ 3c8:	0e 94 5d 01 	call	0x2ba	; 0x2ba <pinModeport>
+   ADC_initilization(AREF,1,10);
+ 3cc:	4a e0       	ldi	r20, 0x0A	; 10
+ 3ce:	61 e0       	ldi	r22, 0x01	; 1
+ 3d0:	81 e0       	ldi	r24, 0x01	; 1
+ 3d2:	0e 94 36 00 	call	0x6c	; 0x6c <ADC_initilization>
+   
+   
+    while (1) 
+    {
+		x=ADC_getValue(10);
+ 3d6:	8a e0       	ldi	r24, 0x0A	; 10
+ 3d8:	0e 94 8a 00 	call	0x114	; 0x114 <ADC_getValue>
+		digitalWrightport(portC,x);
+ 3dc:	68 2f       	mov	r22, r24
+ 3de:	83 e0       	ldi	r24, 0x03	; 3
+ 3e0:	0e 94 a1 01 	call	0x342	; 0x342 <digitalWrightport>
+ 3e4:	f8 cf       	rjmp	.-16     	; 0x3d6 <main+0x1c>
+
+000003e6 <_exit>:
+ 3e6:	f8 94       	cli
+
+000003e8 <__stop_program>:
+ 3e8:	ff cf       	rjmp	.-2      	; 0x3e8 <__stop_program>

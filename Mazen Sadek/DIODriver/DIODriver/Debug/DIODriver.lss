@@ -1,0 +1,238 @@
+
+DIODriver.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000142  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000196  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000196  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001c8  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000060  00000000  00000000  00000204  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000006ec  00000000  00000000  00000264  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000005b3  00000000  00000000  00000950  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000004c4  00000000  00000000  00000f03  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000088  00000000  00000000  000013c8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000002ed  00000000  00000000  00001450  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000272  00000000  00000000  0000173d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000040  00000000  00000000  000019af  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 96 00 	call	0x12c	; 0x12c <main>
+  64:	0c 94 9f 00 	jmp	0x13e	; 0x13e <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <pinModeport>:
+	
+	PORTD_REG |=(1<<pin);
+	
+	else if((port ==portD)&&(states==LOW))
+	
+	PORTD_REG &=~(1<<pin);
+  6c:	81 30       	cpi	r24, 0x01	; 1
+  6e:	49 f4       	brne	.+18     	; 0x82 <pinModeport+0x16>
+  70:	61 11       	cpse	r22, r1
+  72:	02 c0       	rjmp	.+4      	; 0x78 <pinModeport+0xc>
+  74:	1a ba       	out	0x1a, r1	; 26
+  76:	1b c0       	rjmp	.+54     	; 0xae <pinModeport+0x42>
+  78:	61 30       	cpi	r22, 0x01	; 1
+  7a:	c9 f4       	brne	.+50     	; 0xae <pinModeport+0x42>
+  7c:	9f ef       	ldi	r25, 0xFF	; 255
+  7e:	9a bb       	out	0x1a, r25	; 26
+  80:	16 c0       	rjmp	.+44     	; 0xae <pinModeport+0x42>
+  82:	82 30       	cpi	r24, 0x02	; 2
+  84:	49 f4       	brne	.+18     	; 0x98 <pinModeport+0x2c>
+  86:	61 11       	cpse	r22, r1
+  88:	02 c0       	rjmp	.+4      	; 0x8e <pinModeport+0x22>
+  8a:	17 ba       	out	0x17, r1	; 23
+  8c:	08 95       	ret
+  8e:	61 30       	cpi	r22, 0x01	; 1
+  90:	c1 f4       	brne	.+48     	; 0xc2 <pinModeport+0x56>
+  92:	8f ef       	ldi	r24, 0xFF	; 255
+  94:	87 bb       	out	0x17, r24	; 23
+  96:	08 95       	ret
+  98:	83 30       	cpi	r24, 0x03	; 3
+  9a:	49 f4       	brne	.+18     	; 0xae <pinModeport+0x42>
+  9c:	61 11       	cpse	r22, r1
+  9e:	02 c0       	rjmp	.+4      	; 0xa4 <pinModeport+0x38>
+  a0:	14 ba       	out	0x14, r1	; 20
+  a2:	08 95       	ret
+  a4:	61 30       	cpi	r22, 0x01	; 1
+  a6:	69 f4       	brne	.+26     	; 0xc2 <pinModeport+0x56>
+  a8:	8f ef       	ldi	r24, 0xFF	; 255
+  aa:	84 bb       	out	0x14, r24	; 20
+  ac:	08 95       	ret
+  ae:	84 30       	cpi	r24, 0x04	; 4
+  b0:	41 f4       	brne	.+16     	; 0xc2 <pinModeport+0x56>
+  b2:	61 11       	cpse	r22, r1
+  b4:	02 c0       	rjmp	.+4      	; 0xba <pinModeport+0x4e>
+  b6:	11 ba       	out	0x11, r1	; 17
+  b8:	08 95       	ret
+  ba:	61 30       	cpi	r22, 0x01	; 1
+  bc:	11 f4       	brne	.+4      	; 0xc2 <pinModeport+0x56>
+  be:	8f ef       	ldi	r24, 0xFF	; 255
+  c0:	81 bb       	out	0x11, r24	; 17
+  c2:	08 95       	ret
+
+000000c4 <digitalWrightport>:
+}
+
+void digitalWrightport(u8 port,u8 states){
+	
+	//	PORTA
+	if((port ==portA ) && (states==HIGH))
+  c4:	81 30       	cpi	r24, 0x01	; 1
+  c6:	69 f4       	brne	.+26     	; 0xe2 <digitalWrightport+0x1e>
+  c8:	61 30       	cpi	r22, 0x01	; 1
+  ca:	19 f4       	brne	.+6      	; 0xd2 <digitalWrightport+0xe>
+		PORTA_REG =0xff;
+  cc:	9f ef       	ldi	r25, 0xFF	; 255
+  ce:	9b bb       	out	0x1b, r25	; 27
+  d0:	22 c0       	rjmp	.+68     	; 0x116 <digitalWrightport+0x52>
+		
+		else if((port ==portA ) &&(states==LOW)) 
+  d2:	61 11       	cpse	r22, r1
+  d4:	02 c0       	rjmp	.+4      	; 0xda <digitalWrightport+0x16>
+		PORTA_REG =0x00;
+  d6:	1b ba       	out	0x1b, r1	; 27
+  d8:	1e c0       	rjmp	.+60     	; 0x116 <digitalWrightport+0x52>
+		
+		else if	((port ==portA ) && ( (states!=LOW)&&(states!=HIGH) )  )
+  da:	62 30       	cpi	r22, 0x02	; 2
+  dc:	e0 f0       	brcs	.+56     	; 0x116 <digitalWrightport+0x52>
+		PORTA_REG=states;
+  de:	6b bb       	out	0x1b, r22	; 27
+  e0:	1a c0       	rjmp	.+52     	; 0x116 <digitalWrightport+0x52>
+		
+//PORTB
+     if((port ==portB ) && (states==HIGH))
+  e2:	82 30       	cpi	r24, 0x02	; 2
+  e4:	49 f4       	brne	.+18     	; 0xf8 <digitalWrightport+0x34>
+  e6:	61 30       	cpi	r22, 0x01	; 1
+  e8:	19 f4       	brne	.+6      	; 0xf0 <digitalWrightport+0x2c>
+	PORTB_REG =0xff;
+  ea:	8f ef       	ldi	r24, 0xFF	; 255
+  ec:	88 bb       	out	0x18, r24	; 24
+  ee:	08 95       	ret
+
+	else if((port ==portB ) &&(states==LOW))
+  f0:	61 11       	cpse	r22, r1
+  f2:	1b c0       	rjmp	.+54     	; 0x12a <digitalWrightport+0x66>
+	PORTB_REG =0x00;
+  f4:	18 ba       	out	0x18, r1	; 24
+  f6:	08 95       	ret
+
+//PORTC
+if((port ==portC ) && (states==HIGH))
+  f8:	83 30       	cpi	r24, 0x03	; 3
+  fa:	69 f4       	brne	.+26     	; 0x116 <digitalWrightport+0x52>
+  fc:	61 30       	cpi	r22, 0x01	; 1
+  fe:	19 f4       	brne	.+6      	; 0x106 <digitalWrightport+0x42>
+PORTC_REG =0xff;
+ 100:	8f ef       	ldi	r24, 0xFF	; 255
+ 102:	85 bb       	out	0x15, r24	; 21
+ 104:	08 95       	ret
+
+else if((port ==portC ) &&(states==LOW))
+ 106:	61 11       	cpse	r22, r1
+ 108:	02 c0       	rjmp	.+4      	; 0x10e <digitalWrightport+0x4a>
+PORTC_REG =0x00;
+ 10a:	15 ba       	out	0x15, r1	; 21
+ 10c:	08 95       	ret
+
+else if	((port ==portC ) && ( (states!=LOW)&&(states!=HIGH) )  )
+ 10e:	62 30       	cpi	r22, 0x02	; 2
+ 110:	60 f0       	brcs	.+24     	; 0x12a <digitalWrightport+0x66>
+PORTC_REG=states;
+ 112:	65 bb       	out	0x15, r22	; 21
+ 114:	08 95       	ret
+
+//PORTD
+
+if((port ==portD ) && (states==HIGH))
+ 116:	84 30       	cpi	r24, 0x04	; 4
+ 118:	41 f4       	brne	.+16     	; 0x12a <digitalWrightport+0x66>
+ 11a:	61 30       	cpi	r22, 0x01	; 1
+ 11c:	19 f4       	brne	.+6      	; 0x124 <digitalWrightport+0x60>
+PORTD_REG =0xff;
+ 11e:	8f ef       	ldi	r24, 0xFF	; 255
+ 120:	82 bb       	out	0x12, r24	; 18
+ 122:	08 95       	ret
+
+else if((port ==portD ) &&(states==LOW))
+ 124:	61 11       	cpse	r22, r1
+ 126:	01 c0       	rjmp	.+2      	; 0x12a <digitalWrightport+0x66>
+PORTD_REG =0x00;
+ 128:	12 ba       	out	0x12, r1	; 18
+ 12a:	08 95       	ret
+
+0000012c <main>:
+    /* Replace with your application code */
+	/*pinModepin(portA,1,INPUT);
+	pinModepin(portA,2,OUTPUT);
+	pinModeport(portB,OUTPUT);*/
+	
+	pinModeport(portC,OUTPUT);
+ 12c:	61 e0       	ldi	r22, 0x01	; 1
+ 12e:	83 e0       	ldi	r24, 0x03	; 3
+ 130:	0e 94 36 00 	call	0x6c	; 0x6c <pinModeport>
+		else if(digitalRead(portA,1)==LOW)
+		digitalWrightpin(portA,2,LOW);
+		
+		digitalWrightport(portB,HIGH);*/
+		
+		digitalWrightport(portC,cmd);
+ 134:	61 e0       	ldi	r22, 0x01	; 1
+ 136:	83 e0       	ldi	r24, 0x03	; 3
+ 138:	0e 94 62 00 	call	0xc4	; 0xc4 <digitalWrightport>
+ 13c:	fb cf       	rjmp	.-10     	; 0x134 <main+0x8>
+
+0000013e <_exit>:
+ 13e:	f8 94       	cli
+
+00000140 <__stop_program>:
+ 140:	ff cf       	rjmp	.-2      	; 0x140 <__stop_program>
