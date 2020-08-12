@@ -12,6 +12,7 @@
 #include <avr/interrupt.h>
 
 
+/*** EXTERNAL INTERRUPT ***/
 
 int main(void)
 {
@@ -55,4 +56,7 @@ PORTB ^= (1 << PB1);
 }
 
 
-
+/*** INTERNAL INTERRUPT ***/
+// ADC
+// TIMER
+// SPI
