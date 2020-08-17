@@ -10,6 +10,9 @@
 #include "SPI.h"
 #include <avr/io.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
+
+void (*ISR_spi)(void) = '\0';
 
 void SPI_MasterInit()								/* SPI Initialize function */
 {
@@ -41,3 +44,25 @@ unsigned char SPI_Read()								/* SPI read data function */
 	while(!(SPSR & (1<<SPIF)));				/* Wait till reception complete */
 	return(SPDR);							/* return received data */
 }
+
+void SPI_loadData(unsigned char data)
+{
+	SPDR=data;
+}
+unsigned char SPI_returnData()
+{
+	return(SPDR);
+}
+
+void SPI_attachInterrupt(void (*Local_ISR)(void)){
+
+SPCR |= (1<<SPIE);					/* Enable Interrupt in SPI  */
+ISR_spi = Local_ISR;
+sei();
+
+}
+
+ISR (SPI_STC_vect) // SPI interrupt routine
+ { 
+ 	ISR_spi();
+ }

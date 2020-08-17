@@ -18,6 +18,7 @@ void SPI_SlaveInit();							/* SPI initialize function */
 void SPI_Write(unsigned char);						/* SPI write data function */
 unsigned char SPI_Read();							/* SPI read data function */
 void SPI_MasterInit();							/* SPI initialize function */
-
-
+unsigned char SPI_returndata();
+void SPI_attachInterrupt(void (*Local_ISR)(void));
+void SPI_loadData(unsigned char data);
 #endif /* INCFILE1_H_ */

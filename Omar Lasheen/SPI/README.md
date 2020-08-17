@@ -161,6 +161,119 @@ int main(void)
 ```
 
 
+### Slave transmitter master receiver example
+
+* This example send data from slave to master and display the output on LCD    
+
+<img src="./8oQv1Hk6G7.png" width="1080" />
+
+### Master
+```
+
+#define F_CPU 1000000UL
+#include "SPI.h"
+#include "Gpio.h"
+#include "lcd.h"
+#include <stdio.h>
+#include <util/delay.h>
+
+#define CS1 A4
+
+
+int main(void)
+{
+	char i,count=0,buffer[5];
+	char* name;
+	pinMode(CS1,OUTPUT);
+	digitalWrite(CS1,HIGH);
+
+
+	SPI_MasterInit();
+	LCD_SetUpReg(D0,D1,REGD_UPPER);
+	LCD_Begin(16,2);
+	
+	while (1)
+	{
+		
+		LCD_Clear();
+		LCD_String_xy("Master Device",0, 0);
+		LCD_String_xy("Receive Data:  ",1, 0);	
+		digitalWrite(CS1,LOW);
+		for(i=0;i<10;i++)
+		{
+			count=SPI_Read();
+			sprintf(buffer,"%d",count);
+			if(count<=9)
+			LCD_String_xy(buffer,1,13);	
+			_delay_ms(500);		
+		}
+		
+		digitalWrite(CS1,HIGH);
+		_delay_ms(1000);
+	}
+	
+}
+
+
+
+```
+
+
+### SLAVE 
+
+```
+
+#define F_CPU 1000000UL
+#include "SPI.h"
+#include "Gpio.h"
+#include "lcd.h"
+#include <stdio.h>
+#include <util/delay.h>
+
+volatile unsigned char data=0;
+volatile unsigned char flag=0;
+
+void send(){
+
+SPI_loadData(data);
+flag=1;
+	
+}
+
+int main(void)
+{
+	char i,buffer[5];
+	SPI_SlaveInit();
+	SPI_attachInterrupt(send);
+	LCD_SetUpReg(D0,D1,REGD_UPPER);
+	LCD_Begin(16,2);
+	
+	while (1)
+	{
+		LCD_String_xy("Slave Device(1)",0, 0);
+		for(i=0;i<10;i++)
+		{
+			while(flag==0);
+		    
+			LCD_String_xy("Sending Data:  ",1, 0);
+			sprintf(buffer,"%d",data);
+			LCD_String_xy(buffer,1,13);
+			data++;
+			flag=0;
+		}
+		data=0;
+		_delay_ms(500);
+		LCD_Clear();
+			
+		
+
+	}
+	
+}
+
+```
+
+
 * In Atmega 32, We have 1 SPI Port with pins which are B5(MOSI),B6(MISO),B7(SCK),B4(SS). 
 
 
