@@ -18,10 +18,60 @@ void SPI_MasterInit()								/* SPI Initialize function */
 {
 	DDRB |= (1<<MOSI)|(1<<SCK);		/* Make MOSI, SCK, 0th pin direction as output pins */
 	DDRB &= ~(1<<MISO);						/* Make MISO pin as input pin */
-	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR1)|(1<<SPR0);	/* Enable SPI, Enable in master mode, with Fosc/24 SCK frequency */
+	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR1)|(1<<SPR0);	/* Enable SPI, Enable in master mode, with Fosc/64 SCK frequency */
 	SPSR &= ~(1<<SPI2X);					/* Disable speed doubler */
 }
 
+void SPI_setClockDivider(unsigned char prescaler){
+
+if(prescaler == SPI_CLOCK_DIV2)
+{
+SPCR &=~(3<<SPR0);
+SPSR |= (1<<SPI2X);
+}
+
+else if(prescaler == SPI_CLOCK_DIV4)
+{
+SPCR &=~(1<<SPR0);
+SPCR &=~(1<<SPR1);
+SPSR &= ~(1<<SPI2X);
+}
+
+else if(prescaler == SPI_CLOCK_DIV8)
+{
+SPCR |=(1<<SPR0);
+SPCR &=~(1<<SPR1);
+SPSR |= ~(1<<SPI2X);
+}
+
+else if(prescaler == SPI_CLOCK_DIV16)
+{
+SPCR |=(1<<SPR0);
+SPCR &=~(1<<SPR1);
+SPSR &= ~(1<<SPI2X);
+}
+
+else if(prescaler == SPI_CLOCK_DIV32)
+{
+SPCR &= ~(1<<SPR0);
+SPCR |=(1<<SPR1);
+SPSR |= (1<<SPI2X);
+}
+
+else if(prescaler == SPI_CLOCK_DIV64)
+{
+SPCR &= ~(1<<SPR0);
+SPCR |=(1<<SPR1);
+SPSR &= ~(1<<SPI2X);
+}
+
+else if(prescaler == SPI_CLOCK_DIV128)
+{
+SPCR |= (3<<SPR0);
+SPSR &= ~(1<<SPI2X);
+}
+
+}
 void SPI_SlaveInit()									/* SPI Initialize function */
 {
 	DDRB &= ~((1<<MOSI)|(1<<SCK)|(1<<SS));		/* Make MOSI, SCK, SS pin direction as input pins */
