@@ -48,7 +48,7 @@ int reading,pwmval;
 
 * This example demonstrates how to use WatchDog timer to reset the microcontroller every 2.1 sec inorder to Blink an LED.
 
-<img src="./PDS_6xaLmd9XDr.png" width="1080" />
+<img src="./PDS_qp9vv41Geh.png" width="1080" />
 
 
 ```
@@ -150,7 +150,7 @@ int main(void)
 
 * This example demonstrates how to use Input capture mode of timer1 in the microcontroller in order  to measure  measure duty cycle, frequency , and period of a signal connected to ICP pin;
 
-<img src="./ZeyYbbEIHg.png" width="1080" />
+<img src="./PDS_6xaLmd9XDr.png" width="1080" />
 
 
 ```
