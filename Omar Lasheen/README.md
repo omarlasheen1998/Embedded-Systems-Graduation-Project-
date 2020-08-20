@@ -13,3 +13,5 @@
 6.I2C
 
 7.SPI
+
+8.Timers and PWM
