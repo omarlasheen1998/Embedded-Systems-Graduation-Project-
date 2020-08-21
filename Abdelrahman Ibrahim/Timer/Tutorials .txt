@@ -1,6 +1,0 @@
-youtube tutorial .. https://www.youtube.com/watch?v=OReeWLpipmk
-                 .. https://www.youtube.com/watch?v=cAui6116XKc
-
-
-https://maxembedded.wordpress.com/2011/06/22/introduction-to-avr-timers/
-http://maxembedded.com/2011/06/avr-timers-timer0/
