@@ -27,7 +27,7 @@ uint8_t I2C_Start(char write_address)						/* I2C start function */
 	status = TWSR & 0xF8;									/* Read TWI status register with masking lower three bits */
 	if (status == TW_MT_SLA_W_ACK)										/* Check weather SLA+W transmitted & ack received or not? */
 	return 1;												/* If yes then return 1 to indicate ack received i.e. ready to accept data byte */
-	if (status == TW_MT_SLA_W_NACK)										/* Check weather SLA+W transmitted & nack received or not? */
+	else if (status == TW_MT_SLA_W_NACK)										/* Check weather SLA+W transmitted & nack received or not? */
 	return 2;												/* If yes then return 2 to indicate nack received i.e. device is busy */
 	else
 	return 3;												/* Else return 3 to indicate SLA+W failed */
@@ -47,7 +47,7 @@ uint8_t I2C_Repeated_Start(char read_address)				/* I2C repeated start function 
 	status = TWSR & 0xF8;									/* Read TWI status register with masking lower three bits */
 	if (status == TW_MT_SLA_R_ACK)										/* Check weather SLA+R transmitted & ack received or not? */
 	return 1;												/* If yes then return 1 to indicate ack received */
-	if (status == TW_MT_SLA_W_NACK)										/* Check weather SLA+R transmitted & nack received or not? */
+	else if (status == TW_MT_SLA_W_NACK)										/* Check weather SLA+R transmitted & nack received or not? */
 	return 2;												/* If yes then return 2 to indicate nack received i.e. device is busy */
 	else
 	return 3;												/* Else return 3 to indicate SLA+R failed */
@@ -91,7 +91,7 @@ uint8_t I2C_Write(char data)								/* I2C write function */
 	status = TWSR & 0xF8;									/* Read TWI status register with masking lower three bits */
 	if (status == TW_MT_DATA_ACK)										/* Check weather data transmitted & ack received or not? */
 	return 0;												/* If yes then return 0 to indicate ack received */
-	if (status == TW_MT_DATA_NACK)										/* Check weather data transmitted & nack received or not? */
+	else if (status == TW_MT_DATA_NACK)										/* Check weather data transmitted & nack received or not? */
 	return 1;												/* If yes then return 1 to indicate nack received */
 	else
 	return 2;												/* Else return 2 to indicate data transmission failed */
@@ -126,9 +126,9 @@ int8_t I2C_Slave_Listen()
 		status = TWSR & 0xF8;					/* Read TWI status register with masking lower three bits */
 		if (status == 0x60 || status == 0x68)	/* Check weather own SLA+W received & ack returned (TWEA = 1) */
 		return 0;								/* If yes then return 0 to indicate ack returned */
-		if (status == 0xA8 || status == 0xB0)	/* Check weather own SLA+R received & ack returned (TWEA = 1) */
+		else if (status == 0xA8 || status == 0xB0)	/* Check weather own SLA+R received & ack returned (TWEA = 1) */
 		return 1;								/* If yes then return 1 to indicate ack returned */
-		if (status == 0x70 || status == 0x78)	/* Check weather general call received & ack returned (TWEA = 1) */
+		else if (status == 0x70 || status == 0x78)	/* Check weather general call received & ack returned (TWEA = 1) */
 		return 2;								/* If yes then return 2 to indicate ack returned */
 		else
 		continue;								/* Else continue */
@@ -147,14 +147,14 @@ int8_t I2C_Slave_Transmit(char data)
 		TWCR |= (1<<TWINT);						/* If yes then clear interrupt flag & return -1 */
 		return -1;
 	}
-	if (status == TW_SLAVE_DATA_ACK)							/* Check weather data transmitted & ack received */
+	else if (status == TW_SLAVE_DATA_ACK)							/* Check weather data transmitted & ack received */
 	return 0;									/* If yes then return 0 */
-	if (status == TW_SLAVE_DATA_NACK)							/* Check weather data transmitted & nack received */
+	else if (status == TW_SLAVE_DATA_NACK)							/* Check weather data transmitted & nack received */
 	{
 		TWCR |= (1<<TWINT);						/* If yes then clear interrupt flag & return -2 */
 		return -2;
 	}
-	if (status == TW_SLAVE_LAST_DATA_ACK)							/* If last data byte transmitted with ack received TWEA = 0 */
+	else if (status == TW_SLAVE_LAST_DATA_ACK)							/* If last data byte transmitted with ack received TWEA = 0 */
 	return -3;									/* If yes then return -3 */
 	else										/* else return -4 */
 	return -4;
@@ -168,9 +168,9 @@ char I2C_Slave_Receive()
 	status = TWSR & 0xF8;						/* Read TWI status register with masking lower three bits */
 	if (status == 0x80 || status == 0x90)		/* Check weather data received & ack returned (TWEA = 1) */
 	return TWDR;								/* If yes then return received data */
-	if (status == 0x88 || status == 0x98)		/* Check weather data received, nack returned and switched to not addressed slave mode */
+	else if (status == 0x88 || status == 0x98)		/* Check weather data received, nack returned and switched to not addressed slave mode */
 	return TWDR;								/* If yes then return received data */
-	if (status == TW_SLAVE_ST)							/* Check weather STOP/REPEATED START received */
+	else if (status == TW_SLAVE_ST)							/* Check weather STOP/REPEATED START received */
 	{
 		TWCR |= (1<<TWINT);						/* If yes then clear interrupt flag & return 0 */
 		return -1;
