@@ -1,0 +1,317 @@
+
+UART.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000198  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .stab         000006cc  00000000  00000000  000001ec  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  2 .stabstr      00000090  00000000  00000000  000008b8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_aranges 00000060  00000000  00000000  00000948  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 0000007f  00000000  00000000  000009a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000299  00000000  00000000  00000a27  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000198  00000000  00000000  00000cc0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000003f0  00000000  00000000  00000e58  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000080  00000000  00000000  00001248  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000139  00000000  00000000  000012c8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000e8  00000000  00000000  00001401  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_pubtypes 00000067  00000000  00000000  000014e9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 75 00 	call	0xea	; 0xea <main>
+  64:	0c 94 ca 00 	jmp	0x194	; 0x194 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <debouncing>:
+
+#include <avr/io.h>
+#include <util/delay.h>
+
+void debouncing (int* pressed,int* released_level,int* pressed_level,void (*f)(int),int data)
+{
+  6c:	0f 93       	push	r16
+  6e:	1f 93       	push	r17
+  70:	fb 01       	movw	r30, r22
+  72:	da 01       	movw	r26, r20
+	
+	if (bit_is_clear(PINB,1))
+  74:	b1 99       	sbic	0x16, 1	; 22
+  76:	22 c0       	rjmp	.+68     	; 0xbc <debouncing+0x50>
+	{
+	
+	
+			
+	(*pressed_level)++;
+  78:	4d 91       	ld	r20, X+
+  7a:	5c 91       	ld	r21, X
+  7c:	11 97       	sbiw	r26, 0x01	; 1
+  7e:	4f 5f       	subi	r20, 0xFF	; 255
+  80:	5f 4f       	sbci	r21, 0xFF	; 255
+  82:	11 96       	adiw	r26, 0x01	; 1
+  84:	5c 93       	st	X, r21
+  86:	4e 93       	st	-X, r20
+			*released_level=0;
+  88:	11 82       	std	Z+1, r1	; 0x01
+  8a:	10 82       	st	Z, r1
+			if (*pressed_level>300)
+  8c:	4d 91       	ld	r20, X+
+  8e:	5c 91       	ld	r21, X
+  90:	11 97       	sbiw	r26, 0x01	; 1
+  92:	61 e0       	ldi	r22, 0x01	; 1
+  94:	4d 32       	cpi	r20, 0x2D	; 45
+  96:	56 07       	cpc	r21, r22
+  98:	2c f1       	brlt	.+74     	; 0xe4 <debouncing+0x78>
+			{
+				
+				*pressed_level=0;
+  9a:	1d 92       	st	X+, r1
+  9c:	1c 92       	st	X, r1
+				if (*pressed==0){
+  9e:	dc 01       	movw	r26, r24
+  a0:	4d 91       	ld	r20, X+
+  a2:	5c 91       	ld	r21, X
+  a4:	11 97       	sbiw	r26, 0x01	; 1
+  a6:	41 15       	cp	r20, r1
+  a8:	51 05       	cpc	r21, r1
+  aa:	e1 f4       	brne	.+56     	; 0xe4 <debouncing+0x78>
+				*pressed=1;
+  ac:	41 e0       	ldi	r20, 0x01	; 1
+  ae:	50 e0       	ldi	r21, 0x00	; 0
+  b0:	4d 93       	st	X+, r20
+  b2:	5c 93       	st	X, r21
+				f(data);
+  b4:	c8 01       	movw	r24, r16
+  b6:	f9 01       	movw	r30, r18
+  b8:	09 95       	icall
+  ba:	14 c0       	rjmp	.+40     	; 0xe4 <debouncing+0x78>
+				}						
+				
+			}		
+		}	
+		else{
+			(*released_level)++;
+  bc:	20 81       	ld	r18, Z
+  be:	31 81       	ldd	r19, Z+1	; 0x01
+  c0:	2f 5f       	subi	r18, 0xFF	; 255
+  c2:	3f 4f       	sbci	r19, 0xFF	; 255
+  c4:	31 83       	std	Z+1, r19	; 0x01
+  c6:	20 83       	st	Z, r18
+			*pressed_level=0;
+  c8:	11 96       	adiw	r26, 0x01	; 1
+  ca:	1c 92       	st	X, r1
+  cc:	1e 92       	st	-X, r1
+			if (*released_level>100)
+  ce:	20 81       	ld	r18, Z
+  d0:	31 81       	ldd	r19, Z+1	; 0x01
+  d2:	25 36       	cpi	r18, 0x65	; 101
+  d4:	31 05       	cpc	r19, r1
+  d6:	34 f0       	brlt	.+12     	; 0xe4 <debouncing+0x78>
+			{
+				*pressed=0;
+  d8:	dc 01       	movw	r26, r24
+  da:	11 96       	adiw	r26, 0x01	; 1
+  dc:	1c 92       	st	X, r1
+  de:	1e 92       	st	-X, r1
+				*released_level=0;
+  e0:	11 82       	std	Z+1, r1	; 0x01
+  e2:	10 82       	st	Z, r1
+			}
+			
+		}
+		
+						
+  e4:	1f 91       	pop	r17
+  e6:	0f 91       	pop	r16
+  e8:	08 95       	ret
+
+000000ea <main>:
+void uart_init (void);
+void debouncing (int* pressed,int* released_level,int* pressed_level,void (*f)(int),int data);
+void uart_transmit(int data);
+char uart_recieve();
+int main(void)
+{
+  ea:	8f 92       	push	r8
+  ec:	9f 92       	push	r9
+  ee:	af 92       	push	r10
+  f0:	bf 92       	push	r11
+  f2:	cf 92       	push	r12
+  f4:	df 92       	push	r13
+  f6:	ef 92       	push	r14
+  f8:	ff 92       	push	r15
+  fa:	0f 93       	push	r16
+  fc:	1f 93       	push	r17
+  fe:	df 93       	push	r29
+ 100:	cf 93       	push	r28
+ 102:	00 d0       	rcall	.+0      	; 0x104 <main+0x1a>
+ 104:	00 d0       	rcall	.+0      	; 0x106 <main+0x1c>
+ 106:	00 d0       	rcall	.+0      	; 0x108 <main+0x1e>
+ 108:	cd b7       	in	r28, 0x3d	; 61
+ 10a:	de b7       	in	r29, 0x3e	; 62
+	DDRB&=~(1<<PINB1);
+ 10c:	b9 98       	cbi	0x17, 1	; 23
+	PORTB|=1<<PINB1;
+ 10e:	c1 9a       	sbi	0x18, 1	; 24
+	DDRB|=1<<PINB2;
+ 110:	ba 9a       	sbi	0x17, 2	; 23
+	uart_init();
+ 112:	0e 94 b2 00 	call	0x164	; 0x164 <uart_init>
+	int data=0b00001111;
+	int pressed=0,rel_level=0,pres_level=0;
+ 116:	1a 82       	std	Y+2, r1	; 0x02
+ 118:	19 82       	std	Y+1, r1	; 0x01
+ 11a:	1c 82       	std	Y+4, r1	; 0x04
+ 11c:	1b 82       	std	Y+3, r1	; 0x03
+ 11e:	1e 82       	std	Y+6, r1	; 0x06
+ 120:	1d 82       	std	Y+5, r1	; 0x05
+	char recieved;
+    while(1)
+    {
+	 
+	  debouncing(&pressed,&rel_level,&pres_level,uart_transmit,data);
+ 122:	0f 2e       	mov	r0, r31
+ 124:	f3 e0       	ldi	r31, 0x03	; 3
+ 126:	cf 2e       	mov	r12, r31
+ 128:	dd 24       	eor	r13, r13
+ 12a:	f0 2d       	mov	r31, r0
+ 12c:	cc 0e       	add	r12, r28
+ 12e:	dd 1e       	adc	r13, r29
+ 130:	0f 2e       	mov	r0, r31
+ 132:	f5 e0       	ldi	r31, 0x05	; 5
+ 134:	af 2e       	mov	r10, r31
+ 136:	bb 24       	eor	r11, r11
+ 138:	f0 2d       	mov	r31, r0
+ 13a:	ac 0e       	add	r10, r28
+ 13c:	bd 1e       	adc	r11, r29
+ 13e:	0f 2e       	mov	r0, r31
+ 140:	f2 ec       	ldi	r31, 0xC2	; 194
+ 142:	8f 2e       	mov	r8, r31
+ 144:	f0 e0       	ldi	r31, 0x00	; 0
+ 146:	9f 2e       	mov	r9, r31
+ 148:	f0 2d       	mov	r31, r0
+ 14a:	7e 01       	movw	r14, r28
+ 14c:	08 94       	sec
+ 14e:	e1 1c       	adc	r14, r1
+ 150:	f1 1c       	adc	r15, r1
+ 152:	c7 01       	movw	r24, r14
+ 154:	b6 01       	movw	r22, r12
+ 156:	a5 01       	movw	r20, r10
+ 158:	94 01       	movw	r18, r8
+ 15a:	0f e0       	ldi	r16, 0x0F	; 15
+ 15c:	10 e0       	ldi	r17, 0x00	; 0
+ 15e:	0e 94 36 00 	call	0x6c	; 0x6c <debouncing>
+ 162:	f7 cf       	rjmp	.-18     	; 0x152 <main+0x68>
+
+00000164 <uart_init>:
+ *  Author: omar
+ */ 
+#include <avr/io.h>
+void uart_init (void){
+	
+	UCSRC &= ~(1 << UMSEL); //setting the UMSEL bit to 0 for asynchronous mode
+ 164:	80 b5       	in	r24, 0x20	; 32
+ 166:	8f 7b       	andi	r24, 0xBF	; 191
+ 168:	80 bd       	out	0x20, r24	; 32
+	//UBRR=f/(baud+1)= 1000000/(16*2400)-1=25
+	// ubrr stamds for usart baud rate register 
+	// to enable transmiter
+	UCSRB|=1<<TXEN |1<<RXEN;
+ 16a:	8a b1       	in	r24, 0x0a	; 10
+ 16c:	88 61       	ori	r24, 0x18	; 24
+ 16e:	8a b9       	out	0x0a, r24	; 10
+	//2 stop bit
+	UCSRC|=1<<USBS;
+ 170:	80 b5       	in	r24, 0x20	; 32
+ 172:	88 60       	ori	r24, 0x08	; 8
+ 174:	80 bd       	out	0x20, r24	; 32
+	//usart char size
+	UCSRC|= (1<<URSEL) |1<<UCSZ0 | 1<<UCSZ1; //for 8-bit
+ 176:	80 b5       	in	r24, 0x20	; 32
+ 178:	86 68       	ori	r24, 0x86	; 134
+ 17a:	80 bd       	out	0x20, r24	; 32
+	UBRRH=(unsigned char) 25>>8; //25=0b00011001 ubrrh=000000000
+ 17c:	10 bc       	out	0x20, r1	; 32
+	UBRRL=(unsigned char) 25;
+ 17e:	89 e1       	ldi	r24, 0x19	; 25
+ 180:	89 b9       	out	0x09, r24	; 9
+	
+}	
+ 182:	08 95       	ret
+
+00000184 <uart_transmit>:
+void uart_transmit(int data)
+{
+	
+while ((UCSRA&(1<<UDRE))==0);
+ 184:	5d 9b       	sbis	0x0b, 5	; 11
+ 186:	fe cf       	rjmp	.-4      	; 0x184 <uart_transmit>
+	UDR=data; //8-data bits
+ 188:	8c b9       	out	0x0c, r24	; 12
+	
+	
+	
+}
+ 18a:	08 95       	ret
+
+0000018c <uart_recieve>:
+
+char uart_recieve(){
+	while (! (UCSRA & (1 << RXC)) );
+ 18c:	5f 9b       	sbis	0x0b, 7	; 11
+ 18e:	fe cf       	rjmp	.-4      	; 0x18c <uart_recieve>
+	int receiveData;
+    receiveData = UDR;
+ 190:	8c b1       	in	r24, 0x0c	; 12
+	return receiveData;
+	
+ 192:	08 95       	ret
+
+00000194 <_exit>:
+ 194:	f8 94       	cli
+
+00000196 <__stop_program>:
+ 196:	ff cf       	rjmp	.-2      	; 0x196 <__stop_program>
