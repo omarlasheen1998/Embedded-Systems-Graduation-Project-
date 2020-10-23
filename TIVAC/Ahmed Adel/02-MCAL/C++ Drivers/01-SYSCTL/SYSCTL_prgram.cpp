@@ -2,9 +2,9 @@
 #include "01-LIB/01-STD_TYPES/STD_TYPES.h"
 #include "01-LIB/02-BIT_MATH/BIT_MATH.h"
 
-#include "SYSCTL_interface.h"
-#include "SYSCTL_private.h"
-#include "SYSCTL_config.h"
+#include "02-MCAL/C++ Drivers/01-SYSCTL/SYSCTL_interface.h"
+#include "02-MCAL/C++ Drivers/01-SYSCTL/SYSCTL_private.h"
+#include "02-MCAL/C++ Drivers/01-SYSCTL/SYSCTL_config.h"
 
 
 void SYSCTL_voidSetClockSpeed(uint8 Copy_u8ClockSpeed){

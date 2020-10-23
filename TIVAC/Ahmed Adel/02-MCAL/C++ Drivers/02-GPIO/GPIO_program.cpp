@@ -292,32 +292,32 @@ void Pin::GPIO_voidSetPinValue(uint8 Copy_u8PortID, uint8 Copy_u8PinID, uint8 Co
                 switch(Copy_u8PortID){
                 case PORTA:
                     switch(Copy_u8Value){
-                    case LOW:   CLR_BIT(GPIO_APB_PORTF_GPIODATA, Copy_u8PinID);  break;
-                    case HIGH:  SET_BIT(GPIO_APB_PORTF_GPIODATA, Copy_u8PinID);  break;
+                    case LOW:   CLR_BIT(GPIO_APB_PORTA_GPIODATA, Copy_u8PinID);  break;
+                    case HIGH:  SET_BIT(GPIO_APB_PORTA_GPIODATA, Copy_u8PinID);  break;
                     }
                     break;
                 case PORTB:
                     switch(Copy_u8Value){
-                    case LOW:   CLR_BIT(GPIO_APB_PORTF_GPIODATA, Copy_u8PinID);  break;
-                    case HIGH:  SET_BIT(GPIO_APB_PORTF_GPIODATA, Copy_u8PinID);  break;
+                    case LOW:   CLR_BIT(GPIO_APB_PORTB_GPIODATA, Copy_u8PinID);  break;
+                    case HIGH:  SET_BIT(GPIO_APB_PORTB_GPIODATA, Copy_u8PinID);  break;
                     }
                     break;
                 case PORTC:
                     switch(Copy_u8Value){
-                    case LOW:   CLR_BIT(GPIO_APB_PORTF_GPIODATA, Copy_u8PinID);  break;
-                    case HIGH:  SET_BIT(GPIO_APB_PORTF_GPIODATA, Copy_u8PinID);  break;
+                    case LOW:   CLR_BIT(GPIO_APB_PORTC_GPIODATA, Copy_u8PinID);  break;
+                    case HIGH:  SET_BIT(GPIO_APB_PORTC_GPIODATA, Copy_u8PinID);  break;
                     }
                     break;
                 case PORTD:
                     switch(Copy_u8Value){
-                    case LOW:   CLR_BIT(GPIO_APB_PORTF_GPIODATA, Copy_u8PinID);  break;
-                    case HIGH:  SET_BIT(GPIO_APB_PORTF_GPIODATA, Copy_u8PinID);  break;
+                    case LOW:   CLR_BIT(GPIO_APB_PORTD_GPIODATA, Copy_u8PinID);  break;
+                    case HIGH:  SET_BIT(GPIO_APB_PORTD_GPIODATA, Copy_u8PinID);  break;
                     }
                     break;
                 case PORTE:
                     switch(Copy_u8Value){
-                    case LOW:   CLR_BIT(GPIO_APB_PORTF_GPIODATA, Copy_u8PinID);  break;
-                    case HIGH:  SET_BIT(GPIO_APB_PORTF_GPIODATA, Copy_u8PinID);  break;
+                    case LOW:   CLR_BIT(GPIO_APB_PORTE_GPIODATA, Copy_u8PinID);  break;
+                    case HIGH:  SET_BIT(GPIO_APB_PORTE_GPIODATA, Copy_u8PinID);  break;
                     }
                     break;
                 case PORTF:
