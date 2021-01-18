@@ -30,7 +30,24 @@
 #define RCC_PLL_IN_HSE_DIV_2  1
 #define RCC_PLL_IN_HSE        2
 
+/*******************   PLL MUL factor Options   ****************************/
 
+#define NO_CLOCK_FACTOR                                0b0000
+#define PLL_CLOCK_MULTIPLE_BY_2                        0b0000
+#define PLL_CLOCK_MULTIPLE_BY_3			 0b0001
+#define PLL_CLOCK_MULTIPLE_BY_4                        0b0010
+#define PLL_CLOCK_MULTIPLE_BY_5                        0b0011
+#define PLL_CLOCK_MULTIPLE_BY_6                        0b0100
+#define PLL_CLOCK_MULTIPLE_BY_7                        0b0101
+#define PLL_CLOCK_MULTIPLE_BY_8                        0b0110
+#define PLL_CLOCK_MULTIPLE_BY_9                        0b0111
+#define PLL_CLOCK_MULTIPLE_BY_10                       0b1000
+#define PLL_CLOCK_MULTIPLE_BY_11                       0b1001
+#define PLL_CLOCK_MULTIPLE_BY_12                       0b1010
+#define PLL_CLOCK_MULTIPLE_BY_13                       0b1011
+#define PLL_CLOCK_MULTIPLE_BY_14                       0b1100
+#define PLL_CLOCK_MULTIPLE_BY_15                       0b1101
+#define PLL_CLOCK_MULTIPLE_BY_16                       0b1110
 
 
 #endif // RCC_PRIVATE_H

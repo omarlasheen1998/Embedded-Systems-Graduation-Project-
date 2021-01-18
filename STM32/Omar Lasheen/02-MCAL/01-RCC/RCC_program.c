@@ -12,30 +12,48 @@
 
 void RCC_voidInitSysClock(void)
 {
-    #if      RCC_CLOCK_TYPE == RCC_HSE_CRYSTAL
-        RCC_CR   = 0x00010000;     /* Enable HSE with no bypass */
-        RCC_CFGR = 0x00000001;     /* HSE selected as system clock */
-    #elif    RCC_CLOCK_TYPE == RCC_HSE_RC
-        RCC_CR   = 0x00050000;     /* Enable HSE with bypass */
-        RCC_CFGR = 0x00000001;     /* HSE selected as system clock */
-    #elif    RCC_CLOCK_TYPE == RCC_HSI
-        RCC_CR   = 0x00000081;     /* Enable HSI + Trimming = 0 */
-        RCC_CFGR = 0x00000000;     /* HSI selected as system clock */
+    #if     RCC_CLOCK_TYPE == RCC_HSI
+        CLR_BIT(RCC_CFGR,0);     /* HSI selected as system clock */
+        CLR_BIT(RCC_CFGR,1);
+    	CLR_BIT(RCC_CR, 0);	   /* Enable HSI + Trimming = 0 */
+    #elif   RCC_CLOCK_TYPE == RCC_HSE_CRYSTAL
+        SET_BIT(RCC_CFGR,0);	  /* HSE selected as system clock */
+        CLR_BIT(RCC_CFGR,1);     
+    	SET_BIT(RCC_CR, 16);     /* Enable HSE with no bypass */
+    #elif   RCC_CLOCK_TYPE == RCC_HSE_RC
+        SET_BIT(RCC_CFGR,0);	  /* HSE selected as system clock */
+        CLR_BIT(RCC_CFGR,1);
+        SET_BIT(RCC_CR, 18);    /* Enable HSE with bypass */
+        SET_BIT(RCC_CR, 16);
     #elif    RCC_CLOCK_TYPE == RCC_PLL
+        /* PLL selected as system clock */
+            CLR_BIT(RCC_CFGR,0);	  
+            SET_BIT(RCC_CFGR,1); 
+        /* PLL MUL FECTOR */
+            RCC_CFGR &= ~((0b1111) << 18);
+            RCC_CFGR |= (RCC_PLL_MUL_VAL) << 18; 
         #if   RCC_PLL_INPUT == RCC_PLL_IN_HSI_DIV_2
-            RCC_CR   = 0x01000081; /* Enable HSI + Trimming = 0 + ENABLE PLL*/
-            RCC_CFGR = 0x00000000; /* HSI/2 selected as system clock */
+            CLR_BIT(RCC_CFGR, 16); 	/* Enable HSI + Trimming = 0 + ENABLE PLL*/
+	    
         #elif RCC_PLL_INPUT == RCC_PLL_IN_HSE_DIV_2
-            RCC_CR   = 0x01010000;     /* Enable HSE with no bypass */
-            RCC_CFGR = 0x00010001;     /* HSE/2 selected as system clock */
+        /* Enable HSE with no bypass   */
+    	    SET_BIT(RCC_CR, 16);  
+    	 /* 	HSE/2 selected		*/   
+    	    SET_BIT(RCC_CFGR,16);
+    	    SET_BIT(RCC_CFGR,17);
 
         #elif RCC_PLL_INPUT == RCC_PLL_IN_HSE
-            RCC_CR   = 0x01010000;     /* Enable HSE with no bypass */
-            RCC_CFGR = 0x00030001;     /* HSE/2 selected as system clock */
+        /* Enable HSE with no bypass   */
+    	    SET_BIT(RCC_CR, 16);     
+    	/* 	HSE selected		*/
+    	    SET_BIT(RCC_CFGR,16);
+    	    CLR_BIT(RCC_CFGR,17);
+            SET_BIT(RCC_CFGR,10); //divide APB1 clk by 2 for clk not to exceed 36MHZ
 
         #endif // RCC_PLL_INPUT
-
-
+	/* Enable PLL */
+	SET_BIT(RCC_CR, 24); 
+	while(GET_BIT(RCC_CR,25)== 0){}     
     #else
         #error("You chosed Wrong Clock type")
 
