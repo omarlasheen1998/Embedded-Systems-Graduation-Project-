@@ -39,9 +39,9 @@ void STK_voidInit (void)
 
 /*************	 Function OF Set Busy Wait  **************************/
 /* This is function Like delay function stop the code until finish count
- *  1	 count 	= 1 us
- *  100	 counts = 100 us
- *  1000 counts = 1 ms
+ *  9	 count 	= 1 us
+ *  900	 counts = 100 us
+ *  9000 counts = 1 ms
  *  and so on ...													 */
 
 void STK_voidSetBusyWait (uint32 Copy_u32Ticks)
@@ -65,9 +65,9 @@ void STK_voidSetBusyWait (uint32 Copy_u32Ticks)
 /*************	 Function OF Set Interval Single  **************************/
 /* this function take ticks and function to do after ticks finished and do it once
  * but don't stop the code until finish count
- *  1	 count 	= 1 us
- *  100	 counts = 100 us
- *  1000 counts = 1 ms
+ *  9	 count 	= 1 us
+ *  900	 counts = 100 us
+ *  9000 counts = 1 ms
  *  and so on ...													 */
 
 void  STK_voidSetIntervalSingle (uint32 Copy_u32Ticks, void (*Copy_ptr) (void))
@@ -92,9 +92,9 @@ void  STK_voidSetIntervalSingle (uint32 Copy_u32Ticks, void (*Copy_ptr) (void))
 /*************	 Function OF Set Interval Periodic  **************************/
 /* this function take ticks and function to do after ticks finished and do it many time until you call a function stop it
  * but don't stop the code until finish count
- *  1	 count 	= 1 us
- *  100	 counts = 100 us
- *  1000 counts = 1 ms
+ *  9	 count 	= 1 us
+ *  900	 counts = 100 us
+ *  9000 counts = 1 ms
  *  and so on ...													 */
 
 void  STK_voidSetIntervalPeriodic (uint32 Copy_u32Ticks, void (*Copy_ptr) (void))
@@ -178,17 +178,17 @@ void SysTick_Handler (void)
 	Local_u8Temporary = GET_BIT(STK->CTRL, 16);
 }
 
-/*************	 Function OF Delay_us  **************************/
+/*************	 Function OF Delay_ms  **************************/
 /* This is function is call from (STK_voidSetBusyWait()), it is delay function stop the code until finish count
- *  1	 count 	= 1 us
- *  100	 counts = 100 us
- *  1000 counts = 1 ms
+ *  9	 count 	= 1 us
+ *  900	 counts = 100 us
+ *  9000 counts = 1 ms
  *  and so on ...													 */
 
-void STK_voidDelay_us (uint32 Copy_u32Ticks)
+void STK_voidDelay_ms (uint32 Copy_u32Ticks)
 {
 	/* convert from ms to us as
-	 * 1 ms = 1000 us */
-	Copy_u32Ticks *= 1000;
+	 * 1 ms = 9000 us */
+	Copy_u32Ticks *= 9000;
 	STK_voidSetBusyWait(Copy_u32Ticks);
 }
