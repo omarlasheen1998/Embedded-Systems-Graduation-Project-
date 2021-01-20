@@ -953,8 +953,6 @@ void ADC_voidReadChannelInterrupt(uint16 Channel_u16Number){
 		SET_BIT(ADC1_CR2,1);
 		delayMs(1);
 		NVIC_voidSetPendingFlag(18);
-
-
 		break;
 
 	}
@@ -962,7 +960,6 @@ void ADC_voidReadChannelInterrupt(uint16 Channel_u16Number){
 }
 
 void ADC1_2_IRQHandler(void){
-	val=ADC1_DR;
 	if(g_callBackPtr!=NULL_PTR){
 		(*g_callBackPtr)();
 	}
@@ -971,5 +968,8 @@ void ADC1_voidSetCallBack(void(*a_ptr)(void)){
 	g_callBackPtr=a_ptr;
 }
 
+uint16 ADC_u16ReturnValue(void){
+	return ADC1_DR;
+}
 
 
