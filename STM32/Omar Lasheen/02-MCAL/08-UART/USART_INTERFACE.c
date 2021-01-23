@@ -61,6 +61,8 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
   
 	char array[16];
 
+	u32 LOC_u32TimeOut = 0;
+
 	switch(Copy_u8uart)
 {
 	case UART1:
@@ -72,10 +74,14 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
 	
 	for(int i=0;(array[i]!='\0');i++)
 	{
-	while((USART1->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+	while((USART1->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000 ){
+	LOC_u32TimeOut++;
+	}  //wait until the TXE flag is set 
 	USART1->DR = array[i];
-	
-	while((USART1->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut = 0;
+	while((USART1->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000 ){
+	LOC_u32TimeOut++;
+	}  //wait until the TC flag is set 
 	USART1->SR &= ~(1<<6);
 	}
   
@@ -92,12 +98,15 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
 		sprintf(array,"%d.%d", i1,i2);
 	for(int i=0;(array[i]!='\0');i++)
 	{
-	while((USART1->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+		while((USART1->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000 ){
+	LOC_u32TimeOut++;
+	}  //wait until the TXE flag is set 
 	USART1->DR = array[i];
-	
-	while((USART1->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut = 0;
+	while((USART1->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000 ){
+	LOC_u32TimeOut++;
+	}  //wait until the TC flag is set 
 	USART1->SR &= ~(1<<6);
-	
 	}
   
 	}
@@ -105,19 +114,27 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
 	{
 	 for(int i=0;*(char*)(Copy_u8data+i)!='\0';i++)
 		{
-	   while((USART1->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+			while((USART1->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000 ){
+	LOC_u32TimeOut++;
+	}  //wait until the TXE flag is set 
 	USART1->DR = *(char*)(Copy_u8data+i);
-	
-	while((USART1->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut = 0;
+	while((USART1->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000 ){
+	LOC_u32TimeOut++;
+	}  //wait until the TC flag is set 
 	USART1->SR &= ~(1<<6);
 		}
   }
 	else if(Copy_u8type == CHAR)
 	{
-			   while((USART1->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+			   while((USART1->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000 ){
+	LOC_u32TimeOut++;
+	}  //wait until the TXE flag is set 
 	USART1->DR = *(char*)(Copy_u8data);
-	
-	while((USART1->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut = 0;
+	while((USART1->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000 ){
+	LOC_u32TimeOut++;
+	}  //wait until the TC flag is set 
 	USART1->SR &= ~(1<<6);
 	}
 	break;
@@ -132,10 +149,10 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
 	
 	for(int i=0;(array[i]!='\0');i++)
 	{
-	while((USART2->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+	while((USART2->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}  //wait until the TXE flag is set 
 	USART2->DR = array[i];
-	
-	while((USART2->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut=0;
+	while((USART2->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} //wait until the TC flag is set 
 	USART2->SR &= ~(1<<6);
 	}
   
@@ -152,10 +169,10 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
 		sprintf(array,"%d.%d", i1,i2);
 	for(int i=0;(array[i]!='\0');i++)
 	{
-	while((USART2->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+	while((USART2->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}  //wait until the TXE flag is set 
 	USART2->DR = array[i];
-	
-	while((USART2->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut=0;
+	while((USART2->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}  //wait until the TC flag is set 
 	USART2->SR &= ~(1<<6);
 	
 	}
@@ -165,19 +182,19 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
 	{
 	 for(int i=0;*(char*)(Copy_u8data+i)!='\0';i++)
 		{
-	   while((USART2->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+	   while((USART2->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}  //wait until the TXE flag is set 
 	USART2->DR = *(char*)(Copy_u8data+i);
-	
-	while((USART2->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut=0;
+	while((USART2->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}  //wait until the TC flag is set 
 	USART2->SR &= ~(1<<6);
 		}
   }
 	else if(Copy_u8type == CHAR)
 	{
-			   while((USART2->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+			   while((USART2->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}   //wait until the TXE flag is set 
 	USART2->DR = *(char*)(Copy_u8data);
-	
-	while((USART2->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut=0;
+	while((USART2->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}   //wait until the TC flag is set 
 	USART2->SR &= ~(1<<6);
 	}
 	break;
@@ -191,10 +208,10 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
 	
 	for(int i=0;(array[i]!='\0');i++)
 	{
-	while((USART3->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+	while((USART3->SR&(1<<7)) == 0  && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} //wait until the TXE flag is set 
 	USART3->DR = array[i];
-	
-	while((USART3->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut=0;
+	while((USART3->SR&(1<<6)) == 0  && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} //wait until the TC flag is set 
 	USART3->SR &= ~(1<<6);
 	}
   
@@ -211,10 +228,10 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
 		sprintf(array,"%d.%d", i1,i2);
 	for(int i=0;(array[i]!='\0');i++)
 	{
-	while((USART3->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+	while((USART3->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}  //wait until the TXE flag is set 
 	USART3->DR = array[i];
-	
-	while((USART3->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut=0;
+	while((USART3->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} //wait until the TC flag is set 
 	USART3->SR &= ~(1<<6);
 	
 	}
@@ -224,19 +241,19 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
 	{
 	 for(int i=0;*(char*)(Copy_u8data+i)!='\0';i++)
 		{
-	   while((USART3->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+	   while((USART3->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}  //wait until the TXE flag is set 
 	USART3->DR = *(char*)(Copy_u8data+i);
-	
-	while((USART3->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut=0;
+	while((USART3->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}  //wait until the TC flag is set 
 	USART3->SR &= ~(1<<6);
 		}
   }
 	else if(Copy_u8type == CHAR)
 	{
-			   while((USART3->SR&(1<<7)) == 0);  //wait until the TXE flag is set 
+			   while((USART3->SR&(1<<7)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}  //wait until the TXE flag is set 
 	USART3->DR = *(char*)(Copy_u8data);
-	
-	while((USART3->SR&(1<<6)) == 0);  //wait until the TC flag is set 
+	LOC_u32TimeOut=0;
+	while((USART3->SR&(1<<6)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}  //wait until the TC flag is set 
 	USART3->SR &= ~(1<<6);
 	}
 	break;
@@ -246,25 +263,26 @@ void USART_voidTransmit(u8 Copy_u8uart,void* Copy_u8data, u8 Copy_u8type){
 }
 char USART_charReceive(u8 Copy_u8uart)
 {
+	u32 LOC_u32TimeOut=0;
 switch(Copy_u8uart)
 {
 	case UART1:
 	
-	while((USART1->SR&(1<<5)) == 0);	//wait until the RXNE flag is set
+	while((USART1->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}	//wait until the RXNE flag is set
 	
 	return USART1->DR;
 	break;
 	
 	case UART2:
 	
-	while((USART2->SR&(1<<5)) == 0);	//wait until the RXNE flag is set
+	while((USART2->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}	//wait until the RXNE flag is set
 	
 	return USART2->DR;
 	break;
 	
 	case UART3:
 
-	while((USART3->SR&(1<<5)) == 0);	//wait until the RXNE flag is set
+	while((USART3->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}	//wait until the RXNE flag is set
 	
 	return USART3->DR;
 	break;
@@ -277,7 +295,7 @@ switch(Copy_u8uart)
 
 }
 void USART_voidReceiveString(u8 Copy_u8uart,char* Copy_charData,u8 Copy_u8Size){
-
+u32 LOC_u32TimeOut=0;
 	
 switch(Copy_u8uart)
 {
@@ -288,12 +306,12 @@ switch(Copy_u8uart)
 	
 	strcpy(Copy_charData,"");
 	
-		while((USART1->SR&(1<<5)) == 0){}	        //wait until the RXNE flag is set
+		while((USART1->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}        //wait until the RXNE flag is set
 	  Copy_charData[i] = USART1->DR;
 	   i++;
 
 	while (i < Copy_u8Size-1 ) {              // check space is available (including additional null char at end)
-		while((USART1->SR&(1<<5)) == 0){}	        //wait until the RXNE flag is set
+		while((USART1->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} 	        //wait until the RXNE flag is set
 	  c = USART1->DR;
 		if (c == '\0') break;                   // break on NULL character
 		Copy_charData[i] = c;                       // write into the supplied buffer
@@ -311,12 +329,12 @@ switch(Copy_u8uart)
 	unsigned char c;
 	
 		strcpy(Copy_charData,"");
-	while((USART2->SR&(1<<5)) == 0){}	        //wait until the RXNE flag is set
+	while((USART2->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} 	        //wait until the RXNE flag is set
 	  Copy_charData[i] = USART2->DR;
 	   i++;
 
 	while (i < Copy_u8Size-1 ) {              // check space is available (including additional null char at end)
-		while((USART2->SR&(1<<5)) == 0){}	        //wait until the RXNE flag is set
+		while((USART2->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} 	        //wait until the RXNE flag is set
 	  c = USART2->DR;
 		if (c == '\0') break;                   // break on NULL character
 		Copy_charData[i] = c;                       // write into the supplied buffer
@@ -335,12 +353,12 @@ switch(Copy_u8uart)
 	
 		strcpy(Copy_charData,"");
 	
-while((USART3->SR&(1<<5)) == 0){}	        //wait until the RXNE flag is set
+while((USART3->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} 	        //wait until the RXNE flag is set
 	  Copy_charData[i] = USART3->DR;
 	   i++;
 
 	while (i < Copy_u8Size-1 ) {              // check space is available (including additional null char at end)
-	while((USART3->SR&(1<<5)) == 0){}	        //wait until the RXNE flag is set
+	while((USART3->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} 	        //wait until the RXNE flag is set
 	  c = USART3->DR;
 		if (c == '\0') break;                   // break on NULL character
 		Copy_charData[i] = c;                       // write into the supplied buffer
@@ -355,9 +373,12 @@ while((USART3->SR&(1<<5)) == 0){}	        //wait until the RXNE flag is set
 }
 
 }
+
 void USART_voidReceiveStringUntil(u8 Copy_u8uart,char* Copy_charData,char Copy_charLetter){
 
-switch(Copy_u8uart)
+	u32 LOC_u32TimeOut=0;
+
+	switch(Copy_u8uart)
 {
 	case UART1:
 	{
@@ -365,7 +386,7 @@ switch(Copy_u8uart)
 	unsigned char i = 0;
 	unsigned char a;
 	
-	  while((USART1->SR&(1<<5)) == 0){}	        //wait until the RXNE flag is set
+	  while((USART1->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;}         //wait until the RXNE flag is set
 	  Copy_charData[i] = USART1->DR;
 	   i++;
 		
@@ -373,7 +394,7 @@ switch(Copy_u8uart)
 	{
 		while (1) 
 	{              	
-	while((USART1->SR&(1<<5)) == 0){}	//wait until the RXNE flag is set
+	while((USART1->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} 	//wait until the RXNE flag is set
 		a = USART1->DR;
 		Copy_charData[i] = a;                       // write into the supplied buffer
 		i++;
@@ -395,7 +416,7 @@ switch(Copy_u8uart)
 	unsigned char i = 0;
 	unsigned char a;
 	
-	  while((USART2->SR&(1<<5)) == 0){}	        //wait until the RXNE flag is set
+	  while((USART2->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} 	        //wait until the RXNE flag is set
 	  Copy_charData[i] = USART2->DR;
 	   i++;
 		
@@ -403,7 +424,7 @@ switch(Copy_u8uart)
 	{
 		while (1) 
 	{              	
-	while((USART2->SR&(1<<5)) == 0){}	//wait until the RXNE flag is set
+	while((USART2->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} 	//wait until the RXNE flag is set
 		a = USART2->DR;
 		Copy_charData[i] = a;                       // write into the supplied buffer
 		i++;
@@ -424,7 +445,7 @@ switch(Copy_u8uart)
 	unsigned char i = 0;
 	unsigned char a;
 	
-	  while((USART3->SR&(1<<5)) == 0){}	        //wait until the RXNE flag is set
+	  while((USART3->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} 	        //wait until the RXNE flag is set
 	  Copy_charData[i] = USART3->DR;
 	   i++;
 		
@@ -432,7 +453,7 @@ switch(Copy_u8uart)
 	{
 		while (1) 
 	{              	
-	while((USART3->SR&(1<<5)) == 0){}	//wait until the RXNE flag is set
+	while((USART3->SR&(1<<5)) == 0 && LOC_u32TimeOut<100000){LOC_u32TimeOut++;} 	//wait until the RXNE flag is set
 		a = USART3->DR;
 		Copy_charData[i] = a;                       // write into the supplied buffer
 		i++;
