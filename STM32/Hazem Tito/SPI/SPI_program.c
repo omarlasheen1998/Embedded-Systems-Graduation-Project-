@@ -9,6 +9,9 @@
 #include "SPI_interface.h"
 #include "SPI_private.h"
 #include "SPI_config.h"
+#include "NVIC_interface.h"
+#include "NVIC_private.h"
+#include "NVIC_config.h"
 
 void (*Global_PTR_1)(void)='\0';
 void (*Global_PTR_2)(void)='\0';
