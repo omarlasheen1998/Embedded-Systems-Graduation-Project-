@@ -10,7 +10,7 @@
 int main(void){
 uint8 character;
 RCC_APB2ENR|=0xFC;
-SPI_voidInitSlave(SPI_1); /* SLAVE IS A STM MICROCONTROLLER*/
-character=SPI_u8RecieveByte(SPI_1);
+SPI_voidInitSlave(SPI_2); /* SLAVE IS A STM MICROCONTROLLER*/
+character=SPI_u8RecieveByte(SPI_2);
 
 }
