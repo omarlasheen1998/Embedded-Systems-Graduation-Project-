@@ -34,7 +34,7 @@
 
 #define NO_CLOCK_FACTOR                                0b0000
 #define PLL_CLOCK_MULTIPLE_BY_2                        0b0000
-#define PLL_CLOCK_MULTIPLE_BY_3			 0b0001
+#define PLL_CLOCK_MULTIPLE_BY_3					   	   0b0001
 #define PLL_CLOCK_MULTIPLE_BY_4                        0b0010
 #define PLL_CLOCK_MULTIPLE_BY_5                        0b0011
 #define PLL_CLOCK_MULTIPLE_BY_6                        0b0100

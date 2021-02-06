@@ -17,7 +17,8 @@
 
 /***************   Function definition    ******************/
 
-void AFIO_voidSetEXTIConfiguration (u8 Copy_u8EXTI_Line, u8 Copy_u8PortMap);
-void AFIO_voidRemapPeripheralPins (u8 Copy_u8Port);
+void AFIO_voidSetEXTIConfiguration (uint8 Copy_uint8EXTI_Line, uint8 Copy_uint8PortMap);
+void AFIO_voidRemapPeripheralPins (uint8 Copy_uint8Port);
+void AFIO_voidRemap_CAN (void);
 
 #endif // AFIO_INTERFACE_H

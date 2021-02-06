@@ -8,18 +8,21 @@
 #ifndef AFIO_PRIVATE_H
 #define AFIO_PRIVATE_H
 
+/*******************   BASE Address Definition    *********************/
+
+#define AFIO_BASE_ADDRESS	0x40010000 		//define the boundary address of AFIO
 
 /*******************   Register Definition     ***********************/
 
 typedef struct
 {
-	volatile u32 EVCR;
-	volatile u32 MAPR;
-	volatile u32 EXTICR[4];
-	volatile u32 MAPR2;
+	volatile uint32 EVCR;
+	volatile uint32 MAPR;
+	volatile uint32 EXTICR[4];
+	volatile uint32 MAPR2;
 }AFIO_t;
 
-#define AFIO 		((volatile AFIO_t *) 0x40010000)
+#define AFIO 		((volatile AFIO_t *) AFIO_BASE_ADDRESS)
 
 
 #endif // AFIO_PRIVATE_H

@@ -48,9 +48,8 @@ void RCC_voidInitSysClock(void)
     	/* 	HSE selected		*/
     	    SET_BIT(RCC_CFGR,16);
     	    CLR_BIT(RCC_CFGR,17);
-            SET_BIT(RCC_CFGR,10); //divide APB1 clk by 2 for clk not to exceed 36MHZ
-
         #endif // RCC_PLL_INPUT
+				SET_BIT(RCC_CFGR,10); //divide APB1 clk by 2 for clk not to exceed 36MHZ
 	/* Enable PLL */
 	SET_BIT(RCC_CR, 24); 
 	while(GET_BIT(RCC_CR,25)== 0){}     
@@ -60,7 +59,7 @@ void RCC_voidInitSysClock(void)
     #endif
 }
 
-void RCC_voidEnableClock(uint8 Copy_u8BusId, uint8 Copy_u8PerId)
+void RCC_voidEnableClock(u8 Copy_u8BusId, u8 Copy_u8PerId)
 {
     if (Copy_u8PerId <= 31)
     {
@@ -80,7 +79,7 @@ void RCC_voidEnableClock(uint8 Copy_u8BusId, uint8 Copy_u8PerId)
 }
 
 
-void RCC_voidDisableClock(uint8 Copy_u8BusId, uint8 Copy_u8PerId)
+void RCC_voidDisableClock(u8 Copy_u8BusId, u8 Copy_u8PerId)
 {
     if (Copy_u8PerId <= 31)
     {

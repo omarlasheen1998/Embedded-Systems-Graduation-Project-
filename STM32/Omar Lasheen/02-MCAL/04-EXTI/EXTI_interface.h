@@ -6,6 +6,7 @@
 #ifndef EXTI_INTERFACE_H
 #define EXTI_INTERFACE_H
 
+
 /*******************   LINE Definition     ***************************/
 
 #define EXTI_LINE0				0
@@ -39,6 +40,6 @@ void EXTI_voidEnableEXTI 		 (uint8 Copy_u8EXTILine);
 void EXTI_voidDisableEXTI 		 (uint8 Copy_u8EXTILine);
 void EXTI_voidSoftWareTrigger	 (uint8 Copy_u8EXTILine);
 
-void EXTI_voidSetCallBack (void (*ptr) (void));
+void EXTI_voidSetCallBack (uint8 Copy_u8EXTILine, void (*ptr) (void));
 
 #endif // EXTI_INTERFACE_H
