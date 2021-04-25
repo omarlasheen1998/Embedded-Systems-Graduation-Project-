@@ -1,19 +1,33 @@
-#ifndef SPI_CONFIG_H
-#define SPI_CONFIG_H
 
 
-/*************************BAUD RATE CONFIGURATION*******************/
-/*options : DIVIDE_BY_2
- *          DIVIDE_BY_4
- *          DIVIDE_BY_8
- *          DIVIDE_BY_16
- *          DIVIDE_BY_32
- *          DIVIDE_BY_64
- *          DIVIDE_BY_128
- *          DIVIDE_BY_256
- *
- */
-#define Baud_Rate  CLK_32
+#ifndef SPI_CONFIG_H_
+#define SPI_CONFIG_H_
+
+//SPI1
+#define MSPI1_CLOCK_MODE     MSPI_MODE3
+
+#define MSPI1_PRESCALLER     MSPI_FPCLK_DIVIDED_BY_128
+
+#define MSPI1_DATA_ORDER     MSPI_MSB_FIRST
+
+#define MSPI1_SS_MANAGE      HW_SLAVE_MANAGEMENT
+
+#define MSPI1_DATA_SIZE      MSPI_8BIT_DATA
 
 
-#endif
+
+//SPI2
+#define MSPI2_CLOCK_MODE     MSPI_MODE3
+
+
+#define MSPI2_PRESCALLER     MSPI_FPCLK_DIVIDED_BY_32
+
+#define MSPI2_DATA_ORDER     MSPI_MSB_FIRST
+
+#define MSPI2_SS_MANAGE      HW_SLAVE_MANAGEMENT
+
+#define MSPI2_DATA_SIZE      MSPI_8BIT_DATA
+
+
+
+#endif /* SPI_CONFIG_H_ */
