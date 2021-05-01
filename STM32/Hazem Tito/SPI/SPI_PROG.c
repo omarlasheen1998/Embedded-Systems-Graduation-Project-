@@ -77,6 +77,7 @@ if ( SPI_Configuaration == MSPI_MASTER )
 	GPIO_voidSetPinDirection(GPIOA, PIN7, OUTPUT_SPEED_50MHZ_AFPP); //MOSI
 	GPIO_voidSetPinDirection(GPIOA, PIN5, OUTPUT_SPEED_50MHZ_AFPP); //SCLK
 	GPIO_voidSetPinDirection(GPIOA, PIN6, INPUT_FLOATING); //MISO
+	SET_BIT(MSPI1->CR2,2); /* ENABLE SSOE*/
 	
 }
 else if  ( SPI_Configuaration ==  MSPI_SLAVE)
@@ -94,7 +95,7 @@ else if  ( SPI_Configuaration ==  MSPI_SLAVE)
 	MSPI1 -> CR1 &= 0xFFC7 ;
 	MSPI1 -> CR1 |= ( MSPI1_PRESCALLER << 3 ) ;
   CLR_BIT(MSPI1->CR1,10); /* FULL DUPLEX MODE IS USED*/
-	SET_BIT(MSPI1->CR2,2); /* ENABLE SSOE*/
+  CLR_BIT(MSPI2->I2SCFGR, 11);
 	SET_BIT( MSPI1 -> CR1 , 6 ); //Enable SPI1
 
 }
@@ -159,8 +160,7 @@ if ( SPI_Configuaration == MSPI_MASTER )
   
 	GPIO_voidSetPinDirection(GPIOB, PIN15, OUTPUT_SPEED_50MHZ_AFPP); //MOSI
 	GPIO_voidSetPinDirection(GPIOB, PIN13, OUTPUT_SPEED_50MHZ_AFPP); //SCLK
-	GPIO_voidSetPinDirection(GPIOB, PIN14, INPUT_PULL_UP_DOWN); //MISO
-	GPIO_voidSetPinPull(GPIOB,PIN14,PULL_UP);
+	GPIO_voidSetPinDirection(GPIOB, PIN14, INPUT_FLOATING); //MISO
 }
 else if  ( SPI_Configuaration ==  MSPI_SLAVE)
 {
@@ -168,11 +168,9 @@ else if  ( SPI_Configuaration ==  MSPI_SLAVE)
   configure_SPI2 = SPI_Configuaration;
   
 	GPIO_voidSetPinDirection(GPIOB, PIN14, OUTPUT_SPEED_50MHZ_AFPP); //MISO
-	GPIO_voidSetPinDirection(GPIOB, PIN15, INPUT_PULL_UP_DOWN); //MOSI
+	GPIO_voidSetPinDirection(GPIOB, PIN15, INPUT_FLOATING); //MOSI
 	GPIO_voidSetPinDirection(GPIOB, PIN13, INPUT_FLOATING); //SCLK
-	GPIO_voidSetPinDirection(GPIOB, PIN12, INPUT_PULL_UP_DOWN); //NSS
-	GPIO_voidSetPinPull(GPIOB,PIN15,PULL_UP);
-	GPIO_voidSetPinPull(GPIOB,PIN12,PULL_UP);
+	GPIO_voidSetPinDirection(GPIOB, PIN12, INPUT_FLOATING); //NSS
 }
   
 	MSPI2 -> CR1 &= 0xFFC7 ;
@@ -188,96 +186,28 @@ else if  ( SPI_Configuaration ==  MSPI_SLAVE)
 
 u8 MSPI_voidTransferDataU8 ( u8 SPI_TYPE, u8 Copy_u8Data )
 {
-
-	u8 retry=0;				 
-	u8 x;
+	u8 rx_val=0;
+	
+	
+ 
 	if(SPI_TYPE == SPI1)
-{	
-	if(configure_SPI1 == MSPI_MASTER )
-	{
-		while((MSPI1->SR&1<<1)==0)	
-	{
-		retry++;
-		if(retry>200)return 0;
-	}			  
-	MSPI1->DR = Copy_u8Data;	 	  
-	retry=0;
-	
-	while((MSPI1->SR&1<<0)==0)   
-	{
-		retry++;
-		if(retry>200)return 0;
-	}	  						    
-	return MSPI1->DR;          		
-
-}
-	else if( configure_SPI1 == MSPI_SLAVE	)
-	{
-		while((MSPI1->SR&1<<0)==0)   
-	{
-		retry++;
-		if(retry>200)return 0;
-	}
-	x=MSPI1->DR;
-	retry=0;
-	
-		while((MSPI1->SR&1<<1)==0)	
-	{
-		retry++;
-		if(retry>200)return 0;
-	}			  
-	MSPI1->DR = Copy_u8Data;	 	  
-	return x;          		
-
-}
-	return 0;
+{
+			MSPI1->DR = Copy_u8Data;
+     while(MSPI1->SR & 0x80){}
+		 while(MSPI1->SR & 0x1){rx_val = MSPI1->DR;}
 }
 
 
   else if(SPI_TYPE == SPI2)
-{	
+{
 
-	if(configure_SPI2 == MSPI_MASTER )
-	{
-		while((MSPI2->SR&1<<1)==0)	
-	{
-		retry++;
-		if(retry>200)return 0;
-	}			  
-	MSPI2->DR = Copy_u8Data;	 	  
-	retry=0;
-	
-	while((MSPI2->SR&1<<0)==0)   
-	{
-		retry++;
-		if(retry>200)return 0;
-	}	  						    
-	return MSPI2->DR;          		
-
-}
-	else if( configure_SPI2 == MSPI_SLAVE	)
-	{
-		while((MSPI2->SR&1<<0)==0)   
-	{
-		retry++;
-		if(retry>200)return 0;
-	}
-	x=MSPI2->DR;
-	retry=0;
-	
-		while((MSPI2->SR&1<<1)==0)	
-	{
-		retry++;
-		if(retry>200)return 0;
-	}			  
-	MSPI2->DR = Copy_u8Data;	 	  
-	return x;          		
-
-}
-	return 0;
+     MSPI2->DR = Copy_u8Data;
+     while(MSPI2->SR & 0x80){}
+		 while(MSPI2->SR & 0x1){rx_val = MSPI2->DR;}
 }
 
-return 0;  
+  
+return rx_val;  
 }
 
 
@@ -289,28 +219,32 @@ void MSPI_voidSendByte(u8 Copy_u8spi,const u8 Copy_u8data){
 	switch (Copy_u8spi){
 	case SPI1:
 		MSPI1->DR=Copy_u8data;
-		while((MSPI1->SR & (1<<1))==0);// waiting for TXE flag is set to indicate that the byte is sent
+	while(MSPI1->SR & 0x80){}// waiting for BUSY flag is set to indicate that the byte is sent
 		break;
 	case SPI2:
 		MSPI2->DR=Copy_u8data;
-		while((MSPI2->SR & (1<<1))==0);// waiting for TXE flag is set to indicate that the byte is sent
+		while(MSPI2->SR & 0x80){}// waiting for BUSY flag is set to indicate that the byte is sent
 		break;
 	}
 
 }
 
 u8 MSPI_u8RecieveByte(u8 Copy_u8spi){
+	u8 rx_val=0;
 	switch(Copy_u8spi){
 	case SPI1:
-		while((MSPI1->SR & (1<<0))==0); // waiting for RXNE flag is set to indicate that the byte is received
-		return MSPI1->DR;
-
+		while(MSPI1->SR & 0x80){}
+		while(MSPI1->SR & 0x1){rx_val = MSPI1->DR;}
 		break;
+		
 	case SPI2:
-		while((MSPI2->SR & (1<<0))==0);// waiting for RXNE flag is set to indicate that the byte is received
-		return MSPI2->DR;
+		while(MSPI2->SR & 0x80){}
+		while(MSPI2->SR & 0x1){rx_val = MSPI2->DR;}
 		break;
+		
 	}
+	
+		return rx_val;
 }
 /* function description :
  * this function used to send string if it will be received it must send with end of #
