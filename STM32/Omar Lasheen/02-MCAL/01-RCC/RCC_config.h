@@ -48,7 +48,7 @@
 /*** Note: Select value only if you  have PLL as input clock source ***/
 
 #if RCC_CLOCK_TYPE == RCC_PLL
-#define RCC_PLL_MUL_VAL     PLL_CLOCK_MULTIPLE_BY_9
+#define RCC_PLL_MUL_VAL     PLL_CLOCKk_MULTIPLE_BY_9
 #endif
 
 

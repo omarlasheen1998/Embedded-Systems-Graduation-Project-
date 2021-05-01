@@ -5,6 +5,8 @@
 /*********************************************************************************/
 #ifndef RCC_INTERFACE_H
 #define RCC_INTERFACE_H
+#include "STD_TYPES.h"
+
 
 #define RCC_AHB     0
 #define RCC_APB1    1
@@ -19,11 +21,16 @@
 #define APB2_ADC2_EN         10
 #define APB2_TIM1_EN         11
 #define APB2_SPI1_EN         12
-#define APB2_TIM8_EN         13
 #define APB2_USART1_EN       14
 #define APB2_ADC3_EN         15
 /***************   APB1 BITS definition    ******************/
 #define APB1_CAN_EN 25
+#define APB1_SPI2_EN 14
+#define APB1_USART2_EN 17
+#define APB1_USART3_EN 18
+#define APB1_TIM2_EN 0
+#define APB1_TIM3_EN 1
+#define APB1_TIM4_EN 2
 
 /***************   Function definition    ******************/
 
