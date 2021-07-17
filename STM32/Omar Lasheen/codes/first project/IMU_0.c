@@ -62,7 +62,6 @@ void setup(void);
 void loop(void);
 void setup_mpu_6050_registers(void);
 void read_mpu_6050_data(void);
-void write_LCD(void);
 void print_data(void);
 
 
@@ -209,12 +208,13 @@ void loop()
  
 }
 
-void read_mpu_6050_data() {
-u8 send_data;
-u8 receive_data[20];
-send_data = 0x3B;
-I2C_master_tx(MI2C1,imu_address,&send_data,1);																	//Send the requested starting register
-I2C_generate_stop_condition(MI2C1);                               			//End the transmission
+void read_mpu_6050_data() 
+{
+	u8 send_data;
+	u8 receive_data[20];
+	send_data = 0x3B;
+	I2C_master_tx(MI2C1,imu_address,&send_data,1);																	//Send the requested starting register
+	I2C_generate_stop_condition(MI2C1);                               			//End the transmission
 	
   I2C_master_rx(MI2C1,imu_address,receive_data,14);                              //Request 14 bytes from the MPU-6050
 //Subroutine for reading the raw gyro and accelerometer data
@@ -230,80 +230,7 @@ I2C_generate_stop_condition(MI2C1);                               			//End the t
   gyro_z  = (receive_data[12]<<8)|receive_data[13];                                 //Add the low and high byte to the gyro_z variable
 }
 
-void write_LCD(void){                                                      //Subroutine for writing the LCD
-	int data_flag;
-	
-  //To get a 250Hz program loop (4us) it's only possible to write one character per loop
-  //Writing multiple characters is taking to much time
-  if(lcd_loop_counter == 14)lcd_loop_counter = 0;                      //Reset the counter after 14 characters
-  lcd_loop_counter ++;                                                 //Increase the counter
-	
-  if(lcd_loop_counter == 1){
-    angle_pitch_buffer = angle_pitch_output * 10;                      //Buffer the pitch angle because it will change
-    USART_voidTransmit(UART3,"Pitch:",STRING);                                               //Set the LCD cursor to position to position 0,0
-  }
-  if(lcd_loop_counter == 2){
-    if(angle_pitch_buffer < 0)USART_voidTransmit(UART3,"-",CHAR);                          //Print - if value is negative
-    else USART_voidTransmit(UART3,"+",CHAR);                                                //Print + if value is negative
-  }
-	
-  if(lcd_loop_counter == 3)
-	{//Print first number
-		data_flag = abs(angle_pitch_buffer)/1000;
-		USART_voidTransmit(UART3,&data_flag,INT);    											
-	}
-	if(lcd_loop_counter == 4)
-	{//Print second number
-		data_flag = (abs(angle_pitch_buffer)/100)%10;
-		USART_voidTransmit(UART3,&data_flag,INT);    											
-	}
-  if(lcd_loop_counter == 5)
-	{//Print third number
-		data_flag = (abs(angle_pitch_buffer)/10)%10;
-		USART_voidTransmit(UART3,&data_flag,INT);    											
-	}
-  if(lcd_loop_counter == 6)USART_voidTransmit(UART3,".",CHAR);         //Print decimal point
-	if(lcd_loop_counter == 7)
-	{ //Print decimal number
-		data_flag = abs(angle_pitch_buffer)%10;
-		USART_voidTransmit(UART3,&data_flag,INT);    											
-	}
-	 
-	
-  if(lcd_loop_counter == 8){
-    angle_roll_buffer = angle_roll_output * 10;
-		USART_voidTransmit(UART3,"\n",CHAR);
-    USART_voidTransmit(UART3,"Roll :",STRING);
-  }
-	  if(lcd_loop_counter == 9){
-    if(angle_roll_output < 0)USART_voidTransmit(UART3,"-",CHAR);                          //Print - if value is negative
-    else USART_voidTransmit(UART3,"+",CHAR);                                                //Print + if value is negative
-  }
-		if(lcd_loop_counter == 10)
-	{//Print first number
-		data_flag = abs(angle_roll_output)/1000;
-		USART_voidTransmit(UART3,&data_flag,INT);    											
-	}
-	if(lcd_loop_counter == 11)
-	{//Print second number
-		data_flag = (abs(angle_roll_output)/100)%10;
-		USART_voidTransmit(UART3,&data_flag,INT);    											
-	}
-  if(lcd_loop_counter == 12)
-	{//Print third number
-		data_flag = (abs(angle_roll_output)/10)%10;
-		USART_voidTransmit(UART3,&data_flag,INT);    											
-	}
-  if(lcd_loop_counter == 13)USART_voidTransmit(UART3,".",CHAR);         //Print decimal point
-	if(lcd_loop_counter == 14)
-	{ //Print decimal number
-		data_flag = abs(angle_roll_output)%10;
-		USART_voidTransmit(UART3,&data_flag,INT); 
-		USART_voidTransmit(UART3,"\n",CHAR);		
-	}
-  
-  	
-}
+
 
 void setup_mpu_6050_registers() {  //Activate the MPU-6050
   u8 send_data[2];
