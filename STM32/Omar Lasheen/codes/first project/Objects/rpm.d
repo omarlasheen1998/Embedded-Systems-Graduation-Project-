@@ -1,0 +1,10 @@
+.\objects\rpm.o: RPM.c
+.\objects\rpm.o: STD_TYPES.h
+.\objects\rpm.o: BIT_MATH.h
+.\objects\rpm.o: GPIO_interface.h
+.\objects\rpm.o: RCC_interface.h
+.\objects\rpm.o: USART_INTERFACE.h
+.\objects\rpm.o: STK_interface.h
+.\objects\rpm.o: AFIO_interface.h
+.\objects\rpm.o: NVIC_interface.h
+.\objects\rpm.o: EXTI_interface.h

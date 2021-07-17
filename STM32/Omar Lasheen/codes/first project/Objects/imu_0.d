@@ -1,0 +1,14 @@
+.\objects\imu_0.o: IMU_0.c
+.\objects\imu_0.o: STD_TYPES.h
+.\objects\imu_0.o: BIT_MATH.h
+.\objects\imu_0.o: GPIO_interface.h
+.\objects\imu_0.o: RCC_interface.h
+.\objects\imu_0.o: USART_INTERFACE.h
+.\objects\imu_0.o: STK_interface.h
+.\objects\imu_0.o: AFIO_interface.h
+.\objects\imu_0.o: NVIC_interface.h
+.\objects\imu_0.o: I2C_interface.h
+.\objects\imu_0.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\imu_0.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\imu_0.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+.\objects\imu_0.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

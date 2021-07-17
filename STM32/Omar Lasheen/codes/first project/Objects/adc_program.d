@@ -1,0 +1,14 @@
+.\objects\adc_program.o: ADC_program.c
+.\objects\adc_program.o: STD_TYPES.h
+.\objects\adc_program.o: BIT_MATH.h
+.\objects\adc_program.o: ADC_interface.h
+.\objects\adc_program.o: ADC_private.h
+.\objects\adc_program.o: ADC_config.h
+.\objects\adc_program.o: RCC_interface.h
+.\objects\adc_program.o: RCC_private.h
+.\objects\adc_program.o: RCC_config.h
+.\objects\adc_program.o: NVIC_interface.h
+.\objects\adc_program.o: NVIC_private.h
+.\objects\adc_program.o: NVIC_config.h
+.\objects\adc_program.o: STK_interface.h
+.\objects\adc_program.o: GPIO_private.h

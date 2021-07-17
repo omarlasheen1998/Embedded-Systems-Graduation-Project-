@@ -1,0 +1,10 @@
+.\objects\master_main.o: master_main.c
+.\objects\master_main.o: STD_TYPES.h
+.\objects\master_main.o: BIT_MATH.h
+.\objects\master_main.o: GPIO_interface.h
+.\objects\master_main.o: RCC_interface.h
+.\objects\master_main.o: USART_INTERFACE.h
+.\objects\master_main.o: STK_interface.h
+.\objects\master_main.o: AFIO_interface.h
+.\objects\master_main.o: NVIC_interface.h
+.\objects\master_main.o: I2C_interface.h

@@ -1,0 +1,10 @@
+.\objects\steering_angle.o: Steering_angle.c
+.\objects\steering_angle.o: STD_TYPES.h
+.\objects\steering_angle.o: BIT_MATH.h
+.\objects\steering_angle.o: GPIO_interface.h
+.\objects\steering_angle.o: RCC_interface.h
+.\objects\steering_angle.o: USART_INTERFACE.h
+.\objects\steering_angle.o: STK_interface.h
+.\objects\steering_angle.o: AFIO_interface.h
+.\objects\steering_angle.o: NVIC_interface.h
+.\objects\steering_angle.o: EXTI_interface.h

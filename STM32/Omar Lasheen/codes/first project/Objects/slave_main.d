@@ -1,0 +1,16 @@
+.\objects\slave_main.o: slave_main.c
+.\objects\slave_main.o: STD_TYPES.h
+.\objects\slave_main.o: BIT_MATH.h
+.\objects\slave_main.o: GPIO_interface.h
+.\objects\slave_main.o: RCC_interface.h
+.\objects\slave_main.o: RCC_private.h
+.\objects\slave_main.o: RCC_config.h
+.\objects\slave_main.o: SPI_interface.h
+.\objects\slave_main.o: SPI_PRIVATE.h
+.\objects\slave_main.o: USART_INTERFACE.h
+.\objects\slave_main.o: STK_interface.h
+.\objects\slave_main.o: AFIO_interface.h
+.\objects\slave_main.o: NVIC_interface.h
+.\objects\slave_main.o: I2C_interface.h
+.\objects\slave_main.o: I2C_private.h
+.\objects\slave_main.o: DMA_INTERFACE.h

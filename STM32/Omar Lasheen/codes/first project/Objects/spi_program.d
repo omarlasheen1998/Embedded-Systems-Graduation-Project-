@@ -1,0 +1,15 @@
+.\objects\spi_program.o: SPI_program.c
+.\objects\spi_program.o: STD_TYPES.h
+.\objects\spi_program.o: BIT_MATH.h
+.\objects\spi_program.o: RCC_interface.h
+.\objects\spi_program.o: RCC_private.h
+.\objects\spi_program.o: RCC_config.h
+.\objects\spi_program.o: GPIO_interface.h
+.\objects\spi_program.o: GPIO_private.h
+.\objects\spi_program.o: GPIO_config.h
+.\objects\spi_program.o: SPI_interface.h
+.\objects\spi_program.o: SPI_private.h
+.\objects\spi_program.o: SPI_config.h
+.\objects\spi_program.o: NVIC_interface.h
+.\objects\spi_program.o: NVIC_private.h
+.\objects\spi_program.o: NVIC_config.h

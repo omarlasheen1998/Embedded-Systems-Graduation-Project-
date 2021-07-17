@@ -1,0 +1,11 @@
+.\objects\pwm_test.o: PWM_test.c
+.\objects\pwm_test.o: STD_TYPES.h
+.\objects\pwm_test.o: BIT_MATH.h
+.\objects\pwm_test.o: GPIO_interface.h
+.\objects\pwm_test.o: RCC_interface.h
+.\objects\pwm_test.o: USART_INTERFACE.h
+.\objects\pwm_test.o: STK_interface.h
+.\objects\pwm_test.o: AFIO_interface.h
+.\objects\pwm_test.o: NVIC_interface.h
+.\objects\pwm_test.o: EXTI_interface.h
+.\objects\pwm_test.o: PWM_INTERFACE.h

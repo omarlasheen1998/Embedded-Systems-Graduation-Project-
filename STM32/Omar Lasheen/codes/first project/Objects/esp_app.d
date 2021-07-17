@@ -1,0 +1,10 @@
+.\objects\esp_app.o: esp_app.c
+.\objects\esp_app.o: STD_TYPES.h
+.\objects\esp_app.o: BIT_MATH.h
+.\objects\esp_app.o: GPIO_interface.h
+.\objects\esp_app.o: RCC_interface.h
+.\objects\esp_app.o: USART_INTERFACE.h
+.\objects\esp_app.o: STK_interface.h
+.\objects\esp_app.o: AFIO_interface.h
+.\objects\esp_app.o: NVIC_interface.h
+.\objects\esp_app.o: ESP8266_interface.h
