@@ -30,22 +30,11 @@ int main()
 	
 	USART_voidInit(UART3,9600);
 	
-	
-	
 	GPIO_voidSetPinDirection(GPIOA, PIN4, INPUT_PULL_UP_DOWN);
 	GPIO_voidSetPinDirection(GPIOA, PIN5, INPUT_PULL_UP_DOWN);
 	
-	GPIO_voidSetPinDirection(GPIOA, PIN12, INPUT_PULL_UP_DOWN);
-	GPIO_voidSetPinDirection(GPIOA, PIN13, INPUT_PULL_UP_DOWN);
-	
 	GPIO_voidSetPinPull		(GPIOA, PIN4, PULL_UP);
 	GPIO_voidSetPinPull		(GPIOA, PIN5, PULL_UP);
-	
-	GPIO_voidSetPinPull		(GPIOB, PIN12, PULL_UP);
-	GPIO_voidSetPinPull		(GPIOB, PIN13, PULL_UP);
-	
-	MAFIO_voidSetEXTIConfiguration(GPIOB,PIN12);
-	MAFIO_voidSetEXTIConfiguration(GPIOB,PIN13);
 	
 	EXTI_voidSetCallBack(EXTI_LINE4,Forward_1);
 	EXTI_voidSetCallBack(EXTI_LINE5,Backward_1);
@@ -53,22 +42,16 @@ int main()
 	EXTI_voidSetSignalLatch(EXTI_LINE4, ON_CHANGE);
 	EXTI_voidSetSignalLatch(EXTI_LINE5, ON_CHANGE);
 	
-	EXTI_voidSetCallBack(EXTI_LINE12,Forward_2);
-	EXTI_voidSetCallBack(EXTI_LINE13,Backward_2);
-	
-	EXTI_voidSetSignalLatch(EXTI_LINE12, ON_CHANGE);
-	EXTI_voidSetSignalLatch(EXTI_LINE13, ON_CHANGE);
-	
 	
 	NVIC_voidEnableInterrupt(10);//4
 	NVIC_voidEnableInterrupt(23);//5-9
-	NVIC_voidEnableInterrupt(40);//10-15
+	//NVIC_voidEnableInterrupt(40);//10-15
 	
 	STK_voidSetIntervalPeriodic(900000,CalculateAngle); /* 900000 = 100 mS*/
 	
 	while(1)
 	{
-		
+   //CalculateAngle();		
 	}
 	
 }
@@ -141,11 +124,16 @@ void Backward_2(void)
 
 void CalculateAngle(void)
 {
-	s8 angle = 0;
+	s32 angle = 0;
 	
-	angle = (((encoder_counter_1)*1.0)/(45000))*360;
+	angle = (((encoder_counter_1)*1.0)/(45000))*360 - 20;
+
+	if(angle > 20)
+		angle = 20;
+	else if(angle < -20)
+		angle = -20;
 	
-	USART_voidTransmit(UART3,"ANGLE =  ",STRING);
+//	USART_voidTransmit(UART3,"ANGLE =  ",STRING);
 	USART_voidTransmit(UART3,&angle,INT);
 	
 	USART_voidTransmit(UART3," \n",STRING);

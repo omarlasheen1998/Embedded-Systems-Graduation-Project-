@@ -1,0 +1,11 @@
+.\objects\test_led.o: test_led.c
+.\objects\test_led.o: STD_TYPES.h
+.\objects\test_led.o: BIT_MATH.h
+.\objects\test_led.o: GPIO_interface.h
+.\objects\test_led.o: RCC_interface.h
+.\objects\test_led.o: USART_INTERFACE.h
+.\objects\test_led.o: STK_interface.h
+.\objects\test_led.o: AFIO_interface.h
+.\objects\test_led.o: NVIC_interface.h
+.\objects\test_led.o: EXTI_interface.h
+.\objects\test_led.o: PWM_INTERFACE.h

@@ -1,5 +1,5 @@
 --cpu Cortex-M3
-".\objects\steering_angle.o"
+".\objects\pwm_test.o"
 ".\objects\rcc_interface.o"
 ".\objects\gpio_program.o"
 ".\objects\pwm_interface.o"

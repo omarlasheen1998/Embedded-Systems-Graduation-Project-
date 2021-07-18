@@ -26,17 +26,13 @@ int main()
 	rcc_init();
 	EXTI_voidInit();
 	
-	STK_voidInit();
-	
 	USART_voidInit(UART3,9600);
-	
-	
 	
 	GPIO_voidSetPinDirection(GPIOA, PIN4, INPUT_PULL_UP_DOWN);
 	GPIO_voidSetPinDirection(GPIOA, PIN5, INPUT_PULL_UP_DOWN);
 	
-	GPIO_voidSetPinDirection(GPIOA, PIN12, INPUT_PULL_UP_DOWN);
-	GPIO_voidSetPinDirection(GPIOA, PIN13, INPUT_PULL_UP_DOWN);
+	GPIO_voidSetPinDirection(GPIOB, PIN12, INPUT_PULL_UP_DOWN);
+	GPIO_voidSetPinDirection(GPIOB, PIN13, INPUT_PULL_UP_DOWN);
 	
 	GPIO_voidSetPinPull		(GPIOA, PIN4, PULL_UP);
 	GPIO_voidSetPinPull		(GPIOA, PIN5, PULL_UP);
@@ -44,8 +40,8 @@ int main()
 	GPIO_voidSetPinPull		(GPIOB, PIN12, PULL_UP);
 	GPIO_voidSetPinPull		(GPIOB, PIN13, PULL_UP);
 	
-	MAFIO_voidSetEXTIConfiguration(GPIOB,PIN12);
-	MAFIO_voidSetEXTIConfiguration(GPIOB,PIN13);
+	MAFIO_voidSetEXTIConfiguration(PIN12,GPIOB);
+	MAFIO_voidSetEXTIConfiguration(PIN13,GPIOB);
 	
 	EXTI_voidSetCallBack(EXTI_LINE4,Forward_1);
 	EXTI_voidSetCallBack(EXTI_LINE5,Backward_1);
@@ -64,17 +60,24 @@ int main()
 	NVIC_voidEnableInterrupt(23);//5-9
 	NVIC_voidEnableInterrupt(40);//10-15
 	
-	STK_voidSetIntervalPeriodic(900000,CalculateRPM); /* 900000 = 100 mS*/
+	STK_voidInit();
 	
+	//STK_voidSetIntervalPeriodic(9000000,CalculateRPM); /* 900000 = 100 mS*/
+
+  STK_voidStartTimer(16000000);
 	while(1)
 	{
-		/*
-		USART_voidTransmit(UART3,"encoder_1 =  ",STRING);
-		USART_voidTransmit(UART3,&encoder_counter_1,INT);
-		USART_voidTransmit(UART3," , encoder_2 =  ",STRING);
-		USART_voidTransmit(UART3,&encoder_counter_2,INT);
-		USART_voidTransmit(UART3," \n",STRING);
-		*/
+		
+		CalculateRPM();
+	//	STK_voidStopTimer();
+	 // STK_voidStartTimer(90000);
+		
+	//	USART_voidTransmit(UART3,"encoder_1 =  ",STRING);
+	//	USART_voidTransmit(UART3,&encoder_counter_1,INT);
+	//	USART_voidTransmit(UART3," , encoder_2 =  ",STRING);
+	//	USART_voidTransmit(UART3,&encoder_counter_2,INT);
+	//	USART_voidTransmit(UART3," \n",STRING);
+		
 	}
 	
 }
@@ -147,16 +150,28 @@ void Backward_2(void)
 
 void CalculateRPM(void)
 {
-	s8 RPM_1 = 0, RPM_2 = 0;
-	
-	RPM_1 = (((encoder_counter_1)*1.0)/(22500))*60*10;
-	RPM_2 = (((encoder_counter_2)*1.0)/(22500))*60*10;
+	s32 RPM_1 = 0, RPM_2 = 0;	
+	static s64 old_count1=0,old_count2=0;
+	static u32	old_time=0;
+	u32 x = STK_u32GetElapedTime();
+	float y = ((x - old_time)*1.0)/9000000;
+	old_time = x;
+	RPM_1 = (((encoder_counter_1 - old_count1 )*1.0)/(22500 * y ))*60;
+	RPM_2 = (((encoder_counter_2 - old_count2 )*1.0)/(22500 * y ))*60;
+  
+	old_count1 = encoder_counter_1;
+	old_count2 = encoder_counter_2;
 	
 	USART_voidTransmit(UART3,"RPM_1 =  ",STRING);
 	USART_voidTransmit(UART3,&RPM_1,INT);
-	USART_voidTransmit(UART3," , RPM_2 =  ",STRING);
-	USART_voidTransmit(UART3,&RPM_2,INT);
-	USART_voidTransmit(UART3," \n",STRING);
-	encoder_counter_1 = 0;
-	encoder_counter_2 = 0;
+	//USART_voidTransmit(UART3," , encoder_1 =  ",STRING);
+//	USART_voidTransmit(UART3,&encoder_counter_1,INT);
+	
+ USART_voidTransmit(UART3," , RPM_2 =  ",STRING); 
+ USART_voidTransmit(UART3,&RPM_2,INT);
+ USART_voidTransmit(UART3," \n",STRING);
+	
+//	encoder_counter_1 = 0;
+//	encoder_counter_2 = 0;
+	
 }

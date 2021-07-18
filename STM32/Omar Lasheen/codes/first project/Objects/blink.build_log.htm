@@ -3,46 +3,194 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: µVision V5.28.0.0
-Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: islsm abdo, n/a, LIC=----
+IDE-Version: µVision V5.35.0.0
+Copyright (C) 2021 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: hazem magdy, no, LIC=----
  
 Tool Versions:
-Toolchain:       MDK-Lite  Version: 5.28.0.0
+Toolchain:       MDK-Lite  Version: 5.35.0.2
 Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
-C Compiler:      Armcc.exe V5.06 update 6 (build 750)
-Assembler:       Armasm.exe V5.06 update 6 (build 750)
-Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
-Library Manager: ArmAr.exe V5.06 update 6 (build 750)
-Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
-CPU DLL:         SARMCM3.DLL V5.28.0.0
+C Compiler:      Armcc.exe V5.06 update 7 (build 960)
+Assembler:       Armasm.exe V5.06 update 7 (build 960)
+Linker/Locator:  ArmLink.exe V5.06 update 7 (build 960)
+Library Manager: ArmAr.exe V5.06 update 7 (build 960)
+Hex Converter:   FromElf.exe V5.06 update 7 (build 960)
+CPU DLL:         SARMCM3.DLL V5.35.0.2
 Dialog DLL:      DCM.DLL V1.17.3.0
-Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.6.0
-Dialog DLL:      TCM.DLL V1.36.2.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.9.0
+Dialog DLL:      TCM.DLL V1.53.0.0
  
 <h2>Project:</h2>
-D:\Downloads\embadded\stm32f103_imt\System\ARM_STM32f103_Drivers\kiel_workspace\first project\blink.uvprojx
-Project File Date:  07/17/2021
+D:\github\Embedded-Systems-Graduation-Project-\STM32\Omar Lasheen\codes\first project\blink.uvprojx
+Project File Date:  07/18/2021
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
-Build target 'Target 1'
-compiling Steering_angle.c...
-Steering_angle.c(153): warning:  #1-D: last line of file ends without a newline
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'Target 1'
+compiling GPIO_program.c...
+compiling RCC_INTERFACE.c...
+compiling PWM_INTERFACE.c...
+compiling NVIC_program.c...
+NVIC_program.c(97): warning:  #83-D: type qualifier specified more than once
+  		Local_u8Result = GET_BIT(NVIC_IABR0, Copy_u8IntNumber);
+NVIC_program.c(102): warning:  #83-D: type qualifier specified more than once
+  		Local_u8Result = GET_BIT(NVIC_IABR1, Copy_u8IntNumber);
+NVIC_program.c: 2 warnings, 0 errors
+compiling PWM_test.c...
+PWM_test.c(194): warning:  #1-D: last line of file ends without a newline
   }
-Steering_angle.c: 1 warning, 0 errors
+PWM_test.c(169): warning:  #177-D: variable "RPM_2"  was declared but never referenced
+  	s32 RPM_1 = 0, RPM_2 = 0;	
+PWM_test.c(170): warning:  #177-D: variable "old_count2"  was declared but never referenced
+  	static s64 old_count1=0,old_count2=0;
+PWM_test.c: 3 warnings, 0 errors
+compiling STK_program.c...
+STK_program.c(160): warning:  #550-D: variable "Local_u8Temporary"  was set but never used
+  	u8 Local_u8Temporary;
+STK_program.c: 1 warning, 0 errors
+compiling ADC_program.c...
+ADC_program.c(109): warning:  #111-D: statement is unreachable
+  		break;
+ADC_program.c(169): warning:  #111-D: statement is unreachable
+  		break;
+ADC_program.c(229): warning:  #111-D: statement is unreachable
+  		break;
+ADC_program.c(289): warning:  #111-D: statement is unreachable
+  		break;
+ADC_program.c(351): warning:  #111-D: statement is unreachable
+  		break;
+ADC_program.c(412): warning:  #111-D: statement is unreachable
+  		break;
+ADC_program.c(473): warning:  #111-D: statement is unreachable
+  		break;
+ADC_program.c(534): warning:  #111-D: statement is unreachable
+  		break;
+ADC_program.c(595): warning:  #111-D: statement is unreachable
+  		break;
+ADC_program.c(654): warning:  #111-D: statement is unreachable
+  		break;
+ADC_program.c(659): warning:  #940-D: missing return statement at end of non-void function "ADC_u16ReadChannelPoll" 
+  }
+ADC_program.c(1261): warning:  #513-D: a value of type "void (*)(void)" cannot be assigned to an entity of type "volatile void (*)(void)"
+  	g_callBackPtr=a_ptr;
+ADC_program.c: 12 warnings, 0 errors
+compiling AFIO_program.c...
+compiling SPI_PROG.c...
+SPI_PROG.c(308): warning:  #111-D: statement is unreachable
+  		break;
+SPI_PROG.c(311): warning:  #111-D: statement is unreachable
+  		break;
+SPI_PROG.c(313): warning:  #940-D: missing return statement at end of non-void function "MSPI_u8ReturnData" 
+  }
+SPI_PROG.c(367): warning:  #1-D: last line of file ends without a newline
+  }
+SPI_PROG.c: 4 warnings, 0 errors
+compiling DMA.c...
+compiling USART_INTERFACE.c...
+USART_INTERFACE.c(115): warning:  #1254-D: arithmetic on pointer to void or function type
+  	 for(int i=0;*(char*)(Copy_u8data+i)!='\0';i++)
+USART_INTERFACE.c(120): warning:  #1254-D: arithmetic on pointer to void or function type
+  	USART1->DR = *(char*)(Copy_u8data+i);
+USART_INTERFACE.c(183): warning:  #1254-D: arithmetic on pointer to void or function type
+  	 for(int i=0;*(char*)(Copy_u8data+i)!='\0';i++)
+USART_INTERFACE.c(186): warning:  #1254-D: arithmetic on pointer to void or function type
+  	USART2->DR = *(char*)(Copy_u8data+i);
+USART_INTERFACE.c(242): warning:  #1254-D: arithmetic on pointer to void or function type
+  	 for(int i=0;*(char*)(Copy_u8data+i)!='\0';i++)
+USART_INTERFACE.c(245): warning:  #1254-D: arithmetic on pointer to void or function type
+  	USART3->DR = *(char*)(Copy_u8data+i);
+USART_INTERFACE.c(274): warning:  #111-D: statement is unreachable
+  	break;
+USART_INTERFACE.c(281): warning:  #111-D: statement is unreachable
+  	break;
+USART_INTERFACE.c(288): warning:  #111-D: statement is unreachable
+  	break;
+USART_INTERFACE.c(292): warning:  #111-D: statement is unreachable
+  	break;
+USART_INTERFACE.c: 10 warnings, 0 errors
+compiling ESP8266_program.c...
+ESP8266_program.c(44): warning:  #167-D: argument of type "volatile uint8 *" is incompatible with parameter of type "uint8 *"
+  		ESP8266_voidDebugOutput(DataCome);
+ESP8266_program.c(54): warning:  #167-D: argument of type "volatile uint8 *" is incompatible with parameter of type "uint8 *"
+  		ESP8266_voidDebugOutput(DataCome);
+ESP8266_program.c(62): warning:  #167-D: argument of type "volatile uint8 *" is incompatible with parameter of type "uint8 *"
+  		ESP8266_voidDebugOutput(DataCome);
+ESP8266_program.c(78): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8String,"AT+CWJAP=\"");
+ESP8266_program.c(79): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8String,SSID);
+ESP8266_program.c(79): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "const char *__restrict__"
+  		strcat(local_u8String,SSID);
+ESP8266_program.c(80): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8String,"\",\"");
+ESP8266_program.c(81): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8String,Password);
+ESP8266_program.c(81): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "const char *__restrict__"
+  		strcat(local_u8String,Password);
+ESP8266_program.c(82): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8String,"\"\r\n");
+ESP8266_program.c(90): warning:  #167-D: argument of type "volatile uint8 *" is incompatible with parameter of type "uint8 *"
+  		ESP8266_voidDebugOutput(DataCome);
+ESP8266_program.c(123): warning:  #167-D: argument of type "volatile uint8 *" is incompatible with parameter of type "uint8 *"
+  			ESP8266_voidDebugOutput(DataCome);
+ESP8266_program.c(141): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8IP,"AT+CIPSTART=\"TCP\",\"");
+ESP8266_program.c(142): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8IP,IP);
+ESP8266_program.c(142): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "const char *__restrict__"
+  		strcat(local_u8IP,IP);
+ESP8266_program.c(143): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8IP,"\",80\r\n");
+ESP8266_program.c(184): warning:  #167-D: argument of type "volatile uint8 *" is incompatible with parameter of type "uint8 *"
+  			ESP8266_voidDebugOutput(DataCome);
+ESP8266_program.c(205): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8Length,"AT+CIPSEND=");
+ESP8266_program.c(206): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8Length,local_u8DataLength);/* add legth of "GET " + 1 */
+ESP8266_program.c(206): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "const char *__restrict__"
+  		strcat(local_u8Length,local_u8DataLength);/* add legth of "GET " + 1 */
+ESP8266_program.c(207): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8Length,"\r\n");
+ESP8266_program.c(212): warning:  #167-D: argument of type "volatile uint8 *" is incompatible with parameter of type "uint8 *"
+  		ESP8266_voidDebugOutput(DataCome);
+ESP8266_program.c(228): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8url,"GET ");
+ESP8266_program.c(229): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8url,local_u8DataURL);
+ESP8266_program.c(229): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "const char *__restrict__"
+  		strcat(local_u8url,local_u8DataURL);
+ESP8266_program.c(230): warning:  #167-D: argument of type "uint8 *" is incompatible with parameter of type "char *__restrict__"
+  		strcat(local_u8url,"\r\n");
+ESP8266_program.c(290): warning:  #167-D: argument of type "volatile uint8 *" is incompatible with parameter of type "uint8 *"
+  		ESP8266_voidDebugOutput(DataCome);
+ESP8266_program.c: 27 warnings, 0 errors
+compiling I2C_program.c...
+I2C_program.c(606): warning:  #550-D: variable "val"  was set but never used
+  	u16 val;
+I2C_program.c(615): warning:  #550-D: variable "val"  was set but never used
+  	u16 val;
+I2C_program.c(621): warning:  #1-D: last line of file ends without a newline
+   
+I2C_program.c(425): warning:  #177-D: function "I2C_rest_peripheral"  was declared but never referenced
+  static void I2C_rest_peripheral(void)
+I2C_program.c(558): warning:  #177-D: function "is_bus_busy"  was declared but never referenced
+  static u8 is_bus_busy(void)
+I2C_program.c: 5 warnings, 0 errors
+assembling startup_stm32f10x_md.s...
+compiling EXTI_program.c...
+compiling system_stm32f10x.c...
 linking...
-Program Size: Code=8752 RO-data=268 RW-data=48 ZI-data=1696  
+Program Size: Code=11100 RO-data=268 RW-data=68 ZI-data=1700  
 FromELF: creating hex file...
-".\Objects\blink.axf" - 0 Error(s), 1 Warning(s).
+".\Objects\blink.axf" - 0 Error(s), 64 Warning(s).
 
 <h2>Software Packages used:</h2>
 
 Package Vendor: ARM
-                http://www.keil.com/pack/ARM.CMSIS.5.5.1.pack
-                ARM.CMSIS.5.5.1
-                CMSIS (Cortex Microcontroller Software Interface Standard)
-   * Component: CORE Version: 5.2.0
+                http://www.keil.com/pack/ARM.CMSIS.5.8.0.pack
+                ARM.CMSIS.5.8.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.5.0
 
 Package Vendor: Keil
                 http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.3.0.pack
@@ -53,17 +201,17 @@ Package Vendor: Keil
 <h2>Collection of Component include folders:</h2>
   .\RTE\Device\STM32F103C8
   .\RTE\_Target_1
-  C:\Users\islam\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include
-  C:\Users\islam\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include
+  C:\Users\Kimo\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\Core\Include
+  C:\Users\Kimo\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
 
-   * Component: ARM::CMSIS:CORE:5.2.0
+   * Component: ARM::CMSIS:CORE:5.5.0
 
    * Component: Keil::Device:Startup:1.0.0
-      Source file:   Device\Source\ARM\startup_stm32f10x_md.s
       Source file:   Device\Source\system_stm32f10x.c
       Include file:  RTE_Driver\Config\RTE_Device.h
+      Source file:   Device\Source\ARM\startup_stm32f10x_md.s
       Source file:   Device\Source\ARM\STM32F1xx_OPT.s
 Build Time Elapsed:  00:00:01
 </pre>

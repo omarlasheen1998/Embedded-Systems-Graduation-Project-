@@ -125,7 +125,7 @@ uint8 GPIO_u8GetPinValue (uint8 Copy_u8Port, uint8 Copy_u8Pin)
     {
          /*** PORT A ***/
 
-        case GPIOA:
+        case GPIO_u8GetPinValue:
             LOC_u8Result = GET_BIT (GPIOA_IDR, Copy_u8Pin);
             break;
 
