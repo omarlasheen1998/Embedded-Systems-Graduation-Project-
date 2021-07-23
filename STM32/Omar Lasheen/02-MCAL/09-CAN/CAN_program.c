@@ -197,6 +197,7 @@ void CAN_voidGetRxMsg(uint32 local_u8RxFifo, CAN_RxHeaderTypeDef *pRxHeader, uin
     pRxHeader->TimeStamp = (CAN->FIFOMailBox[local_u8RxFifo].RDTR >> 16) & 0XFFFF;
 
     /* Get the data */
+		#if 0
     Local_u8Data[0] = (uint8)((CAN->FIFOMailBox[local_u8RxFifo].RDLR 	  ) & 0XFF);
     Local_u8Data[1] = (uint8)((CAN->FIFOMailBox[local_u8RxFifo].RDLR >> 8 ) & 0XFF);
     Local_u8Data[2] = (uint8)((CAN->FIFOMailBox[local_u8RxFifo].RDLR >> 16) & 0XFF);
@@ -205,7 +206,20 @@ void CAN_voidGetRxMsg(uint32 local_u8RxFifo, CAN_RxHeaderTypeDef *pRxHeader, uin
     Local_u8Data[5] = (uint8)((CAN->FIFOMailBox[local_u8RxFifo].RDHR >> 8 ) & 0XFF);
     Local_u8Data[6] = (uint8)((CAN->FIFOMailBox[local_u8RxFifo].RDHR >> 16) & 0XFF);
     Local_u8Data[7] = (uint8)((CAN->FIFOMailBox[local_u8RxFifo].RDHR >> 24) & 0XFF);
-
+		#else
+		for(u8 i=0 ; i < 8 ; i++)
+		{/*clear buff*/
+			Local_u8Data[i] = 0;
+		}
+		for(u8 i=0 ; i < pRxHeader->DLC ; i++)
+		{
+			if (i<4)
+				Local_u8Data[i] = (uint8)((CAN->FIFOMailBox[local_u8RxFifo].RDLR >>(i*8) ) & 0XFF);
+			else
+				Local_u8Data[i] = (uint8)((CAN->FIFOMailBox[local_u8RxFifo].RDHR 	>>((i-4)*8)  ) & 0XFF);
+		}
+		
+		#endif
     /* Release the FIFO */
     if (local_u8RxFifo == CAN_RX_FIFO0)
     {

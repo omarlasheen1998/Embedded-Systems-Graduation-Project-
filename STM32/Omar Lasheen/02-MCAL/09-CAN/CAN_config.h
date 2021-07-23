@@ -32,7 +32,7 @@
  * 					 CAN_800KBPS,
  * 					 CAN_1MBPS
  	 	 	 	 	 	 	 	 	 	 	 	 *************************/
-#define BOUDRATE		CAN_1MBPS
+#define BOUDRATE		CAN_500KBPS
 
 
 #endif /* CAN_CONFIG_H */

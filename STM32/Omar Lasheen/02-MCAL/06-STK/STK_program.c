@@ -18,8 +18,24 @@ static void (*STK_CallBack) (void);
 /* define variable for interval mode 		*/
 static u8 STk_u8ModeOfInterval;
 
+u32 finish_micros,old_time_micros,finish_millis,old_time_millis;
+u64 elapsed_time_micros,elapsed_time_millis;
+
+void overflow_micros(){
 
 
+elapsed_time_micros += 16000000/9.0 - finish_micros;
+old_time_micros =0;
+
+}
+
+void overflow_millis(){
+
+
+elapsed_time_millis += 16000000/9000.0 - finish_millis;
+old_time_millis =0;
+
+}
 
 /*************	 Function OF Initialize clock Source of STK  **************************/
 /* Apply clock choice from configuration file
@@ -115,7 +131,26 @@ void  STK_voidSetIntervalPeriodic (u32 Copy_u32Ticks, void (*Copy_ptr) (void))
 		SET_BIT(STK->CTRL, 1);
 
 }
+void STK_voidStartTimer(u32 Copy_u32Ticks){
 
+	/* Load ticks to load register */
+		STK->LOAD = Copy_u32Ticks;
+
+/* Start Timer */
+	SET_BIT(STK->CTRL, 0);
+
+
+}
+
+void STK_voidStopTimer(){
+
+		/* Stop Timer */
+	CLR_BIT(STK->CTRL, 0);
+	STK->LOAD = 0 ;
+	STK->VAL = 0;
+
+
+}
 /*************	 Function OF Stop Interval  **************************/
 
 void STK_voidStopInterval (void)
@@ -150,6 +185,42 @@ u32 STK_u32GetRemainingTime (void)
 	Local_u32ElapsedTime = STK -> VAL;
 
 	return Local_u32ElapsedTime;
+}
+
+
+void STK_voidStartMicros(void)
+{
+
+	STK_voidSetIntervalPeriodic(16000000,overflow_micros);	
+
+
+}
+
+
+u64 Micros(void)
+{
+
+finish_micros = STK_u32GetElapedTime()/9.0;
+elapsed_time_micros += finish_micros - old_time_micros;
+old_time_micros = finish_micros;
+	
+
+return elapsed_time_micros;
+}
+void STK_voidStartMillis(void)
+{
+
+	STK_voidSetIntervalPeriodic(16000000,overflow_millis);
+	
+}
+u64 Millis(void)
+{
+
+  finish_millis = STK_u32GetElapedTime()/9000.0;
+	elapsed_time_millis += finish_millis - old_time_millis;
+  old_time_millis = finish_millis;
+	
+return elapsed_time_millis;
 }
 
 /*************	 Function OF STK Interrupt  **************************/
@@ -191,21 +262,4 @@ void STK_voidDelay_ms (u32 Copy_u32Ticks)
 	 * 1 ms = 9000 us */
 	Copy_u32Ticks *= 9000;
 	STK_voidSetBusyWait(Copy_u32Ticks);
-}
-
-void STK_voidStartTimer(u32 Copy_u32Ticks)
-{
-	/* Load ticks to load register */
-	STK->LOAD = Copy_u32Ticks;
-
-	/* Start Timer */
-	SET_BIT(STK->CTRL, 0);
-}
-
-void STK_voidStopTimer(void)
-{
-/* Stop Timer */
-	CLR_BIT(STK->CTRL, 0);
-	STK->LOAD = 0 ;
-	STK->VAL = 0;
 }
