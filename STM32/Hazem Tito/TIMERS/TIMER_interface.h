@@ -10,8 +10,7 @@ uint64 MICROS(uint8 Copy_u8TIMERID,uint32 Copy_reloadvalue);
 uint64 MILLIS(uint8 Copy_u8TIMERID,uint32 Copy_reloadvalue);
 void START_MICROS(uint8 Copy_u8TIMERID);
 void START_MILLIS(uint8 Copy_u8TIMERID);
-void TIMER_overflow_millis(uint8 Copy_u8TIMERID);
-void TIMER_overflow_micros(uint8 Copy_u8TIMERID);
+
 
 
 

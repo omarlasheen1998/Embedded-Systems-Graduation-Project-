@@ -17,49 +17,37 @@ uint32  Copy_reloadvalue;
 
 
 
-void TIMER_overflow_micros(uint8 Copy_u8TIMERID){
-	switch(Copy_u8TIMERID){
-	case 1:
-		time_elapsed_micros+=65535-finish_micros;
-		old_time_micros=0;
-		break;
-	case 2:
-		time_elapsed_micros+=65535-finish_micros;
-		old_time_micros=0;
-		break ;
-	case 3:
-		time_elapsed_micros+=65535-finish_micros;
-		old_time_micros=0;
-		break;
-	case 4:
-		time_elapsed_micros+=65535-finish_micros;
-		old_time_micros=0;
-		break;
+void TIMER_overflow_micros1(void){
+	time_elapsed_micros+=65535-finish_micros;
+	old_time_micros=0;
 
-	}
+}
+void TIMER_overflow_micros3(void){
+	time_elapsed_micros+=65535-finish_micros;
+	old_time_micros=0;
+
+}
+void TIMER_overflow_micros4(void){
+	time_elapsed_micros+=65535-finish_micros;
+	old_time_micros=0;
+
 }
 
 
-void TIMER_overflow_millis(uint8 Copy_u8TIMERID){
-	switch(Copy_u8TIMERID){
-	case 1:
-		time_elapsed_millis+=65535-finish_millis;
-		old_time_millis=0;
-		break;
-	case 2:
-		time_elapsed_millis+=65535-finish_millis;
-		old_time_millis=0;
-		break ;
-	case 3:
-		time_elapsed_millis+=65535-finish_millis;
-		old_time_millis=0;
-		break;
-	case 4:
-		time_elapsed_millis+=65535-finish_millis;
-		old_time_millis=0;
-		break;
 
-	}
+void TIMER_overflow_millis1(void){
+	time_elapsed_millis+=65535-finish_millis;
+	old_time_millis=0;
+
+}
+void TIMER_overflow_millis3(void){
+	time_elapsed_millis+=65535-finish_millis;
+	old_time_millis=0;
+
+}
+void TIMER_overflow_millis4(void){
+	time_elapsed_millis+=65535-finish_millis;
+	old_time_millis=0;
 
 }
 
@@ -250,16 +238,14 @@ uint64 MILLIS(uint8 Copy_u8TIMERID,uint32 Copy_reloadvalue){
 void START_MICROS(uint8 Copy_u8TIMERID){
 	switch (Copy_u8TIMERID) {
 	case 1:
-		TIMER_start(1,65535,TIMER_overflow_micros(1));
+		TIMER_start(1,65535,TIMER_overflow_micros1);
 		break;
-	case 2:
-		TIMER_start(2,65535,TIMER_overflow_micros(2));
-		break;
+
 	case 3:
-		TIMER_start(3,65535,TIMER_overflow_micros(3));
+		TIMER_start(3,65535,TIMER_overflow_micros3);
 		break;
 	case 4:
-		TIMER_start(4,65535,TIMER_overflow_micros(4));
+		TIMER_start(4,65535,TIMER_overflow_micros4);
 		break;
 
 	}
@@ -268,16 +254,14 @@ void START_MICROS(uint8 Copy_u8TIMERID){
 void START_MILLIS(uint8 Copy_u8TIMERID){
 	switch (Copy_u8TIMERID) {
 	case 1:
-		TIMER_start(1,65535,TIMER_overflow_millis(1));
+		TIMER_start(1,65535,TIMER_overflow_millis1);
 		break;
-	case 2:
-		TIMER_start(2,65535,TIMER_overflow_millis(2));
-		break;
+
 	case 3:
-		TIMER_start(3,65535,TIMER_overflow_millis(3));
+		TIMER_start(3,65535,TIMER_overflow_millis3);
 		break;
 	case 4:
-		TIMER_start(4,65535,TIMER_overflow_millis(4));
+		TIMER_start(4,65535,TIMER_overflow_millis4);
 		break;
 
 	}
