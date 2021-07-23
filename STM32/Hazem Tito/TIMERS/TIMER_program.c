@@ -116,7 +116,7 @@ void TIMER_voidInit(uint8 Copy_u8TIMERID){
 
 
 
-void TIMER_start(uint8 Copy_u8TIMERID,Copy_reloadvalue,void (*Copy_ptr) (void)){
+void TIMER_start(uint8 Copy_u8TIMERID,uint32 Copy_reloadvalue,void (*Copy_ptr) (void)){
 	switch(Copy_u8TIMERID){
 	case 1:
 		TIM1_ARR=Copy_reloadvalue;  //reload the counter value
@@ -162,7 +162,7 @@ void TIMER_stop(uint8 Copy_u8TIMERID){
 	}
 }
 
-uint32 Get_Elapsedtime(uint8 Copy_u8TIMERID){
+uint32 Get_Elapsedtime(uint8 Copy_u8TIMERID,uint32  Copy_reloadvalue){
 	uint32 elapsed_time;
 
 	switch(Copy_u8TIMERID){
@@ -187,51 +187,98 @@ uint32 Get_Elapsedtime(uint8 Copy_u8TIMERID){
 
 }
 
-uint64 MICROS(){
-	finish_micros=Get_Elapsedtime();
-	time_elapsed_micros+=finish_micros-old_time_micros;
-	old_time_micros=finish_micros;
-return time_elapsed_micros;
+uint64 MICROS(uint8 Copy_u8TIMERID,uint32 Copy_reloadvalue){
+	switch(Copy_u8TIMERID){
+	case 1:
+		finish_micros=Get_Elapsedtime(1, Copy_reloadvalue);
+		time_elapsed_micros+=finish_micros-old_time_micros;
+		old_time_micros=finish_micros;
+		return time_elapsed_micros;
+		break;
+	case 2:
+		finish_micros=Get_Elapsedtime(2, Copy_reloadvalue);
+		time_elapsed_micros+=finish_micros-old_time_micros;
+		old_time_micros=finish_micros;
+		return time_elapsed_micros;
+		break;
+	case 3:
+		finish_micros=Get_Elapsedtime(3, Copy_reloadvalue);
+		time_elapsed_micros+=finish_micros-old_time_micros;
+		old_time_micros=finish_micros;
+		return time_elapsed_micros;
+		break;
+	case 4:
+		finish_micros=Get_Elapsedtime(4, Copy_reloadvalue);
+		time_elapsed_micros+=finish_micros-old_time_micros;
+		old_time_micros=finish_micros;
+		return time_elapsed_micros;
+		break;
+	}
+	return time_elapsed_micros;
+
 }
-uint64 MILLIS(){
-		finish_millis=Get_Elapsedtime()/1000;
-		time_elapsed_millis+=finish_millis-old_time_millis;
+uint64 MILLIS(uint8 Copy_u8TIMERID,uint32 Copy_reloadvalue){
+	switch(Copy_u8TIMERID){
+	case 1:
+		finish_millis=Get_Elapsedtime(1, Copy_reloadvalue);
+		time_elapsed_millis+=finish_micros-old_time_millis;
 		old_time_millis=finish_millis;
 		return time_elapsed_millis;
+		break;
+	case 2:
+		finish_millis=Get_Elapsedtime(2, Copy_reloadvalue);
+		time_elapsed_millis+=finish_micros-old_time_millis;
+		old_time_millis=finish_millis;
+		return time_elapsed_millis;
+		break;
+	case 3:
+		finish_millis=Get_Elapsedtime(3, Copy_reloadvalue);
+		time_elapsed_millis+=finish_micros-old_time_millis;
+		old_time_millis=finish_millis;
+		return time_elapsed_millis;
+		break;
+	case 4:
+		finish_millis=Get_Elapsedtime(4, Copy_reloadvalue);
+		time_elapsed_millis+=finish_micros-old_time_millis;
+		old_time_millis=finish_millis;
+		return time_elapsed_millis;
+		break;
+	}
+	return time_elapsed_millis;
 }
 
 void START_MICROS(uint8 Copy_u8TIMERID){
 	switch (Copy_u8TIMERID) {
-		case 1:
-			TIMER_start(1,65535,TIMER_overflow_micros(1));
-			break;
-		case 2:
-			TIMER_start(2,65535,TIMER_overflow_micros(2));
-			break;
-		case 3:
-			TIMER_start(3,65535,TIMER_overflow_micros(3));
-			break;
-		case 4:
-			TIMER_start(4,65535,TIMER_overflow_micros(4));
-			break;
+	case 1:
+		TIMER_start(1,65535,TIMER_overflow_micros(1));
+		break;
+	case 2:
+		TIMER_start(2,65535,TIMER_overflow_micros(2));
+		break;
+	case 3:
+		TIMER_start(3,65535,TIMER_overflow_micros(3));
+		break;
+	case 4:
+		TIMER_start(4,65535,TIMER_overflow_micros(4));
+		break;
 
 	}
 
 }
 void START_MILLIS(uint8 Copy_u8TIMERID){
 	switch (Copy_u8TIMERID) {
-		case 1:
-			TIMER_start(1,65535,TIMER_overflow_millis(1));
-			break;
-		case 2:
-			TIMER_start(2,65535,TIMER_overflow_millis(2));
-			break;
-		case 3:
-			TIMER_start(3,65535,TIMER_overflow_millis(3));
-			break;
-		case 4:
-			TIMER_start(4,65535,TIMER_overflow_millis(4));
-			break;
+	case 1:
+		TIMER_start(1,65535,TIMER_overflow_millis(1));
+		break;
+	case 2:
+		TIMER_start(2,65535,TIMER_overflow_millis(2));
+		break;
+	case 3:
+		TIMER_start(3,65535,TIMER_overflow_millis(3));
+		break;
+	case 4:
+		TIMER_start(4,65535,TIMER_overflow_millis(4));
+		break;
 
 	}
 }
@@ -239,7 +286,7 @@ void START_MILLIS(uint8 Copy_u8TIMERID){
 
 void TIM1_UP_IRQHandler(void){
 	TIMER1_CallBack();
-	TIM1_SR&=~(1<<0);
+	TIM1_SR &= ~ (1<<0);
 }
 void TIM2_IRQHandler(void){
 	TIMER2_CallBack();
