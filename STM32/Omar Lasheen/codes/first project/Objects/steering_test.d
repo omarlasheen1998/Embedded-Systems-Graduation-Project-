@@ -1,0 +1,11 @@
+.\objects\steering_test.o: steering_test.c
+.\objects\steering_test.o: STD_TYPES.h
+.\objects\steering_test.o: BIT_MATH.h
+.\objects\steering_test.o: GPIO_interface.h
+.\objects\steering_test.o: RCC_interface.h
+.\objects\steering_test.o: USART_INTERFACE.h
+.\objects\steering_test.o: STK_interface.h
+.\objects\steering_test.o: AFIO_interface.h
+.\objects\steering_test.o: NVIC_interface.h
+.\objects\steering_test.o: EXTI_interface.h
+.\objects\steering_test.o: PWM_INTERFACE.h

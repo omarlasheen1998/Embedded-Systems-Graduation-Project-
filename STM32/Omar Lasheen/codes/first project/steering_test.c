@@ -18,9 +18,6 @@ void Forward_2 (void);
 void Backward_1(void);
 void Backward_2(void);
 
-s32 CalculateRPM(void);
-
-
 s64 encoder_counter_1 = 0, encoder_counter_2 = 0;
 
 int main()
@@ -66,8 +63,8 @@ int main()
 	//NVIC_voidEnableInterrupt(40);//10-15
 	
 	
-	GPIO_voidSetPinDirection(GPIOA, PIN3, OUTPUT_SPEED_50MHZ_PP);
-	PWM_voidSetPinDirection(TIM2,CH3);
+	GPIO_voidSetPinDirection(GPIOA, PIN1, OUTPUT_SPEED_50MHZ_PP);
+	PWM_voidSetPinDirection(TIM2,CH1);
   
   STK_voidStartTimer(16000000);
 	//STK_voidSetIntervalPeriodic(900000,CalculateRPM); /* 900000 = 100 mS*/
@@ -75,27 +72,36 @@ int main()
 	u32	old_time=0;
 	u32 x ;
 	s32 rpm=0;
-	PWM_voidWrite(TIM2,CH3,0);
-
+	PWM_voidWrite(TIM2,CH1,0);
+	USART_voidTransmit(UART3,"A7la Mesa",STRING);
 	
-	while(1)
-	{
-		GPIO_voidSetPinValue(GPIOA, PIN3,HIGH);
-			PWM_voidWrite(TIM2,CH3,65535);
-	    x = STK_u32GetElapedTime();	
+	while(1){
+
+		GPIO_voidSetPinValue(GPIOA,PIN1,LOW);
+	PWM_voidWrite(TIM2,CH1,40000);
+		 x = STK_u32GetElapedTime();	
 			while( ((x - old_time)* 1.0/9) < 1){
 			x = STK_u32GetElapedTime();	
 			}
 			old_time = x;
-			rpm = CalculateRPM();
-		  USART_voidTransmit(UART3," ,RPM_1 =  ",STRING);
-	    USART_voidTransmit(UART3,&rpm,INT);
+				 USART_voidTransmit(UART3," ,encoder_1 =  ",STRING);
+	    USART_voidTransmit(UART3,&encoder_counter_1,INT);
 			
 		  USART_voidTransmit(UART3," \n",STRING);
-		}	
-	
-	
+		if(encoder_counter_1 >= 5500){
+				PWM_voidWrite(TIM2,CH1,0);
+		while(1){
+					 USART_voidTransmit(UART3," ,encoder_1 =  ",STRING);
+	    USART_voidTransmit(UART3,&encoder_counter_1,INT);
+			
+		  USART_voidTransmit(UART3," \n",STRING);
+		}			
+		}
+	}
+		
 }
+
+
 
 void rcc_init(void)
 {
@@ -116,7 +122,6 @@ void rcc_init(void)
 
 	
 }
-
 
 void Forward_1 (void)
 {
@@ -162,43 +167,4 @@ void Backward_2(void)
 	else
 		encoder_counter_2--;
 }
-
-s32 CalculateRPM(void)
-{
-	s32 RPM_1 = 0, RPM_2 = 0;	
-	static s64 old_count1=0,old_count2=0;
-	static u32	old_time=0;
-	u32 x = STK_u32GetElapedTime();
-	float y = ((x - old_time)*1.0)/9000000;
-	old_time = x;
-	s32 delta_count = encoder_counter_1 - old_count1;
-	RPM_1 = (((delta_count )*1.0)/(22500 * y ))*60;
-	//RPM_2 = (((encoder_counter_2 - old_count2 )*1.0)/(22500 * y ))*60;
-  
-	old_count1 = encoder_counter_1;
-//	old_count2 = encoder_counter_2;
 	
-	//USART_voidTransmit(UART3,"delta_count =  ",STRING);
-	//USART_voidTransmit(UART3,&delta_count,INT);
-	//USART_voidTransmit(UART3," , encoder_1 =  ",STRING);
-//	USART_voidTransmit(UART3,&encoder_counter_1,INT);
-	
- //USART_voidTransmit(UART3," , RPM_2 =  ",STRING); 
- //USART_voidTransmit(UART3,&RPM_2,INT);
- //USART_voidTransmit(UART3," \n",STRING);
-	
-//	encoder_counter_1 = 0;
-//	encoder_counter_2 = 0;
-	return RPM_1;
-}
-
-
-
-//void Mousa_test (void){
-	//PWM_voidWrite(TIM1,CH1,17000); /* to get 20 rpm */
-	//USART_voidTransmit(UART3,"encoder_count = ",STRING);
-	//USART_voidTransmit(UART3,&encoder_counter_1,INT);/*display the counts of encoder according to 20 rpm*/
-  //USART_voidTransmit(UART3," \n",STRING);
-
-	
-//}

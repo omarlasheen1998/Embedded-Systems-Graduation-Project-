@@ -22,13 +22,11 @@ Dialog DLL:      TCM.DLL V1.53.0.0
  
 <h2>Project:</h2>
 D:\github\Embedded-Systems-Graduation-Project-\STM32\Omar Lasheen\codes\first project\blink.uvprojx
-Project File Date:  07/18/2021
+Project File Date:  07/21/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
-compiling GPIO_program.c...
-compiling RCC_INTERFACE.c...
 compiling PWM_INTERFACE.c...
 compiling NVIC_program.c...
 NVIC_program.c(97): warning:  #83-D: type qualifier specified more than once
@@ -36,14 +34,14 @@ NVIC_program.c(97): warning:  #83-D: type qualifier specified more than once
 NVIC_program.c(102): warning:  #83-D: type qualifier specified more than once
   		Local_u8Result = GET_BIT(NVIC_IABR1, Copy_u8IntNumber);
 NVIC_program.c: 2 warnings, 0 errors
-compiling PWM_test.c...
-PWM_test.c(194): warning:  #1-D: last line of file ends without a newline
-  }
-PWM_test.c(169): warning:  #177-D: variable "RPM_2"  was declared but never referenced
-  	s32 RPM_1 = 0, RPM_2 = 0;	
-PWM_test.c(170): warning:  #177-D: variable "old_count2"  was declared but never referenced
-  	static s64 old_count1=0,old_count2=0;
-PWM_test.c: 3 warnings, 0 errors
+compiling RCC_INTERFACE.c...
+compiling steering_test.c...
+steering_test.c(74): warning:  #177-D: variable "rpm"  was declared but never referenced
+  	s32 rpm=0;
+steering_test.c(170): warning:  #1-D: last line of file ends without a newline
+  	
+steering_test.c: 2 warnings, 0 errors
+compiling GPIO_program.c...
 compiling STK_program.c...
 STK_program.c(160): warning:  #550-D: variable "Local_u8Temporary"  was set but never used
   	u8 Local_u8Temporary;
@@ -180,9 +178,9 @@ assembling startup_stm32f10x_md.s...
 compiling EXTI_program.c...
 compiling system_stm32f10x.c...
 linking...
-Program Size: Code=11100 RO-data=268 RW-data=68 ZI-data=1700  
+Program Size: Code=10768 RO-data=268 RW-data=48 ZI-data=1696  
 FromELF: creating hex file...
-".\Objects\blink.axf" - 0 Error(s), 64 Warning(s).
+".\Objects\blink.axf" - 0 Error(s), 63 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -211,8 +209,8 @@ Package Vendor: Keil
    * Component: Keil::Device:Startup:1.0.0
       Source file:   Device\Source\system_stm32f10x.c
       Include file:  RTE_Driver\Config\RTE_Device.h
-      Source file:   Device\Source\ARM\startup_stm32f10x_md.s
       Source file:   Device\Source\ARM\STM32F1xx_OPT.s
+      Source file:   Device\Source\ARM\startup_stm32f10x_md.s
 Build Time Elapsed:  00:00:01
 </pre>
 </body>
