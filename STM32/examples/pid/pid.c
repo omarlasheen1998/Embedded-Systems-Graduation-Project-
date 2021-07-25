@@ -15,11 +15,8 @@
 
 void rcc_init  (void);
 void Forward_1 (void);
-void Forward_2 (void);
 void Backward_1(void);
-void Backward_2(void);
 s32 PID_control_drive (s32 reference_rpm);
-s32 PID_control_steer (f32 reference_angle);
 
 f32 kp = 344.5 , ki=2733.9, kd=10.85;
 //f32 kp = 848.06 , ki=4735.06, kd=41.26;
@@ -33,7 +30,6 @@ s32 prev_sp=0;
 
 
 s32 CalculateRPM(void);
-s32 calculate_angle(void);
 
 s64 encoder_counter_1 = 0, encoder_counter_2 = 0;
 
@@ -44,14 +40,11 @@ int main()
 	
 	STK_voidInit();
 	
-	USART_voidInit(UART3,9600);
+	USART_voidInit(UART3,500000);
 	
 
 	GPIO_voidSetPinDirection(GPIOA, PIN4, INPUT_PULL_UP_DOWN);
 	GPIO_voidSetPinDirection(GPIOA, PIN5, INPUT_PULL_UP_DOWN);
-	
-	//GPIO_voidSetPinDirection(GPIOB, PIN12, INPUT_PULL_UP_DOWN);
-	//GPIO_voidSetPinDirection(GPIOB, PIN13, INPUT_PULL_UP_DOWN);
 	
 	GPIO_voidSetPinPull	(GPIOA, PIN4, PULL_UP);
 	GPIO_voidSetPinPull	(GPIOA, PIN5, PULL_UP);
